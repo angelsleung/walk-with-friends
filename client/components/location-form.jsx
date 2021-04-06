@@ -3,6 +3,7 @@ import React from 'react';
 export default class LocationForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { start: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -16,6 +17,11 @@ export default class LocationForm extends React.Component {
   }
 
   render() {
-    return this.props;
+    return (
+      <form>
+        <label htmlFor="start">Start (A)</label>
+        <input type="text" value={this.state.start} />
+      </form>
+    );
   }
 }
