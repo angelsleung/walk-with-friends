@@ -21,20 +21,20 @@ export default class LocationForm extends React.Component {
       <form className="location-form">
         <h1 className="page-title">Map a Route</h1>
         <div className="input-div">
-          <label htmlFor="start">Start (A)</label>
-          <input type="text" value={this.state.startA} />
+          <label htmlFor="start" className="location-label">Start (A)</label>
+          <input type="text" value={this.state.startA} className="location-input" />
         </div>
         <div className="input-div">
-          <label htmlFor="start">Stop (B)</label>
-          <input type="text" value={this.state.stopB} />
+          <label htmlFor="start" className="location-label">Stop (B)</label>
+          <input type="text" value={this.state.stopB} className="location-input" />
         </div>
         <div className="input-div">
-          <label htmlFor="start">Stop (C)</label>
-          <input type="text" value={this.state.stopC} />
+          <label htmlFor="start" className="location-label">Stop (C)</label>
+          <input type="text" value={this.state.stopC} className="location-input" />
         </div>
         <div className="input-div">
-          <label htmlFor="start">End (A)</label>
-          <input type="text" value={this.state.startA} />
+          <label htmlFor="start" className="location-label">End (A)</label>
+          <input type="text" value={this.state.startA} readOnly={true} className="location-input" />
         </div>
         <div className="center input-div">
           <button className="go-button">Go</button>
