@@ -80,6 +80,7 @@ export default class LocationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    window.location.hash = 'route-details';
   }
 
   render() {
@@ -109,7 +110,7 @@ export default class LocationForm extends React.Component {
           <p className="location-input read-only">{this.state.A}</p>
         </div>
         <div className="center input-div">
-          <a href="route-details"><button className="go-button">Go</button></a>
+          <button className="go-button">Go</button>
         </div>
       </form>
     );

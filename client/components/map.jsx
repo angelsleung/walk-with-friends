@@ -8,6 +8,9 @@ export default class Map extends React.Component {
     this.directionsService = null;
     this.directionsRenderer = null;
     this.calcRoute = this.calcRoute.bind(this);
+    this.A = '';
+    this.B = '';
+    this.C = '';
   }
 
   componentDidMount() {
@@ -19,7 +22,7 @@ export default class Map extends React.Component {
     );
     this.mapInstance = new google.maps.Map(this.mapRef.current,
       {
-        center: { lat: 42.33601, lng: -71.0589 },
+        center: { lat: 47.6062, lng: -122.3321 },
         zoom: 7
       }
     );
@@ -29,7 +32,7 @@ export default class Map extends React.Component {
 
   calcRoute() {
     const req = {
-      origin: { lat: 42.4668, lng: -70.9495 },
+      origin: { lat: 47.6062, lng: -122.3321 },
       destination: { lat: 42.4668, lng: -70.9495 },
       waypoints: [
         {
