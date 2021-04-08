@@ -14,7 +14,6 @@ export default class MapComponent extends React.Component {
       apiKey: 'AIzaSyCG4ySJPtAS0a5rJRHZV8uPM6fgOzCZD0A'
     });
 
-    const google = null;
     loader.load().then(() => {
       this.mapInstance = new google.maps.Map(this.mapRef.current,
         {

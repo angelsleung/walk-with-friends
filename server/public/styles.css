@@ -64,11 +64,6 @@ body {
   height: 1.8rem;
 }
 
-.location-input:focus {
-  outline: none;
-  border: 2px solid #6ddccf;
-}
-
 .go-button {
   padding: 0.5rem 3rem;
   border-radius: 10px;
@@ -106,5 +101,6 @@ body {
   .location-form {
     border: none;
     box-shadow: none;
+    width: 40rem;
   }
 }

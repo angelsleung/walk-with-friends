@@ -52,25 +52,19 @@ export default class LocationForm extends React.Component {
       );
       this.autocompleteInstanceA.addListener('place_changed', () => {
         const place = this.autocompleteInstanceA.getPlace();
-        if (!place.geometry) {
-          this.autocompleteRefA.current.placeholder = 'Enter a place';
-        } else {
+        if (place.geometry) {
           this.setState({ A: place.name });
         }
       });
       this.autocompleteInstanceB.addListener('place_changed', () => {
         const place = this.autocompleteInstanceB.getPlace();
-        if (!place.geometry) {
-          this.autocompleteRefB.current.placeholder = 'Enter a place';
-        } else {
+        if (place.geometry) {
           this.setState({ B: place.name });
         }
       });
       this.autocompleteInstanceC.addListener('place_changed', () => {
         const place = this.autocompleteInstanceC.getPlace();
-        if (!place.geometry) {
-          this.autocompleteRefC.current.placeholder = 'Enter a place';
-        } else {
+        if (place.geometry) {
           this.setState({ C: place.name });
         }
       });
