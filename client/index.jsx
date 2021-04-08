@@ -4,7 +4,7 @@ import App from './app';
 import { Loader } from '@googlemaps/js-api-loader';
 
 const loader = new Loader({
-  apiKey: 'AIzaSyCG4ySJPtAS0a5rJRHZV8uPM6fgOzCZD0A',
+  apiKey: process.env.GOOGLE_MAPS_API_KEY,
   libraries: ['places']
 });
 

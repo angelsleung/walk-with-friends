@@ -27,18 +27,17 @@ body {
 }
 
 .page-title {
-  font-family: 'Poppins', sans-serif;
   font-size: 1.5rem;
-  font-weight: normal;
+  font-weight: 500;
+  color: gray;
   text-align: center;
 }
 
 .location-form {
-  border: 1px solid lightgray;
   border-radius: 20px;
   padding: 2rem;
   background-color: white;
-  box-shadow: 1px 2px 10px gray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .input-div {
@@ -46,18 +45,29 @@ body {
 }
 
 .location-label {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.2rem;
+  padding: 1rem;
 }
 
 .location-input {
-  font-family: 'Raleway', sans-serif;
   font-size: 1.2rem;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid gray;
-  box-shadow: 1px 2px 5px gray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   width: 100%;
   height: 1.8rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+.read-only {
+  display: flex;
+  color: gray;
+  background-color: rgb(240, 240, 240);
+  line-height: 1rem;
+  margin: 0.5rem 0;
+  align-items: center;
 }
 
 .go-button {
@@ -67,22 +77,13 @@ body {
   background-color: #6ddccf;
   color: white;
   font-size: 1.4rem;
-  box-shadow: 1px 2px 10px gray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   cursor: pointer;
 }
 
 .pac-container {
   font-family: 'Raleway', sans-serif;
   border-radius: 10px;
-}
-
-.read-only {
-  display: flex;
-  color: gray;
-  background-color: rgb(240, 240, 240);
-  line-height: 1rem;
-  margin: 0;
-  align-items: center;
 }
 
 @media screen and (min-width: 768px) {
