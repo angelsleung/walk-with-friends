@@ -86,6 +86,11 @@ body {
   border-radius: 10px;
 }
 
+.map {
+  height: 20rem;
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   body {
     background-color: white;

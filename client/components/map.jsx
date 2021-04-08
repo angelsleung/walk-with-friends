@@ -8,6 +8,12 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
+    this.mapInstanceA = new google.maps.Map(this.mapRef.current,
+      {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8
+      }
+    );
   }
 
   render() {
