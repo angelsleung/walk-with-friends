@@ -5,15 +5,45 @@ export default class Map extends React.Component {
     super(props);
     this.mapRef = React.createRef();
     this.mapInstance = null;
+    this.directionsService = null;
+    this.directionsRenderer = null;
+    this.calcRoute = this.calcRoute.bind(this);
   }
 
   componentDidMount() {
-    this.mapInstanceA = new google.maps.Map(this.mapRef.current,
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsRenderer = new google.maps.DirectionsRenderer();
+    this.mapInstance = new google.maps.Map(this.mapRef.current,
       {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8
+        center: { lat: 42.33601, lng: -71.0589 },
+        zoom: 7
       }
     );
+    this.directionsRenderer.setMap(this.mapInstance);
+    this.calcRoute();
+  }
+
+  calcRoute() {
+    const req = {
+      origin: { lat: 42.4668, lng: -70.9495 },
+      destination: { lat: 42.4668, lng: -70.9495 },
+      waypoints: [
+        {
+          location: { lat: 42.7762, lng: -71.0773 },
+          stopover: true
+        },
+        {
+          location: { lat: 42.8584, lng: -70.9300 },
+          stopover: true
+        }
+      ],
+      travelMode: 'WALKING'
+    };
+    this.directionsService.route(req, (res, status) => {
+      if (status === 'OK') {
+        this.directionsRenderer.setDirections(res);
+      }
+    });
   }
 
   render() {
