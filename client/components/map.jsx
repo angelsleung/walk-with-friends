@@ -12,7 +12,11 @@ export default class Map extends React.Component {
 
   componentDidMount() {
     this.directionsService = new google.maps.DirectionsService();
-    this.directionsRenderer = new google.maps.DirectionsRenderer();
+    this.directionsRenderer = new google.maps.DirectionsRenderer(
+      {
+        draggable: true
+      }
+    );
     this.mapInstance = new google.maps.Map(this.mapRef.current,
       {
         center: { lat: 42.33601, lng: -71.0589 },
