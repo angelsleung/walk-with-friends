@@ -64,5 +64,8 @@
         "eslint-plugin-html"
       ]
     }
-  ]
+  ],
+  "globals": {
+    "google": "readonly"
+  }
 }

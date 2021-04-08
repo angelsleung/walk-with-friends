@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.11.3",
     "argon2": "^0.27.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -57,7 +58,7 @@
     "stylelint": "^13.8.0",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-standard": "^20.0.0",
-    "webpack": "^5.11.1",
+    "webpack": "^5.31.0",
     "webpack-cli": "^4.3.1",
     "webpack-dev-server": "^3.11.1"
   }
