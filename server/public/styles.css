@@ -14,10 +14,6 @@ body {
   min-height: 100vh;
 }
 
-.row {
-  display: flex;
-}
-
 .center {
   text-align: center;
 }
