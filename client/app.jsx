@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/header';
 import LocationForm from './components/location-form';
-import Map from './components/map';
+import RouteMap from './components/route-map';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 
@@ -36,7 +36,7 @@ export default class App extends React.Component {
       return < LocationForm setLocations={this.setLocations} />;
     }
     if (path === 'route-details') {
-      return < Map locations={this.state.locations} />;
+      return < RouteMap locations={this.state.locations} />;
     }
   }
 

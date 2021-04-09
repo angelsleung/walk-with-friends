@@ -90,20 +90,17 @@ export default class LocationForm extends React.Component {
         <div className="input-div">
           <label htmlFor="startA" className="location-label">Start (A)</label>
           <input type="text" value={this.state.A.name} onChange={this.handleChangeA}
-            className="location-input" ref={this.autocompleteRefA} id="startA"
-            required={false} />
+            className="location-input" ref={this.autocompleteRefA} id="startA" />
         </div>
         <div className="input-div">
           <label htmlFor="stopB" className="location-label">Stop (B)</label>
           <input type="text" value={this.state.B.name} onChange={this.handleChangeB}
-            className="location-input" ref={this.autocompleteRefB} id="stopB"
-            required={false} />
+            className="location-input" ref={this.autocompleteRefB} id="stopB" />
         </div>
         <div className="input-div">
           <label htmlFor="stopC" className="location-label">Stop (C)</label>
           <input type="text" value={this.state.C.name} onChange={this.handleChangeC}
-            className="location-input" ref={this.autocompleteRefC} id="stopC"
-            required={false} />
+            className="location-input" ref={this.autocompleteRefC} id="stopC" />
         </div>
         <div className="input-div">
           <label htmlFor="endD" className="location-label">End (D)</label>

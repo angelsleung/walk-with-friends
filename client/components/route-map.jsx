@@ -1,13 +1,12 @@
 import React from 'react';
 
-export default class Map extends React.Component {
+export default class RouteMap extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
     this.mapInstance = null;
     this.directionsService = null;
     this.directionsRenderer = null;
-    this.calcRoute = this.calcRoute.bind(this);
   }
 
   componentDidMount() {
