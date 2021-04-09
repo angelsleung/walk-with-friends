@@ -106,8 +106,8 @@ export default class LocationForm extends React.Component {
             required={false} />
         </div>
         <div className="input-div">
-          <label htmlFor="endA" className="location-label">End (A)</label>
-          <input type="text" value={this.state.A.name} id="endA"
+          <label htmlFor="endD" className="location-label">End (D)</label>
+          <input type="text" value={this.state.A.name} id="endD"
             className="location-input read-only" readOnly={true}></input>
         </div>
         <div className="center input-div">

@@ -88,8 +88,8 @@ body {
 }
 
 .map {
-  height: 20rem;
-  width: 20rem;
+  height: 22rem;
+  width: 22rem;
   border-radius: 10px;
 }
 
@@ -109,6 +109,8 @@ body {
   }
 
   .map {
+    margin: 3rem 0;
     width: 40rem;
+    height: 30rem;
   }
 }
