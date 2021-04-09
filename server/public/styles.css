@@ -68,6 +68,7 @@ body {
   line-height: 1rem;
   margin: 0.5rem 0;
   align-items: center;
+  overflow-wrap: ;
 }
 
 .go-button {
@@ -104,6 +105,10 @@ body {
   .location-form {
     border: none;
     box-shadow: none;
+    width: 40rem;
+  }
+
+  .map {
     width: 40rem;
   }
 }

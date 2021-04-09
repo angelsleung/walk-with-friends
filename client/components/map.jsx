@@ -8,9 +8,6 @@ export default class Map extends React.Component {
     this.directionsService = null;
     this.directionsRenderer = null;
     this.calcRoute = this.calcRoute.bind(this);
-    this.A = '';
-    this.B = '';
-    this.C = '';
   }
 
   componentDidMount() {
@@ -22,6 +19,7 @@ export default class Map extends React.Component {
     );
     this.mapInstance = new google.maps.Map(this.mapRef.current,
       {
+        // center: { lat: 47.6062, lng: -122.3321 },
         center: { lat: 47.6062, lng: -122.3321 },
         zoom: 7
       }
@@ -31,21 +29,39 @@ export default class Map extends React.Component {
   }
 
   calcRoute() {
+    const { A, B, C } = this.props.locations;
+    const locationA = A.place_id;
+    const locationB = B.place_id;
+    const locationC = C.place_id;
     const req = {
-      origin: { lat: 47.6062, lng: -122.3321 },
-      destination: { lat: 42.4668, lng: -70.9495 },
+      origin: { placeId: locationA },
+      destination: { placeId: locationA },
       waypoints: [
         {
-          location: { lat: 42.7762, lng: -71.0773 },
-          stopover: true
+          location: { placeId: locationB }
         },
         {
-          location: { lat: 42.8584, lng: -70.9300 },
-          stopover: true
+          location: { placeId: locationC }
         }
       ],
-      travelMode: 'WALKING'
+      travelMode: 'DRIVING'
     };
+    // const req = {
+    //   origin: { lat: 47.6062, lng: -122.3321 },
+    //   destination: { lat: 42.4668, lng: -70.9495 },
+    //   waypoints: [
+    //     {
+    //       location: { lat: 42.7762, lng: -71.0773 },
+    //       stopover: true
+    //     },
+    //     {
+    //       location: { lat: 42.8584, lng: -70.9300 },
+    //       stopover: true
+    //     }
+    //   ],
+    //   travelMode: 'WALKING'
+    // };
+
     this.directionsService.route(req, (res, status) => {
       if (status === 'OK') {
         this.directionsRenderer.setDirections(res);
