@@ -4,9 +4,9 @@ export default class LocationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      A: '',
-      B: '',
-      C: ''
+      A: { name: '' },
+      B: { name: '' },
+      C: { name: '' }
     };
     this.autocompleteRefA = React.createRef();
     this.autocompleteRefB = React.createRef();
@@ -67,15 +67,15 @@ export default class LocationForm extends React.Component {
   }
 
   handleChangeA(event) {
-    this.setState({ A: event.target.value });
+    this.setState({ A: { name: event.target.value } });
   }
 
   handleChangeB(event) {
-    this.setState({ B: event.target.value });
+    this.setState({ B: { name: event.target.value } });
   }
 
   handleChangeC(event) {
-    this.setState({ C: event.target.value });
+    this.setState({ C: { name: event.target.value } });
   }
 
   handleSubmit(event) {
