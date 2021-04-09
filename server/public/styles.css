@@ -92,6 +92,18 @@ body {
   border-radius: 10px;
 }
 
+.route-details-text {
+  background-color: white;
+  border-radius: 10px;
+
+  /* border: 1px solid gray; */
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.route-totals {
+  padding: 1rem;
+}
+
 .directions-panel {
   height: 22rem;
   width: 22rem;
