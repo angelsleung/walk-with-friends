@@ -4,8 +4,8 @@ export default class RouteDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      distance: 0,
-      duration: 0,
+      distance: '',
+      duration: '',
       saved: false
     };
     this.mapRef = React.createRef();
