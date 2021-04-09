@@ -89,21 +89,21 @@ body {
 .map {
   height: 22rem;
   width: 22rem;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .route-details-text {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
 
   /* border: 1px solid gray; */
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .route-info {
-  padding-top: 1rem;
+  padding: 1rem 0 0 1rem;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .save-button {
@@ -111,6 +111,7 @@ body {
   align-items: center;
   font-weight: 500;
   cursor: pointer;
+  width: 8rem;
 }
 
 .save-icon {
@@ -127,7 +128,8 @@ body {
 .directions-panel {
   height: 22rem;
   width: 22rem;
-  border-radius: 10px;
+
+  /* border-radius: 20%; */
 }
 
 @media screen and (min-width: 768px) {

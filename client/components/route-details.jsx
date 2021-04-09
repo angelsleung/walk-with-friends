@@ -73,7 +73,8 @@ export default class RouteDetails extends React.Component {
   }
 
   render() {
-    const savedClass = this.state.saved ? 's' : 'r';
+    const savedIconClass = this.state.saved ? 's' : 'r';
+    const savedTextClass = this.state.saved ? 'd' : '';
     return (
       <>
         <div className="map" ref={this.mapRef} />
@@ -84,8 +85,8 @@ export default class RouteDetails extends React.Component {
               <div>{`About ${this.state.duration} minutes`}</div>
             </div>
             <div className="save-button" onClick={this.handleClickSave}>
-              <i className={`save-icon fa${savedClass} fa-heart`}></i>
-              <span className="save-text">Save</span>
+              <i className={`save-icon fa${savedIconClass} fa-heart`}></i>
+              <span className="save-text">{`Save${savedTextClass}`}</span>
             </div>
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
