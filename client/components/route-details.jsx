@@ -3,15 +3,17 @@ import React from 'react';
 export default class RouteDetails extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      distance: 0,
+      duration: 0,
+      saved: false
+    };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
     this.mapInstance = null;
     this.directionsService = null;
     this.directionsRenderer = null;
-    this.state = {
-      distance: 0,
-      duration: 0
-    };
+    this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
@@ -66,14 +68,25 @@ export default class RouteDetails extends React.Component {
     });
   }
 
+  handleClickSave() {
+    this.setState({ saved: !this.state.saved });
+  }
+
   render() {
+    const savedClass = this.state.saved ? 's' : 'r';
     return (
       <>
         <div className="map" ref={this.mapRef} />
         <div className="route-details-text">
-          <div className="route-totals">
-            <div>{`Total Distance: ${this.state.distance} mi`}</div>
-            <div>{`About ${this.state.duration} minutes`}</div>
+          <div className="route-info">
+            <div className="route-totals">
+              <div>{`Total Distance: ${this.state.distance} mi`}</div>
+              <div>{`About ${this.state.duration} minutes`}</div>
+            </div>
+            <div className="save-button" onClick={this.handleClickSave}>
+              <i className={`save-icon fa${savedClass} fa-heart`}></i>
+              <span className="save-text">Save</span>
+            </div>
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
         </div>
