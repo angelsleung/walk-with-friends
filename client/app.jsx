@@ -44,10 +44,10 @@ export default class App extends React.Component {
     const contextValue = this.state.route;
     return (
       <AppContext.Provider value={contextValue}>
-        <>
+        <div className="container">
           <Header />
           { this.renderPage() }
-        </>
+        </div>
       </AppContext.Provider>
     );
   }
