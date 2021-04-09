@@ -4,9 +4,9 @@ export default class LocationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      A: '',
-      B: '',
-      C: ''
+      A: { name: '' },
+      B: { name: '' },
+      C: { name: '' }
     };
     this.autocompleteRefA = React.createRef();
     this.autocompleteRefB = React.createRef();
@@ -26,7 +26,7 @@ export default class LocationForm extends React.Component {
       {
         types: ['establishment'],
         componentRestrictions: { country: 'US' },
-        fields: ['place_id', 'geometry', 'name']
+        fields: ['place_id', 'name']
       }
     );
     this.autocompleteInstanceB = new google.maps.places.Autocomplete(
@@ -34,7 +34,7 @@ export default class LocationForm extends React.Component {
       {
         types: ['establishment'],
         componentRestrictions: { country: 'US' },
-        fields: ['place_id', 'geometry', 'name']
+        fields: ['place_id', 'name']
       }
     );
     this.autocompleteInstanceC = new google.maps.places.Autocomplete(
@@ -42,44 +42,45 @@ export default class LocationForm extends React.Component {
       {
         types: ['establishment'],
         componentRestrictions: { country: 'US' },
-        fields: ['place_id', 'geometry', 'name']
+        fields: ['place_id', 'name']
       }
     );
 
     this.autocompleteInstanceA.addListener('place_changed', () => {
       const place = this.autocompleteInstanceA.getPlace();
-      if (place.geometry) {
-        this.setState({ A: place.name });
+      if (place) {
+        this.setState({ A: place });
       }
     });
     this.autocompleteInstanceB.addListener('place_changed', () => {
       const place = this.autocompleteInstanceB.getPlace();
-      if (place.geometry) {
-        this.setState({ B: place.name });
+      if (place) {
+        this.setState({ B: place });
       }
     });
     this.autocompleteInstanceC.addListener('place_changed', () => {
       const place = this.autocompleteInstanceC.getPlace();
-      if (place.geometry) {
-        this.setState({ C: place.name });
+      if (place) {
+        this.setState({ C: place });
       }
     });
   }
 
   handleChangeA(event) {
-    this.setState({ A: event.target.value });
+    this.setState({ A: { name: event.target.value } });
   }
 
   handleChangeB(event) {
-    this.setState({ B: event.target.value });
+    this.setState({ B: { name: event.target.value } });
   }
 
   handleChangeC(event) {
-    this.setState({ C: event.target.value });
+    this.setState({ C: { name: event.target.value } });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    this.props.setLocations(this.state);
   }
 
   render() {
@@ -88,25 +89,23 @@ export default class LocationForm extends React.Component {
         <h1 className="page-title">Map a Route</h1>
         <div className="input-div">
           <label htmlFor="startA" className="location-label">Start (A)</label>
-          <input type="text" value={this.state.A} onChange={this.handleChangeA}
-            className="location-input" ref={this.autocompleteRefA} id="startA"
-            required={true} />
+          <input type="text" value={this.state.A.name} onChange={this.handleChangeA}
+            className="location-input" ref={this.autocompleteRefA} id="startA" />
         </div>
         <div className="input-div">
           <label htmlFor="stopB" className="location-label">Stop (B)</label>
-          <input type="text" value={this.state.B} onChange={this.handleChangeB}
-            className="location-input" ref={this.autocompleteRefB} id="stopB"
-            required={true} />
+          <input type="text" value={this.state.B.name} onChange={this.handleChangeB}
+            className="location-input" ref={this.autocompleteRefB} id="stopB" />
         </div>
         <div className="input-div">
           <label htmlFor="stopC" className="location-label">Stop (C)</label>
-          <input type="text" value={this.state.C} onChange={this.handleChangeC}
-            className="location-input" ref={this.autocompleteRefC} id="stopC"
-            required={true} />
+          <input type="text" value={this.state.C.name} onChange={this.handleChangeC}
+            className="location-input" ref={this.autocompleteRefC} id="stopC" />
         </div>
         <div className="input-div">
-          <label className="location-label">End (A)</label>
-          <p className="location-input read-only">{this.state.A}</p>
+          <label htmlFor="endD" className="location-label">End (D)</label>
+          <input type="text" value={this.state.A.name} id="endD"
+            className="location-input read-only" readOnly={true}></input>
         </div>
         <div className="center input-div">
           <button className="go-button">Go</button>
