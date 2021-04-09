@@ -27,20 +27,14 @@ export default class RouteDetails extends React.Component {
   }
 
   calcRoute() {
-    // const { A, B, C } = this.props.locations;
+    const { A, B, C } = this.props.locations;
     const req = {
-      origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
-      destination: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
+      origin: { placeId: A.place_id },
+      destination: { placeId: A.place_id },
       waypoints: [
-        { location: { placeId: 'ChIJW4VXzodskFQRseSBkOHh9Vg' } },
-        { location: { placeId: 'ChIJF7Wdd4ZskFQRhk02OceIcdo' } }
+        { location: { placeId: B.place_id } },
+        { location: { placeId: C.place_id } }
       ],
-      // origin: { placeId: A.place_id },
-      // destination: { placeId: A.place_id },
-      // waypoints: [
-      //   { location: { placeId: B.place_id } },
-      //   { location: { placeId: C.place_id } }
-      // ],
       travelMode: 'WALKING'
     };
 
@@ -62,9 +56,12 @@ export default class RouteDetails extends React.Component {
     }
     const distanceMiles = (distanceMeters / 1609.34).toFixed(1);
     const durationMinutes = Math.floor(durationSeconds / 60);
+    const durationString = durationMinutes > 60
+      ? `${Math.floor(durationMinutes / 60)} hr ${durationMinutes % 60} min`
+      : `${durationMinutes} min`;
     this.setState({
       distance: distanceMiles,
-      duration: durationMinutes
+      duration: durationString
     });
   }
 
@@ -82,7 +79,7 @@ export default class RouteDetails extends React.Component {
           <div className="route-info">
             <div className="route-totals">
               <div>{`Total Distance: ${this.state.distance} mi`}</div>
-              <div>{`About ${this.state.duration} minutes`}</div>
+              <div>{`About ${this.state.duration}`}</div>
             </div>
             <div className="save-button" onClick={this.handleClickSave}>
               <i className={`save-icon fa${savedIconClass} fa-heart`}></i>
