@@ -92,6 +92,12 @@ body {
   border-radius: 10px;
 }
 
+.directions-panel {
+  height: 22rem;
+  width: 22rem;
+  border-radius: 10px;
+}
+
 @media screen and (min-width: 768px) {
   body {
     background-color: white;
