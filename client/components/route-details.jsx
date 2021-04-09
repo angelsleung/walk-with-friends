@@ -76,7 +76,7 @@ export default class RouteDetails extends React.Component {
     const savedIconClass = this.state.saved ? 's' : 'r';
     const savedTextClass = this.state.saved ? 'd' : '';
     return (
-      <>
+      <div className="route-details">
         <div className="map" ref={this.mapRef} />
         <div className="route-details-text">
           <div className="route-info">
@@ -90,8 +90,9 @@ export default class RouteDetails extends React.Component {
             </div>
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
+          <br></br>
         </div>
-      </>
+      </div>
     );
   }
 }

@@ -95,8 +95,7 @@ body {
 .route-details-text {
   background-color: white;
   border-radius: 20px;
-
-  /* border: 1px solid gray; */
+  padding: 0.5rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
@@ -125,13 +124,6 @@ body {
   font-size: 1.5rem;
 }
 
-.directions-panel {
-  height: 22rem;
-  width: 22rem;
-
-  /* border-radius: 20%; */
-}
-
 @media screen and (min-width: 768px) {
   body {
     background-color: white;
@@ -147,9 +139,22 @@ body {
     width: 40rem;
   }
 
-  .map {
+  .route-details {
+    display: flex;
+    justify-content: space-between;
     margin: 3rem 0;
+  }
+
+  .route-details-text {
+    max-width: 26rem;
+    max-height: 40rem;
+    overflow-y: scroll;
+    margin-left: 0.5rem;
+  }
+
+  .map {
     width: 40rem;
-    height: 30rem;
+    height: 40rem;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   }
 }
