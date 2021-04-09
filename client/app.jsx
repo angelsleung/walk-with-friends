@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './components/header';
-// import MapRoute from './pages/map-route';
 import LocationForm from './components/location-form';
 import Map from './components/map';
 import AppContext from './lib/app-context';
