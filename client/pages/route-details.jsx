@@ -27,14 +27,20 @@ export default class RouteDetails extends React.Component {
   }
 
   calcRoute() {
-    const { A, B, C } = this.props.locations;
+    // const { A, B, C } = this.props.locations;
     const req = {
-      origin: { placeId: A.place_id },
-      destination: { placeId: A.place_id },
+      origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
+      destination: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
       waypoints: [
-        { location: { placeId: B.place_id } },
-        { location: { placeId: C.place_id } }
+        { location: { placeId: 'ChIJW4VXzodskFQRseSBkOHh9Vg' } },
+        { location: { placeId: 'ChIJF7Wdd4ZskFQRhk02OceIcdo' } }
       ],
+      // origin: { placeId: A.place_id },
+      // destination: { placeId: A.place_id },
+      // waypoints: [
+      //   { location: { placeId: B.place_id } },
+      //   { location: { placeId: C.place_id } }
+      // ],
       travelMode: 'WALKING'
     };
 
@@ -87,7 +93,6 @@ export default class RouteDetails extends React.Component {
             </div>
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
-          <div className="google-logo-spacing"></div>
         </div>
       </div>
     );
