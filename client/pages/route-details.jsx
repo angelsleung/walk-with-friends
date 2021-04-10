@@ -17,16 +17,20 @@ export default class RouteDetails extends React.Component {
   }
 
   componentDidMount() {
-    this.directionsService = new google.maps.DirectionsService();
-    this.directionsRenderer = new google.maps.DirectionsRenderer(
-      { draggable: true });
     this.mapInstance = new google.maps.Map(this.mapRef.current);
-    this.directionsRenderer.setMap(this.mapInstance);
-    this.directionsRenderer.setPanel(this.directionsPanelRef.current);
-    this.calcRoute();
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsRenderer = new google.maps.DirectionsRenderer({
+      draggable: true,
+      map: this.mapInstance,
+      panel: this.directionsPanelRef.current
+    });
+    this.directionsRenderer.addListener('directions_changed', () => {
+      this.calcTotals(this.directionsRenderer.getDirections());
+    });
+    this.displayRoute();
   }
 
-  calcRoute() {
+  displayRoute() {
     // const { A, B, C } = this.props.locations;
     const req = {
       origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
@@ -43,11 +47,9 @@ export default class RouteDetails extends React.Component {
       // ],
       travelMode: 'WALKING'
     };
-
     this.directionsService.route(req, (res, status) => {
       if (status === 'OK' && res) {
         this.directionsRenderer.setDirections(res);
-        this.calcTotals(res);
       }
     });
   }
@@ -62,9 +64,10 @@ export default class RouteDetails extends React.Component {
     }
     const distanceMiles = (distanceMeters / 1609.34).toFixed(1);
     const durationMinutes = Math.floor(durationSeconds / 60);
-    const durationString = durationMinutes > 60
+    let durationString = durationMinutes > 60
       ? `${Math.floor(durationMinutes / 60)} hr ${durationMinutes % 60} min`
-      : `${durationMinutes} min`;
+      : `${durationMinutes} minute`;
+    if (durationMinutes > 1) durationString += 's';
     this.setState({
       distance: distanceMiles,
       duration: durationString
@@ -73,6 +76,7 @@ export default class RouteDetails extends React.Component {
 
   handleClickSave() {
     this.setState({ saved: !this.state.saved });
+    // const directions = JSON.stringify(this.directionsRenderer.getDirections());
   }
 
   render() {
