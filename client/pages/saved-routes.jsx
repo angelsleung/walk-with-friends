@@ -1,6 +1,19 @@
 import React from 'react';
 
 export default class SavedRoutes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      routes: null
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/routes')
+      .then(res => res.json())
+      .then(routes => this.setState({ routes }));
+  }
+
   render() {
     return (
         <div className="page">

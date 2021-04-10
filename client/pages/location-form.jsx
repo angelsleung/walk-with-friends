@@ -89,23 +89,23 @@ export default class LocationForm extends React.Component {
         <form className="location-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Map a Route</h1>
           <div className="input-div">
-            <label htmlFor="startA" className="location-label">Start (A)</label>
+            <label htmlFor="A" className="location-label">Start (A)</label>
             <input type="text" value={this.state.A.name} onChange={this.handleChangeA}
-              className="location-input" ref={this.autocompleteRefA} id="startA" />
+              className="location-input" ref={this.autocompleteRefA} id="A" />
           </div>
           <div className="input-div">
-            <label htmlFor="stopB" className="location-label">Stop (B)</label>
+            <label htmlFor="B" className="location-label">Stop (B)</label>
             <input type="text" value={this.state.B.name} onChange={this.handleChangeB}
-              className="location-input" ref={this.autocompleteRefB} id="stopB" />
+              className="location-input" ref={this.autocompleteRefB} id="B" />
           </div>
           <div className="input-div">
-            <label htmlFor="stopC" className="location-label">Stop (C)</label>
+            <label htmlFor="C" className="location-label">Stop (C)</label>
             <input type="text" value={this.state.C.name} onChange={this.handleChangeC}
-              className="location-input" ref={this.autocompleteRefC} id="stopC" />
+              className="location-input" ref={this.autocompleteRefC} id="C" />
           </div>
           <div className="input-div">
-            <label htmlFor="endD" className="location-label">End (D)</label>
-            <input type="text" value={this.state.A.name} id="endD"
+            <label htmlFor="D" className="location-label">End (D)</label>
+            <input type="text" value={this.state.A.name} id="D"
               className="location-input read-only" readOnly={true}></input>
           </div>
           <div className="center input-div">
