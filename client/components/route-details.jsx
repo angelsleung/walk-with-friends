@@ -5,13 +5,15 @@ export default class RouteDetails extends React.Component {
     super(props);
     this.state = {
       distance: '',
-      duration: ''
+      duration: '',
+      saved: false
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
     this.mapInstance = null;
     this.directionsService = null;
     this.directionsRenderer = null;
+    this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +65,13 @@ export default class RouteDetails extends React.Component {
     });
   }
 
+  handleClickSave() {
+    this.setState({ saved: !this.state.saved });
+  }
+
   render() {
+    const savedIconClass = this.state.saved ? 's' : 'r';
+    const savedTextClass = this.state.saved ? 'd' : '';
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
@@ -72,6 +80,10 @@ export default class RouteDetails extends React.Component {
             <div className="route-totals">
               <div>{`Total Distance: ${this.state.distance} mi`}</div>
               <div>{`About ${this.state.duration}`}</div>
+            </div>
+            <div className="save-button" onClick={this.handleClickSave}>
+              <i className={`save-icon fa${savedIconClass} fa-heart`}></i>
+              <span className="save-text">{`Save${savedTextClass}`}</span>
             </div>
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />

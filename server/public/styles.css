@@ -109,6 +109,25 @@ body {
   justify-content: space-between;
 }
 
+.save-button {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  width: 8rem;
+}
+
+.save-icon {
+  color: #ffcb91;
+  font-size: 2rem;
+  padding: 0.5rem;
+}
+
+.save-text {
+  color: #ffcb91;
+  font-size: 1.5rem;
+}
+
 @media screen and (min-width: 768px) {
   body {
     background-color: white;
