@@ -87,7 +87,7 @@ export default class RouteDetails extends React.Component {
             </div>
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
-          <br></br>
+          <div className="google-logo-spacing"></div>
         </div>
       </div>
     );
