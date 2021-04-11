@@ -133,6 +133,8 @@ body {
   font-weight: 500;
   cursor: pointer;
   flex-basis: 50%;
+  width: 8rem;
+  padding: 0 1.2rem;
 }
 
 .save-icon {
@@ -274,15 +276,15 @@ body {
     padding-left: 5rem;
   }
 
-  /* .route-item-locations {
-    padding-left: 10rem;
-    /* text-align: center; */
-
   .walk-details-text {
-    /* max-width: 26rem; */
-
-    /* height: 100%; */
+    width: 24rem;
     margin-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .walk-details {
+    height: 100%;
   }
 
   .flex-center {

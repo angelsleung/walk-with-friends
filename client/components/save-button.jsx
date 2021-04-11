@@ -7,12 +7,12 @@ export default class SaveButton extends React.Component {
   }
 
   handleClickSave() {
-    this.props.onSave(!this.props.saved);
+    this.props.onSave(!this.props.isSaved);
   }
 
   render() {
-    const savedIconClass = this.props.saved ? 's' : 'r';
-    const savedTextClass = this.props.saved ? 'd' : '';
+    const savedIconClass = this.props.isSaved ? 's' : 'r';
+    const savedTextClass = this.props.isSaved ? 'd' : '';
     return (
       <div className="save-button" onClick={this.handleClickSave}>
         <i className={`save-icon fa${savedIconClass} fa-heart`}></i>

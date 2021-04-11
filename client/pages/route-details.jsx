@@ -7,8 +7,8 @@ export default class RouteDetails extends React.Component {
     this.state = {
       distance: '',
       duration: '',
-      saved: false,
-      newSearch: false
+      isSaved: false,
+      savedRoute: null
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -29,10 +29,11 @@ export default class RouteDetails extends React.Component {
     this.directionsRenderer.addListener('directions_changed', () => {
       this.calcTotals(this.directionsRenderer.getDirections());
     });
-    // this.displayRoute();
+    // this.viewNewRoute();
   }
 
-  displayRoute(directionsResult) {
+  viewNewRoute(directionsResult) {
+
     // const { A, B, C } = this.props.locations;
     const req = {
       origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
@@ -56,6 +57,15 @@ export default class RouteDetails extends React.Component {
     });
   }
 
+  viewSavedRoute() {
+    const routeId = 1;
+    fetch(`/api/routes/${routeId}`)
+      .then(res => res.json())
+      .then(savedRoute => {
+        this.setState({ savedRoute });
+      });
+  }
+
   calcTotals(directionResult) {
     const legs = directionResult.routes[0].legs;
     let distanceMeters = 0;
@@ -77,7 +87,7 @@ export default class RouteDetails extends React.Component {
   }
 
   handleSave() {
-    this.setState({ saved: !this.state.saved });
+    this.setState({ isSaved: !this.state.isSaved });
     // const directions = JSON.stringify();
   }
 
@@ -85,7 +95,7 @@ export default class RouteDetails extends React.Component {
     return (
       <div className="options">
         <div className="row">
-          < SaveButton saved={this.state.saved} onSave={this.handleSave} />
+          < SaveButton saved={this.state.isSaved} onSave={this.handleSave} />
           <div className="share-button">
             <i className="share-icon fas fa-share"></i>
             <span className="button-text">Share</span>
