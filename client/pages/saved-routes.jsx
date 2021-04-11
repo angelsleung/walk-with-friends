@@ -14,10 +14,14 @@ export default class SavedRoutes extends React.Component {
       .then(res => res.json())
       .then(routes => {
         this.setState({ routes });
+        this.setState({ routes: null });
       });
   }
 
   renderRoutes() {
+    if (!this.state.routes) {
+      return <p className="no-routes">No saved routes yet!</p>;
+    }
     return (
       this.state.routes.map(route => {
         return (
@@ -47,7 +51,6 @@ export default class SavedRoutes extends React.Component {
   }
 
   render() {
-    if (!this.state.routes) return null;
     return (
       <div className="page">
         <h1 className="page-title">Saved Routes</h1>

@@ -136,7 +136,10 @@ body {
   display: flex;
   border-top: 1px solid lightgray;
   padding: 1rem 0;
-  justify-content: space-around;
+}
+
+.route-item-locations {
+  flex-basis: 75%;
 }
 
 .route-item-icon-location {
@@ -168,6 +171,15 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex-basis: 25%;
+}
+
+.no-routes {
+  text-align: center;
+  font-style: italic;
+  color: darkgray;
+  border-top: 1px solid lightgray;
+  padding: 2rem;
 }
 
 .center {
