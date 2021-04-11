@@ -14,7 +14,6 @@ export default class SavedRoutes extends React.Component {
       .then(res => res.json())
       .then(routes => {
         this.setState({ routes });
-        this.setState({ routes: null });
       });
   }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import SaveButton from '../components/save-button';
 
 export default class RouteDetails extends React.Component {
   constructor(props) {
@@ -6,14 +7,15 @@ export default class RouteDetails extends React.Component {
     this.state = {
       distance: '',
       duration: '',
-      saved: false
+      saved: false,
+      newSearch: false
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
     this.mapInstance = null;
     this.directionsService = null;
     this.directionsRenderer = null;
-    this.handleClickSave = this.handleClickSave.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   componentDidMount() {
@@ -27,10 +29,10 @@ export default class RouteDetails extends React.Component {
     this.directionsRenderer.addListener('directions_changed', () => {
       this.calcTotals(this.directionsRenderer.getDirections());
     });
-    this.displayRoute();
+    // this.displayRoute();
   }
 
-  displayRoute() {
+  displayRoute(directionsResult) {
     // const { A, B, C } = this.props.locations;
     const req = {
       origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
@@ -74,29 +76,74 @@ export default class RouteDetails extends React.Component {
     });
   }
 
-  handleClickSave() {
+  handleSave() {
     this.setState({ saved: !this.state.saved });
-    // const directions = JSON.stringify(this.directionsRenderer.getDirections());
+    // const directions = JSON.stringify();
+  }
+
+  renderOptions() {
+    return (
+      <div className="options">
+        <div className="row">
+          < SaveButton saved={this.state.saved} onSave={this.handleSave} />
+          <div className="share-button">
+            <i className="share-icon fas fa-share"></i>
+            <span className="button-text">Share</span>
+          </div>
+        </div>
+        <div className="row">
+          <div className="directions-button">
+            <i className="directions-icon fas fa-directions"></i>
+            <span className="button-text">Directions</span>
+          </div>
+          <div className="edit-button">
+            <i className="edit-icon fas fa-edit"></i>
+            <span className="button-text">Edit</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderWalkDetails() {
+    return (
+      <div className="walk-details">
+        <div className="walk-details-section">
+          <h2>Last walked</h2>
+          <span>4/1/21</span>
+        </div>
+        <div className="walk-details-section">
+          <h2>Next walk</h2>
+          <span>4/17/21 @ 12:00pm</span>
+        </div>
+        <div className="walk-details-section">
+          <h2>Shared with</h2>
+          <ul>
+            <li>Misty</li>
+            <li>Brock</li>
+          </ul>
+        </div>
+      </div>
+    );
   }
 
   render() {
-    const savedIconClass = this.state.saved ? 's' : 'r';
-    const savedTextClass = this.state.saved ? 'd' : '';
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
-        <div className="route-details-text">
+        {/* <div className="route-details-text">
           <div className="route-info">
             <div className="route-totals">
               <div>{`Total Distance: ${this.state.distance} mi`}</div>
               <div>{`About ${this.state.duration}`}</div>
             </div>
-            <div className="save-button" onClick={this.handleClickSave}>
-              <i className={`save-icon fa${savedIconClass} fa-heart`}></i>
-              <span className="save-text">{`Save${savedTextClass}`}</span>
-            </div>
+            < SaveButton saved={this.state.saved} onSave={this.handleSave} />
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
+        </div> */}
+        <div className="walk-details-text">
+          {this.renderOptions()}
+          {this.renderWalkDetails()}
         </div>
       </div>
     );

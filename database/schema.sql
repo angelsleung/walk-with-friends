@@ -13,7 +13,7 @@ create table "routes" (
   "locationC"        text    not null,
   "distance"         text    not null,
   "duration"         text    not null,
-  "directions"       text    not null,
+  "placeIds"       text    not null,
   "createdAt"   timestamptz(6) not null default now(),
   primary key ("routeId")
 )
