@@ -6,61 +6,55 @@ export default class SavedRoutes extends React.Component {
     this.state = {
       routes: null
     };
+    this.renderRoutes = this.renderRoutes.bind(this);
   }
 
   componentDidMount() {
     fetch('/api/routes')
       .then(res => res.json())
-      .then(routes => this.setState({ routes }));
+      .then(routes => {
+        this.setState({ routes });
+      });
+  }
+
+  renderRoutes() {
+    return (
+      this.state.routes.map(route => {
+        return (
+          <div key={route.routeId} className="route-list-item">
+            <div className="route-item-locations">
+              <div className="route-item-icon-location">
+                <i className="walk-icon fas fa-walking"></i>
+                <div className="route-item-start-location">{route.locationA}</div>
+              </div>
+              <div className="route-item-icon-location stop-location">
+                <i className="marker-icon fas fa-map-marker-alt"></i>
+                <div className="route-item-stop-location">{route.locationB}</div>
+              </div>
+              <div className="route-item-icon-location stop-location">
+                <i className="marker-icon fas fa-map-marker-alt"></i>
+                <div className="route-item-stop-location">{route.locationC}</div>
+              </div>
+            </div>
+            <div className="route-item-totals">
+              <div className="route-item-distance">{route.distance}</div>
+              <div className="route-item-duration">{route.duration}</div>
+            </div>
+          </div>
+        );
+      })
+    );
   }
 
   render() {
+    if (!this.state.routes) return null;
     return (
-        <div className="page">
-          <h1 className="page-title">Saved Routes</h1>
-          <div className="route-list">
-            <div className="route-list-item">
-              <div className="route-item-locations">
-                <div className="route-item-icon-location">
-                  <i className="walk-icon fas fa-walking"></i>
-                  <div className="route-item-start-location">1 Martin Rd</div>
-                </div>
-                <div className="route-item-icon-location stop-location">
-                  <i className="marker-icon fas fa-map-marker-alt"></i>
-                  <div className="route-item-stop-location">8 Off Grand Dr</div>
-                </div>
-                <div className="route-item-icon-location stop-location">
-                  <i className="marker-icon fas fa-map-marker-alt"></i>
-                  <div className="route-item-stop-location">5 Robinson Dr</div>
-                </div>
-              </div>
-              <div className="route-item-totals">
-                <div className="route-item-distance">0.7 mi</div>
-                <div className="route-item-duration">15 min</div>
-              </div>
-            </div>
-            <div className="route-list-item">
-              <div className="route-item-locations">
-                <div className="route-item-icon-location">
-                  <i className="walk-icon fas fa-walking"></i>
-                  <div className="route-item-start-location">1 Martin Rd</div>
-                </div>
-                <div className="route-item-icon-location stop-location">
-                  <i className="marker-icon fas fa-map-marker-alt"></i>
-                  <div className="route-item-stop-location">8 Off Grand Dr</div>
-                </div>
-                <div className="route-item-icon-location stop-location">
-                  <i className="marker-icon fas fa-map-marker-alt"></i>
-                  <div className="route-item-stop-location">5 Robinson Dr</div>
-                </div>
-              </div>
-              <div className="route-item-totals">
-                <div className="route-item-distance">0.7 mi</div>
-                <div className="route-item-duration">15 min</div>
-              </div>
-            </div>
-          </div>
+      <div className="page">
+        <h1 className="page-title">Saved Routes</h1>
+        <div className="route-list">
+          {this.renderRoutes()}
         </div>
+      </div>
     );
   }
 }

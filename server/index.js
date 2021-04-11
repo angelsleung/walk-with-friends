@@ -20,7 +20,7 @@ app.use(jsonMiddleware);
 
 app.get('/api/routes', (req, res) => {
   const sql = `
-    select *
+    select "routeId", "locationA", "locationB", "locationC", "distance", "duration", "createdAt"
     from "routes"
     order by "createdAt"
   `;
