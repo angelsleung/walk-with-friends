@@ -20,8 +20,14 @@ app.use(jsonMiddleware);
 
 app.get('/api/routes', (req, res) => {
   const sql = `
-    select "routeId", "locationA", "locationB", "locationC", "distance", "duration", "createdAt"
-    from "routes"
+    select "routeId",
+           "locationA",
+           "locationB",
+           "locationC",
+           "distance",
+           "duration",
+           "createdAt"
+      from "routes"
     order by "createdAt"
   `;
   db.query(sql)
@@ -35,6 +41,32 @@ app.get('/api/routes', (req, res) => {
       });
     });
 });
+
+app.get('/api/routes/:routeId', (req, res) => {
+  const routeId = req.params.routeId;
+  const sql = `
+  select "routeId",
+         "placeIds",
+         "lastWalked",
+         "nextWalk",
+         "sharedWith"
+    from "routes"
+  where "routeId" = $1
+  `;
+  const params = [routeId];
+  db.query(sql, params)
+    .then(result => {
+      const [route] = result.rows;
+      res.json(route);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
