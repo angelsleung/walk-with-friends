@@ -6,7 +6,7 @@ export default class SavedRoutes extends React.Component {
     this.state = {
       routes: null
     };
-    this.renderRoutes = this.renderRoutes.bind(this);
+    this.handleClickRoute = this.handleClickRoute.bind(this);
   }
 
   componentDidMount() {
@@ -17,6 +17,12 @@ export default class SavedRoutes extends React.Component {
       });
   }
 
+  handleClickRoute(event) {
+    const clickedRoute = event.target.closest('.route-list-item');
+    const routeId = clickedRoute.getAttribute('route-id');
+    this.props.selectRoute(routeId);
+  }
+
   renderRoutes() {
     if (!this.state.routes) {
       return <p className="no-routes">No saved routes yet!</p>;
@@ -24,7 +30,8 @@ export default class SavedRoutes extends React.Component {
     return (
       this.state.routes.map(route => {
         return (
-          <div key={route.routeId} className="route-list-item">
+          <div key={route.routeId} className="route-list-item"
+            onClick={this.handleClickRoute} route-id={route.routeId}>
             <div className="route-item-locations">
               <div className="route-item-icon-location">
                 <i className="walk-icon fas fa-walking"></i>

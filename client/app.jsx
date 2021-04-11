@@ -15,9 +15,11 @@ export default class App extends React.Component {
         A: '',
         B: '',
         C: ''
-      }
+      },
+      routeId: null
     };
     this.setLocations = this.setLocations.bind(this);
+    this.selectRoute = this.selectRoute.bind(this);
   }
 
   componentDidMount() {
@@ -31,16 +33,22 @@ export default class App extends React.Component {
     window.location.hash = 'route-details';
   }
 
+  selectRoute(routeId) {
+    this.setState({ routeId });
+    window.location.hash = 'route-details';
+  }
+
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
       return < LocationForm setLocations={this.setLocations} />;
     }
     if (path === 'route-details') {
-      return < RouteDetails locations={this.state.locations} />;
+      return < RouteDetails locations={this.state.locations}
+        routeId={this.state.routeId} />;
     }
     if (path === 'saved-routes') {
-      return < SavedRoutes />;
+      return < SavedRoutes selectRoute={this.selectRoute} />;
     }
   }
 

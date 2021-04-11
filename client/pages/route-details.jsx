@@ -29,13 +29,16 @@ export default class RouteDetails extends React.Component {
     this.directionsRenderer.addListener('directions_changed', () => {
       this.calcTotals(this.directionsRenderer.getDirections());
     });
-    // this.viewNewRoute();
+    if (this.props.routeId) {
+      this.calcSavedRoute();
+    } else {
+      this.calcNewRoute();
+    }
   }
 
-  viewNewRoute(directionsResult) {
-
+  calcNewRoute() {
     // const { A, B, C } = this.props.locations;
-    const req = {
+    const request = {
       origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
       destination: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
       waypoints: [
@@ -50,20 +53,36 @@ export default class RouteDetails extends React.Component {
       // ],
       travelMode: 'WALKING'
     };
-    this.directionsService.route(req, (res, status) => {
-      if (status === 'OK' && res) {
-        this.directionsRenderer.setDirections(res);
-      }
-    });
+    this.displayRoute(request);
   }
 
-  viewSavedRoute() {
-    const routeId = 1;
+  calcSavedRoute() {
+    const routeId = this.props.routeId;
     fetch(`/api/routes/${routeId}`)
       .then(res => res.json())
       .then(savedRoute => {
         this.setState({ savedRoute });
+        const placeIds = this.state.savedRoute.placeIds.split(',');
+        const waypoints = [];
+        for (let i = 1; i < placeIds.length; i++) {
+          waypoints.push({ location: { placeId: placeIds[i] } });
+        }
+        const request = {
+          origin: { placeId: placeIds[0] },
+          destination: { placeId: placeIds[0] },
+          waypoints,
+          travelMode: 'WALKING'
+        };
+        this.displayRoute(request);
       });
+  }
+
+  displayRoute(request) {
+    this.directionsService.route(request, (result, status) => {
+      if (status === 'OK' && result) {
+        this.directionsRenderer.setDirections(result);
+      }
+    });
   }
 
   calcTotals(directionResult) {
