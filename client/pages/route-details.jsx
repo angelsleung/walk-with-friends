@@ -5,17 +5,19 @@ export default class RouteDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isSaved: false,
       distance: '',
       duration: '',
-      isSaved: false,
-      savedRoute: null
+      lastWalked: '',
+      nextWalk: '',
+      sharedWith: ''
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
     this.mapInstance = null;
     this.directionsService = null;
     this.directionsRenderer = null;
-    this.handleSave = this.handleSave.bind(this);
+    this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
@@ -37,32 +39,31 @@ export default class RouteDetails extends React.Component {
   }
 
   calcNewRoute() {
-    // const { A, B, C } = this.props.locations;
+    const { A, B, C } = this.props.locations;
     const request = {
-      origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
-      destination: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
-      waypoints: [
-        { location: { placeId: 'ChIJW4VXzodskFQRseSBkOHh9Vg' } },
-        { location: { placeId: 'ChIJF7Wdd4ZskFQRhk02OceIcdo' } }
-      ],
-      // origin: { placeId: A.place_id },
-      // destination: { placeId: A.place_id },
+      // origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
+      // destination: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
       // waypoints: [
-      //   { location: { placeId: B.place_id } },
-      //   { location: { placeId: C.place_id } }
+      //   { location: { placeId: 'ChIJW4VXzodskFQRseSBkOHh9Vg' } },
+      //   { location: { placeId: 'ChIJF7Wdd4ZskFQRhk02OceIcdo' } }
       // ],
+      origin: { placeId: A.place_id },
+      destination: { placeId: A.place_id },
+      waypoints: [
+        { location: { placeId: B.place_id } },
+        { location: { placeId: C.place_id } }
+      ],
       travelMode: 'WALKING'
     };
     this.displayRoute(request);
   }
 
   calcSavedRoute() {
-    const routeId = this.props.routeId;
-    fetch(`/api/routes/${routeId}`)
+    this.setState({ isSaved: true });
+    fetch(`/api/routes/${this.props.routeId}`)
       .then(res => res.json())
-      .then(savedRoute => {
-        this.setState({ savedRoute });
-        const placeIds = this.state.savedRoute.placeIds.split(',');
+      .then(route => {
+        const placeIds = JSON.parse(route.placeIds);
         const waypoints = [];
         for (let i = 1; i < placeIds.length; i++) {
           waypoints.push({ location: { placeId: placeIds[i] } });
@@ -93,7 +94,7 @@ export default class RouteDetails extends React.Component {
       distanceMeters += legs[i].distance.value;
       durationSeconds += legs[i].duration.value;
     }
-    const distanceMiles = (distanceMeters / 1609.34).toFixed(1);
+    const distanceMiles = `${(distanceMeters / 1609.34).toFixed(1)} mi`;
     const durationMinutes = Math.floor(durationSeconds / 60);
     let durationString = durationMinutes > 60
       ? `${Math.floor(durationMinutes / 60)} hr ${durationMinutes % 60} min`
@@ -105,16 +106,68 @@ export default class RouteDetails extends React.Component {
     });
   }
 
-  handleSave() {
-    this.setState({ isSaved: !this.state.isSaved });
-    // const directions = JSON.stringify();
+  handleClickSave() {
+    // this.setState({ isSaved: !this.state.isSaved });
+    if (this.state.isSaved) {
+      this.unsaveRoute();
+    } else {
+      this.saveRoute();
+    }
+  }
+
+  saveRoute() {
+    const waypoints = this.directionsRenderer.getDirections().geocoded_waypoints;
+    const placeIds = [];
+    for (let i = 0; i < waypoints.length; i++) {
+      placeIds.push(waypoints[i].place_id);
+    }
+    const { A, B, C } = this.props.locations;
+    const route = {
+      locationA: A.name,
+      locationB: B.name,
+      locationC: C.name,
+      distance: this.state.distance,
+      duration: this.state.duration,
+      placeIds: JSON.stringify(placeIds),
+      lastWalked: '',
+      nextWalk: '',
+      sharedWith: ''
+    };
+    const req = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(route)
+    };
+    fetch('api/routes', req)
+      .then(res => res.json())
+      .then(route => {
+        this.setState({ isSaved: true });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  unsaveRoute() {
+    const req = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    };
+    fetch(`/api/routes/${this.props.routeId}`, req)
+      .then(res => res.json())
+      .then(route => {
+        this.setState({ isSaved: false });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   renderOptions() {
     return (
       <div className="options">
         <div className="row">
-          < SaveButton saved={this.state.isSaved} onSave={this.handleSave} />
+          < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
           <div className="share-button">
             <i className="share-icon fas fa-share"></i>
             <span className="button-text">Share</span>
@@ -160,16 +213,18 @@ export default class RouteDetails extends React.Component {
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
+
         {/* <div className="route-details-text">
           <div className="route-info">
             <div className="route-totals">
-              <div>{`Total Distance: ${this.state.distance} mi`}</div>
+              <div>{`Total Distance: ${this.state.distance}`}</div>
               <div>{`About ${this.state.duration}`}</div>
             </div>
-            < SaveButton saved={this.state.saved} onSave={this.handleSave} />
+            < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
           </div>
           <div className="directionsPanel" ref={this.directionsPanelRef} />
         </div> */}
+
         <div className="walk-details-text">
           {this.renderOptions()}
           {this.renderWalkDetails()}

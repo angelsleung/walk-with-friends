@@ -67,6 +67,84 @@ app.get('/api/routes/:routeId', (req, res) => {
     });
 });
 
+app.post('/api/routes', (req, res) => {
+  const {
+    locationA,
+    locationB,
+    locationC,
+    distance,
+    duration,
+    placeIds,
+    lastWalked,
+    nextWalk,
+    sharedWith
+  } = req.body;
+  const sql = `
+    insert into "routes" (
+      "locationA",
+      "locationB",
+      "locationC",
+      "distance",
+      "duration",
+      "placeIds",
+      "lastWalked",
+      "nextWalk",
+      "sharedWith"
+    )
+    values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    returning *
+  `;
+  const params = [
+    locationA,
+    locationB,
+    locationC,
+    distance,
+    duration,
+    placeIds,
+    lastWalked,
+    nextWalk,
+    sharedWith
+  ];
+  db.query(sql, params)
+    .then(result => {
+      const [route] = result.rows;
+      res.status(201).json(route);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.delete('/api/routes/:routeId', (req, res) => {
+  const routeId = req.params.routeId;
+  const sql = `
+  delete from "routes"
+        where "routeId" = $1
+    returning *
+  `;
+  const params = [routeId];
+  db.query(sql, params)
+    .then(result => {
+      const [route] = result.rows;
+      if (!route) {
+        res.status(404).json({
+          error: `Unable to find route with "routeId" ${routeId}`
+        });
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred'
+      });
+    });
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
