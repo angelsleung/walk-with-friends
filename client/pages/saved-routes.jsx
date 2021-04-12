@@ -24,7 +24,7 @@ export default class SavedRoutes extends React.Component {
   }
 
   renderRoutes() {
-    if (!this.state.routes) {
+    if (!this.state.routes || this.state.routes.length === 0) {
       return <p className="no-routes">No saved routes yet!</p>;
     }
     return (
