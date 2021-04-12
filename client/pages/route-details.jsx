@@ -37,12 +37,6 @@ export default class RouteDetails extends React.Component {
   calcNewRoute() {
     const { A, B, C } = this.props.locations;
     const request = {
-      // origin: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
-      // destination: { placeId: 'ChIJYVqRI4dskFQRVWnuu-Qjk0E' },
-      // waypoints: [
-      //   { location: { placeId: 'ChIJW4VXzodskFQRseSBkOHh9Vg' } },
-      //   { location: { placeId: 'ChIJF7Wdd4ZskFQRhk02OceIcdo' } }
-      // ],
       origin: { placeId: A.place_id },
       destination: { placeId: A.place_id },
       waypoints: [

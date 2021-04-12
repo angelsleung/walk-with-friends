@@ -209,6 +209,10 @@ header {
 }
 
 .walk-details {
+  margin-bottom: 3rem;
+}
+
+.walk-details-text {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
   padding: 1rem;
@@ -317,14 +321,15 @@ header {
     padding: 1rem;
   }
 
-  .walk-details-text {
+  .walk-details {
+    height: 40rem;
     width: 24rem;
     margin-left: 0.5rem;
     display: flex;
     flex-direction: column;
   }
 
-  .walk-details {
+  .walk-details-text {
     height: 100%;
   }
 
