@@ -107,7 +107,6 @@ export default class RouteDetails extends React.Component {
   }
 
   handleClickSave() {
-    // this.setState({ isSaved: !this.state.isSaved });
     if (this.state.isSaved) {
       this.unsaveRoute();
     } else {
@@ -160,7 +159,7 @@ export default class RouteDetails extends React.Component {
         }
       })
       .catch(err => {
-        console.error('error:', err);
+        console.error(err);
       });
   }
 
