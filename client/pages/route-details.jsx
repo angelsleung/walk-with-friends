@@ -31,11 +31,7 @@ export default class RouteDetails extends React.Component {
     this.directionsRenderer.addListener('directions_changed', () => {
       this.calcTotals(this.directionsRenderer.getDirections());
     });
-    if (this.props.routeId) {
-      this.calcSavedRoute();
-    } else {
-      this.calcNewRoute();
-    }
+    this.props.routeId ? this.calcSavedRoute() : this.calcNewRoute();
   }
 
   calcNewRoute() {
@@ -217,9 +213,11 @@ export default class RouteDetails extends React.Component {
           <div className="walk-details-section">
             <h2>Shared with</h2>
             <ul>
-              {this.state.sharedWith.map((friend, index) => {
-                return <li key={index}>{friend}</li>;
-              })}
+              {this.state.sharedWith
+                ? this.state.sharedWith.map((friend, index) => {
+                    return <li key={index}>{friend}</li>;
+                  })
+                : ''}
             </ul>
           </div>
         </div>
@@ -231,8 +229,9 @@ export default class RouteDetails extends React.Component {
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
-        {this.renderDirectionsDetails()}
-        {this.renderWalkDetails()}
+        {this.props.routeId
+          ? this.renderWalkDetails()
+          : this.renderDirectionsDetails()}
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './components/header';
+import Navbar from './components/navbar';
 import LocationForm from './pages/location-form';
 import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
@@ -41,14 +42,14 @@ export default class App extends React.Component {
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
-      return < LocationForm setLocations={this.setLocations} />;
+      return <LocationForm setLocations={this.setLocations} />;
     }
     if (path === 'route-details') {
-      return < RouteDetails locations={this.state.locations}
+      return <RouteDetails locations={this.state.locations}
         routeId={this.state.routeId} />;
     }
     if (path === 'saved-routes') {
-      return < SavedRoutes selectRoute={this.selectRoute} />;
+      return <SavedRoutes selectRoute={this.selectRoute} />;
     }
   }
 
@@ -60,6 +61,8 @@ export default class App extends React.Component {
           <Header />
           { this.renderPage() }
         </div>
+        <Navbar />
+
       </AppContext.Provider>
     );
   }
