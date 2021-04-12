@@ -163,26 +163,17 @@ export default class RouteDetails extends React.Component {
       });
   }
 
-  renderOptions() {
+  renderDirectionsDetails() {
     return (
-      <div className="options">
-        <div className="row">
+      <div className="route-details-text">
+        <div className="route-info">
+          <div className="route-totals">
+            <div>{`Total Distance: ${this.state.distance}`}</div>
+            <div>{`About ${this.state.duration}`}</div>
+          </div>
           < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
-          <div className="share-button">
-            <i className="share-icon fas fa-share"></i>
-            <span className="button-text">Share</span>
-          </div>
         </div>
-        <div className="row">
-          <div className="directions-button">
-            <i className="directions-icon fas fa-directions"></i>
-            <span className="button-text">Directions</span>
-          </div>
-          <div className="edit-button">
-            <i className="edit-icon fas fa-edit"></i>
-            <span className="button-text">Edit</span>
-          </div>
-        </div>
+        <div className="directionsPanel" ref={this.directionsPanelRef} />
       </div>
     );
   }
@@ -190,20 +181,41 @@ export default class RouteDetails extends React.Component {
   renderWalkDetails() {
     return (
       <div className="walk-details">
-        <div className="walk-details-section">
-          <h2>Last walked</h2>
-          <span>4/1/21</span>
+        <div className="options">
+          <div className="row">
+            < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
+            <div className="share-button">
+              <i className="share-icon fas fa-share"></i>
+              <span className="button-text">Share</span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="directions-button">
+              <i className="directions-icon fas fa-directions"></i>
+              <span className="button-text">Directions</span>
+            </div>
+            <div className="edit-button">
+              <i className="edit-icon fas fa-edit"></i>
+              <span className="button-text">Edit</span>
+            </div>
+          </div>
         </div>
-        <div className="walk-details-section">
-          <h2>Next walk</h2>
-          <span>4/17/21 @ 12:00pm</span>
-        </div>
-        <div className="walk-details-section">
-          <h2>Shared with</h2>
-          <ul>
-            <li>Misty</li>
-            <li>Brock</li>
-          </ul>
+        <div className="walk-details-text">
+          <div className="walk-details-section">
+            <h2>Last walked</h2>
+            <span>4/1/21</span>
+          </div>
+          <div className="walk-details-section">
+            <h2>Next walk</h2>
+            <span>4/17/21 @ 12:00pm</span>
+          </div>
+          <div className="walk-details-section">
+            <h2>Shared with</h2>
+            <ul>
+              <li>Misty</li>
+              <li>Brock</li>
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -213,22 +225,8 @@ export default class RouteDetails extends React.Component {
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
-
-        {/* <div className="route-details-text">
-          <div className="route-info">
-            <div className="route-totals">
-              <div>{`Total Distance: ${this.state.distance}`}</div>
-              <div>{`About ${this.state.duration}`}</div>
-            </div>
-            < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
-          </div>
-          <div className="directionsPanel" ref={this.directionsPanelRef} />
-        </div> */}
-
-        <div className="walk-details-text">
-          {this.renderOptions()}
-          {this.renderWalkDetails()}
-        </div>
+        {this.renderDirectionsInfo()}
+        {this.renderWalkDetails()}
       </div>
     );
   }
