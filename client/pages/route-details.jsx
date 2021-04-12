@@ -231,7 +231,8 @@ export default class RouteDetails extends React.Component {
         <div className="map" ref={this.mapRef} />
         {this.props.routeId
           ? this.renderWalkDetails()
-          : this.renderDirectionsDetails()}
+          : this.renderDirectionsDetails()
+        }
       </div>
     );
   }

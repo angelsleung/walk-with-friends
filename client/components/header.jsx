@@ -1,9 +1,13 @@
 import React from 'react';
+import AppDrawer from './app-drawer';
 
 export default function Header(props) {
   return (
     <header>
-      <div className="app-name">Walk with Friends</div>
+      <AppDrawer />
+      <div className="app-name">
+        <h1>Walk with Friends</h1>
+      </div>
     </header>
   );
 }
