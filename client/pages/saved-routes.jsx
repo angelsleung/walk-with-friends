@@ -4,7 +4,7 @@ export default class SavedRoutes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      routes: null
+      routes: []
     };
     this.handleClickRoute = this.handleClickRoute.bind(this);
   }
@@ -24,7 +24,7 @@ export default class SavedRoutes extends React.Component {
   }
 
   renderRoutes() {
-    if (!this.state.routes || this.state.routes.length === 0) {
+    if (this.state.routes.length === 0) {
       return <p className="no-routes">No saved routes yet!</p>;
     }
     return (
