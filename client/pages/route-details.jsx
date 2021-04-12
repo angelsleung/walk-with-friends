@@ -75,6 +75,11 @@ export default class RouteDetails extends React.Component {
           travelMode: 'WALKING'
         };
         this.displayRoute(request);
+        this.setState({
+          lastWalked: route.lastWalked,
+          nextWalk: route.nextWalk,
+          sharedWith: JSON.parse(route.sharedWith)
+        });
       });
   }
 
@@ -130,7 +135,7 @@ export default class RouteDetails extends React.Component {
       placeIds: JSON.stringify(placeIds),
       lastWalked: '',
       nextWalk: '',
-      sharedWith: ''
+      sharedWith: JSON.stringify(this.state.sharedWith)
     };
     const req = {
       method: 'POST',
@@ -203,17 +208,18 @@ export default class RouteDetails extends React.Component {
         <div className="walk-details-text">
           <div className="walk-details-section">
             <h2>Last walked</h2>
-            <span>4/1/21</span>
+            <span>{this.state.lastWalked}</span>
           </div>
           <div className="walk-details-section">
             <h2>Next walk</h2>
-            <span>4/17/21 @ 12:00pm</span>
+            <span>{this.state.nextWalk}</span>
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
             <ul>
-              <li>Misty</li>
-              <li>Brock</li>
+              {this.state.sharedWith.map((friend, index) => {
+                return <li key={index}>{friend}</li>;
+              })}
             </ul>
           </div>
         </div>
@@ -225,7 +231,7 @@ export default class RouteDetails extends React.Component {
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
-        {this.renderDirectionsInfo()}
+        {this.renderDirectionsDetails()}
         {this.renderWalkDetails()}
       </div>
     );
