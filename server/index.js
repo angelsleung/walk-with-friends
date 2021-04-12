@@ -123,19 +123,11 @@ app.delete('/api/routes/:routeId', (req, res) => {
   const sql = `
   delete from "routes"
         where "routeId" = $1
-    returning *
   `;
   const params = [routeId];
   db.query(sql, params)
     .then(result => {
-      const [route] = result.rows;
-      if (!route) {
-        res.status(404).json({
-          error: `Unable to find route with "routeId" ${routeId}`
-        });
-      } else {
-        res.sendStatus(204);
-      }
+      res.sendStatus(204);
     })
     .catch(err => {
       console.error(err);

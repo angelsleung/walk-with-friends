@@ -154,12 +154,13 @@ export default class RouteDetails extends React.Component {
       headers: { 'Content-Type': 'application/json' }
     };
     fetch(`/api/routes/${this.props.routeId}`, req)
-      .then(res => res.json())
-      .then(route => {
-        this.setState({ isSaved: false });
+      .then(res => {
+        if (res.status === 204) {
+          this.setState({ isSaved: false });
+        }
       })
       .catch(err => {
-        console.error(err);
+        console.error('error:', err);
       });
   }
 
