@@ -68,7 +68,7 @@ export default class RouteDetails extends React.Component {
           lastWalked: route.lastWalked,
           nextWalk: route.nextWalk
         });
-        this.props.getSharedWith(JSON.parse(route.sharedWith));
+        this.props.setSharedWith(JSON.parse(route.sharedWith));
       });
   }
 
@@ -178,7 +178,7 @@ export default class RouteDetails extends React.Component {
         <div className="options">
           <div className="row">
             < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
-            <a className="option-link" href="#share">
+            <a className="option-link" href="#share-form">
               <div className="option-button">
                 <i className="share-icon fas fa-share" />
                 <span className="button-text">Share</span>

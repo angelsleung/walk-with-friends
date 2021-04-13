@@ -46,16 +46,16 @@ export default class ShareForm extends React.Component {
       }
     }
     const sharedList = this.state.alreadyShared.concat(notYetShared);
-    const sharedWithList = { sharedWith: sharedList };
+    const sharedWithList = { sharedWith: JSON.stringify(sharedList) };
     const req = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sharedWithList)
     };
-    fetch(`/api/routes/${this.state.routeId}`, req)
+    fetch(`/api/routes/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
-          this.props.getSharedWith(sharedList);
+          this.props.setSharedWith(sharedList);
         }
       })
       .catch(err => {
