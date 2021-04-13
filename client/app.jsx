@@ -4,6 +4,7 @@ import Navbar from './components/navbar';
 import LocationForm from './pages/location-form';
 import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
+import ShareForm from './pages/share-form';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 
@@ -17,10 +18,12 @@ export default class App extends React.Component {
         B: '',
         C: ''
       },
-      routeId: null
+      routeId: null,
+      sharedWith: []
     };
     this.setLocations = this.setLocations.bind(this);
     this.selectRoute = this.selectRoute.bind(this);
+    this.setSharedWith = this.setSharedWith.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +42,11 @@ export default class App extends React.Component {
     window.location.hash = 'route-details';
   }
 
+  setSharedWith(sharedWith) {
+    this.setState({ sharedWith });
+    window.location.hash = 'route-details';
+  }
+
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
@@ -46,10 +54,16 @@ export default class App extends React.Component {
     }
     if (path === 'route-details') {
       return <RouteDetails locations={this.state.locations}
-        routeId={this.state.routeId} />;
+        routeId={this.state.routeId} setSharedWith={this.setSharedWith}
+        sharedWith={this.state.sharedWith} />;
     }
     if (path === 'saved-routes') {
       return <SavedRoutes selectRoute={this.selectRoute} />;
+    }
+
+    if (path === 'share-form') {
+      return <ShareForm sharedWith={this.state.sharedWith}
+        setSharedWith={this.setSharedWith} routeId={this.state.routeId} />;
     }
   }
 
@@ -62,7 +76,6 @@ export default class App extends React.Component {
           { this.renderPage() }
         </div>
         <Navbar />
-
       </AppContext.Provider>
     );
   }

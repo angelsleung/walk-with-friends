@@ -137,6 +137,44 @@ app.delete('/api/routes/:routeId', (req, res) => {
     });
 });
 
+app.get('/api/friends', (req, res) => {
+  const sql = `
+    select *
+      from "friends"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.patch('/api/routes/:routeId', (req, res) => {
+  const routeId = req.params.routeId;
+  const { sharedWith } = req.body;
+  const sql = `
+    update "routes"
+       set "sharedWith" = $1
+     where "routeId" = $2
+  `;
+  const params = [sharedWith, routeId];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);

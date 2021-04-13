@@ -9,8 +9,7 @@ export default class RouteDetails extends React.Component {
       distance: '',
       duration: '',
       lastWalked: '',
-      nextWalk: '',
-      sharedWith: ''
+      nextWalk: ''
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -67,9 +66,9 @@ export default class RouteDetails extends React.Component {
         this.displayRoute(request);
         this.setState({
           lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk,
-          sharedWith: JSON.parse(route.sharedWith)
+          nextWalk: route.nextWalk
         });
+        this.props.setSharedWith(JSON.parse(route.sharedWith));
       });
   }
 
@@ -125,7 +124,7 @@ export default class RouteDetails extends React.Component {
       placeIds: JSON.stringify(placeIds),
       lastWalked: '',
       nextWalk: '',
-      sharedWith: JSON.stringify(this.state.sharedWith)
+      sharedWith: JSON.stringify(this.props.sharedWith)
     };
     const req = {
       method: 'POST',
@@ -179,18 +178,20 @@ export default class RouteDetails extends React.Component {
         <div className="options">
           <div className="row">
             < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
-            <div className="share-button">
-              <i className="share-icon fas fa-share"></i>
-              <span className="button-text">Share</span>
-            </div>
+            <a className="option-link" href="#share-form">
+              <div className="option-button">
+                <i className="share-icon fas fa-share" />
+                <span className="button-text">Share</span>
+              </div>
+            </a>
           </div>
           <div className="row">
-            <div className="directions-button">
-              <i className="directions-icon fas fa-directions"></i>
+            <div className="option-button">
+              <i className="directions-icon fas fa-directions" />
               <span className="button-text">Directions</span>
             </div>
-            <div className="edit-button">
-              <i className="edit-icon fas fa-edit"></i>
+            <div className="option-button">
+              <i className="edit-icon fas fa-edit" />
               <span className="button-text">Edit</span>
             </div>
           </div>
@@ -207,8 +208,8 @@ export default class RouteDetails extends React.Component {
           <div className="walk-details-section">
             <h2>Shared with</h2>
             <ul>
-              {this.state.sharedWith
-                ? this.state.sharedWith.map((friend, index) => {
+              {this.props.sharedWith
+                ? this.props.sharedWith.map((friend, index) => {
                     return <li key={index}>{friend}</li>;
                   })
                 : ''}

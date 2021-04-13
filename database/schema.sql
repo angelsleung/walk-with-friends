@@ -19,4 +19,8 @@ create table "routes" (
   "sharedWith"       text    not null,
   "createdAt"   timestamptz(6) not null default now(),
   primary key ("routeId")
-)
+);
+
+create table "friends" (
+  "friendsList"      text    not null
+);

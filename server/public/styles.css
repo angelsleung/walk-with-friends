@@ -14,16 +14,16 @@ body {
   width: 100%;
 }
 
-header {
-  display: flex;
-}
-
 #root {
   width: 100%;
+  height: 100%;
 }
 
 .container {
   min-width: 23rem;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 4rem;
 }
 
 .app-name {
@@ -43,7 +43,7 @@ header {
   background-color: white;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   height: 100%;
-  margin: 0.8rem 0.8rem 4rem;
+  margin: 0.8rem;
 }
 
 .input-div {
@@ -76,13 +76,13 @@ header {
   align-items: center;
 }
 
-.go-button {
-  padding: 0.5rem 3rem;
+.button {
+  padding: 0.5rem 2.5rem;
   border-radius: 50px;
   border: 1px solid lightgray;
   background-color: #6ddccf;
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   cursor: pointer;
 }
@@ -94,14 +94,15 @@ header {
 
 .map {
   height: 23rem;
-  width: 100%;
   border-radius: 50px;
+  margin: 0.5rem;
 }
 
 .route-details-text {
   background-color: white;
-  border-radius: 50px;
+  border-radius: 20px;
   padding: 0.5rem;
+  margin: 0.5rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
@@ -114,26 +115,23 @@ header {
 .options {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
-  padding: 1rem 0;
+  padding: 1rem 1rem 1rem 1.5rem;
   background-color: white;
   margin: 0.5rem 0;
 }
 
-.save-button {
-  width: 8rem;
-}
-
-.save-button,
-.share-button,
-.directions-button,
-.edit-button {
+.option-button {
   display: flex;
   align-items: center;
   font-weight: 500;
   cursor: pointer;
-  flex-basis: 50%;
-  width: 8rem;
+  flex-basis: 40%;
+  width: 10rem;
   padding: 0 1.2rem;
+}
+
+.option-link {
+  text-decoration: none;
 }
 
 .save-icon {
@@ -208,7 +206,7 @@ header {
 }
 
 .walk-details {
-  margin-bottom: 3rem;
+  margin: 0.8rem;
 }
 
 .walk-details-text {
@@ -225,6 +223,54 @@ header {
 .walk-details-section > h2 {
   font-weight: 500;
   font-size: 1.3rem;
+}
+
+.friend-list {
+  padding: 2rem 0;
+}
+
+.friend-list-item {
+  display: flex;
+  align-items: center;
+  width: 15rem;
+}
+
+.checkbox {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.friend-label {
+  display: flex;
+}
+
+.friend-icon {
+  color: #ffcb91;
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.friend-name {
+  font-size: 1.5rem;
+}
+
+.add-date-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.add-date-icon {
+  color: #ffcb91;
+  font-size: 2rem;
+  padding-right: 1rem;
+}
+
+.add-date-text {
+  color: #ffcb91;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .navbar {
@@ -265,6 +311,10 @@ header {
 @media screen and (min-width: 768px) {
   body {
     background-color: white;
+  }
+
+  header {
+    display: flex;
   }
 
   .app-name {
@@ -332,19 +382,26 @@ header {
     height: 100%;
   }
 
+  .friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .navbar {
     display: none;
   }
 
   .app-drawer {
     display: block;
+    position: absolute;
   }
 
   .app-drawer > i {
     color: #ffcb91;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 2rem 0 0 2rem;
+    padding: 2rem;
   }
 
   .menu {
