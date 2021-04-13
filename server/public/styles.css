@@ -229,6 +229,7 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
+  width: 15rem;
 }
 
 .checkbox {
@@ -376,6 +377,12 @@ body {
 
   .walk-details-text {
     height: 100%;
+  }
+
+  .friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .navbar {

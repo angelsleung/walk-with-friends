@@ -22,9 +22,9 @@ export default class Share extends React.Component {
       this.state.friends.map((friend, index) => {
         return (
           <div key={index} className="friend-list-item">
-            <input type="checkbox" className="checkbox" id={index} name="friend"></input>
+            <input type="checkbox" className="checkbox" id={index} name="friend" />
             <label className="friend-label" htmlFor={index}>
-              <i className="friend-icon fas fa-user-circle"></i>
+              <i className="friend-icon fas fa-user-circle" />
               <p className="friend-name">{friend}</p>
             </label>
           </div>
@@ -41,7 +41,7 @@ export default class Share extends React.Component {
           {this.renderFriends()}
         </div>
         <div className="add-date-div">
-          <i className="add-date-icon fas fa-calendar-plus"></i>
+          <i className="add-date-icon fas fa-calendar-plus" />
           <p className="add-date-text">Add a date</p>
         </div>
         <div className="center input-div">
