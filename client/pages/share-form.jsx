@@ -35,6 +35,17 @@ export default class ShareForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const req = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(this.state.friends)
+    };
+    fetch(`/api/routes/${this.state.routeId}`, req)
+      .then(res => res.json())
+      .then()
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   renderFriends() {

@@ -61,7 +61,8 @@ export default class App extends React.Component {
     }
 
     if (path === 'share-form') {
-      return <ShareForm sharedWith={this.state.sharedWith}/>;
+      return <ShareForm sharedWith={this.state.sharedWith}
+        routeId={this.state.routeId} />;
     }
   }
 
