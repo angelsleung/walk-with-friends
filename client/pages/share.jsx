@@ -7,15 +7,15 @@ export default class Share extends React.Component {
         <h1 className="page-title">Select Friend</h1>
         <div className="friend-list">
           <div className="friend-list-item">
-            <input type="checkbox" className="checkbox" id="friend"></input>
-            <label className="friend-label" htmlFor="friend">
+            <input type="checkbox" className="checkbox" id="1" name="friend"></input>
+            <label className="friend-label" htmlFor="1">
               <i className="friend-icon fas fa-user-circle"></i>
               <p className="friend-name">Misty</p>
             </label>
           </div>
           <div className="friend-list-item">
-            <input type="checkbox" className="checkbox" id="friend"></input>
-            <label className="friend-label" htmlFor="friend">
+            <input type="checkbox" className="checkbox" id="2" name="friend"></input>
+            <label className="friend-label" htmlFor="2">
               <i className="friend-icon fas fa-user-circle"></i>
               <p className="friend-name">Brock</p>
             </label>
