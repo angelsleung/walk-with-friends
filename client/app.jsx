@@ -18,10 +18,12 @@ export default class App extends React.Component {
         B: '',
         C: ''
       },
-      routeId: null
+      routeId: null,
+      sharedWith: []
     };
     this.setLocations = this.setLocations.bind(this);
     this.selectRoute = this.selectRoute.bind(this);
+    this.getSharedWith = this.getSharedWith.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +42,10 @@ export default class App extends React.Component {
     window.location.hash = 'route-details';
   }
 
+  getSharedWith(sharedWith) {
+    this.setState({ sharedWith });
+  }
+
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
@@ -47,14 +53,15 @@ export default class App extends React.Component {
     }
     if (path === 'route-details') {
       return <RouteDetails locations={this.state.locations}
-        routeId={this.state.routeId} />;
+        routeId={this.state.routeId} getSharedWith={this.getSharedWith}
+        sharedWith={this.state.sharedWith} />;
     }
     if (path === 'saved-routes') {
       return <SavedRoutes selectRoute={this.selectRoute} />;
     }
 
     if (path === 'share') {
-      return <Share />;
+      return <Share sharedWith={this.state.sharedWith}/>;
     }
   }
 

@@ -4,7 +4,7 @@ export default class Share extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: []
+      newFriends: []
     };
   }
 
@@ -13,13 +13,14 @@ export default class Share extends React.Component {
       .then(res => res.json())
       .then(friendsList => {
         const friends = JSON.parse(friendsList[0].friendsList);
-        this.setState({ friends });
+        const newFriends = friends.filter(friend => !this.props.sharedWith.includes(friend));
+        this.setState({ newFriends });
       });
   }
 
   renderFriends() {
     return (
-      this.state.friends.map((friend, index) => {
+      this.state.newFriends.map((friend, index) => {
         return (
           <div key={index} className="friend-list-item">
             <input type="checkbox" className="checkbox" id={index} name="friend" />
@@ -31,6 +32,10 @@ export default class Share extends React.Component {
         );
       })
     );
+  }
+
+  shareRoute() {
+
   }
 
   render() {
