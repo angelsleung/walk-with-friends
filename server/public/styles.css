@@ -16,10 +16,14 @@ body {
 
 #root {
   width: 100%;
+  height: 100%;
 }
 
 .container {
   min-width: 23rem;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 4rem;
 }
 
 .app-name {
@@ -39,7 +43,7 @@ body {
   background-color: white;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   height: 100%;
-  margin: 0.8rem 0.8rem 4rem;
+  margin: 0.8rem;
 }
 
 .input-div {
@@ -73,12 +77,12 @@ body {
 }
 
 .button {
-  padding: 0.5rem 3rem;
+  padding: 0.5rem 2.5rem;
   border-radius: 50px;
   border: 1px solid lightgray;
   background-color: #6ddccf;
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   cursor: pointer;
 }
@@ -90,14 +94,15 @@ body {
 
 .map {
   height: 23rem;
-  width: 100%;
   border-radius: 50px;
+  margin: 0.5rem;
 }
 
 .route-details-text {
   background-color: white;
-  border-radius: 50px;
+  border-radius: 20px;
   padding: 0.5rem;
+  margin: 0.5rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
@@ -110,13 +115,9 @@ body {
 .options {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
-  padding: 1rem 0;
+  padding: 1rem 1rem 1rem 2rem;
   background-color: white;
   margin: 0.5rem 0;
-}
-
-.save-button {
-  width: 8rem;
 }
 
 .save-button,
@@ -127,8 +128,8 @@ body {
   align-items: center;
   font-weight: 500;
   cursor: pointer;
-  flex-basis: 50%;
-  width: 8rem;
+  flex-basis: 40%;
+  width: 10rem;
   padding: 0 1.2rem;
 }
 
@@ -204,7 +205,7 @@ body {
 }
 
 .walk-details {
-  margin-bottom: 3rem;
+  margin: 0.8rem;
 }
 
 .walk-details-text {
@@ -221,6 +222,49 @@ body {
 .walk-details-section > h2 {
   font-weight: 500;
   font-size: 1.3rem;
+}
+
+.friend-list-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.friend-label {
+  display: flex;
+}
+
+.friend-icon {
+  color: #ffcb91;
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.friend-name {
+  font-size: 1.5rem;
+}
+
+.add-date-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-date-icon {
+  color: #ffcb91;
+  font-size: 2rem;
+  padding-right: 1rem;
+}
+
+.add-date-text {
+  color: #ffcb91;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .navbar {
