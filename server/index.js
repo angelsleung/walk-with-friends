@@ -137,6 +137,23 @@ app.delete('/api/routes/:routeId', (req, res) => {
     });
 });
 
+app.get('/api/friends', (req, res) => {
+  const sql = `
+    select *
+      from "friends"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
