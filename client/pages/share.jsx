@@ -26,7 +26,7 @@ export default class Share extends React.Component {
           <p className="add-date-text">Add a date</p>
         </div>
         <div className="center input-div">
-          <button className="button">Share</button>
+          <a href="#route-details"><button className="button">Share</button></a>
         </div>
       </div>
     );
