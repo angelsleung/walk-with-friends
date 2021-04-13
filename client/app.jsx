@@ -4,6 +4,7 @@ import Navbar from './components/navbar';
 import LocationForm from './pages/location-form';
 import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
+import Share from './pages/share';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 
@@ -50,6 +51,10 @@ export default class App extends React.Component {
     }
     if (path === 'saved-routes') {
       return <SavedRoutes selectRoute={this.selectRoute} />;
+    }
+
+    if (path === 'share') {
+      return <Share />;
     }
   }
 
