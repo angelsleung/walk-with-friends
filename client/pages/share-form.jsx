@@ -94,9 +94,7 @@ export default class ShareForm extends React.Component {
             <p className="add-date-text">Add a date</p>
           </div>
           <div className="center input-div">
-            <a href="#route-details">
-              <button className="button">Share</button>
-              </a>
+            <button className="button">Share</button>
           </div>
         </form>
       </div>
