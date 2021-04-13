@@ -14,10 +14,6 @@ body {
   width: 100%;
 }
 
-header {
-  display: flex;
-}
-
 #root {
   width: 100%;
 }
@@ -267,6 +263,10 @@ header {
     background-color: white;
   }
 
+  header {
+    display: flex;
+  }
+
   .app-name {
     display: block;
     width: 100%;
@@ -338,13 +338,14 @@ header {
 
   .app-drawer {
     display: block;
+    position: absolute;
   }
 
   .app-drawer > i {
     color: #ffcb91;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 2rem 0 0 2rem;
+    padding: 2rem;
   }
 
   .menu {

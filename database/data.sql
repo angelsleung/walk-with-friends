@@ -19,3 +19,6 @@ insert into "routes" (
    '4/17/21 @ 12:00pm',
    '["Misty","Brock"]'
 );
+
+insert into "friends" ("friendsList")
+values ('["Misty","Brock","Ash"]');
