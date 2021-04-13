@@ -225,10 +225,13 @@ body {
   font-size: 1.3rem;
 }
 
+.friend-list {
+  padding: 2rem 0;
+}
+
 .friend-list-item {
   display: flex;
   align-items: center;
-  cursor: pointer;
   width: 15rem;
 }
 
