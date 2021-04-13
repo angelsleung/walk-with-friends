@@ -8,10 +8,13 @@ export default class Share extends React.Component {
     };
   }
 
-  getFriends() {
+  componentDidMount() {
     fetch('/api/friends')
       .then(res => res.json())
-      .then(friends => this.setState({ friends }));
+      .then(friendsList => {
+        const friends = JSON.parse(friendsList[0].friendsList);
+        this.setState({ friends });
+      });
   }
 
   renderFriends() {
