@@ -4,7 +4,8 @@ export default class ShareForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: {}
+      alreadyShared: [],
+      notYetShared: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,45 +14,59 @@ export default class ShareForm extends React.Component {
   componentDidMount() {
     fetch('/api/friends')
       .then(res => res.json())
-      .then(contacts => {
-        const friendsList = JSON.parse(contacts[0].friendsList);
-        const friends = {};
+      .then(friends => {
+        const friendsList = JSON.parse(friends[0].friendsList);
+        const alreadyShared = [];
+        const notYetShared = {};
         for (let i = 0; i < friendsList.length; i++) {
           const name = friendsList[i];
-          if (!this.props.sharedWith.includes(name)) {
-            friends[name] = false;
+          if (this.props.sharedWith.includes(name)) {
+            alreadyShared.push(name);
+          } else {
+            notYetShared[name] = false;
           }
         }
-        this.setState({ friends });
+        this.setState({ alreadyShared, notYetShared });
       });
   }
 
   handleChange(event) {
     const friendName = event.target.value;
-    const friends = this.state.friends;
-    friends[friendName] = event.target.checked;
-    this.setState({ friends });
+    const notYetShared = this.state.notYetShared;
+    notYetShared[friendName] = event.target.checked;
+    this.setState({ notYetShared });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    const notYetShared = [];
+    for (const friendName in this.state.notYetShared) {
+      if (this.state.notYetShared[friendName]) {
+        notYetShared.push(friendName);
+      }
+    }
+    const sharedList = this.state.alreadyShared.concat(notYetShared);
+    const sharedWithList = { sharedWith: sharedList };
     const req = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(this.state.friends)
+      body: JSON.stringify(sharedWithList)
     };
     fetch(`/api/routes/${this.state.routeId}`, req)
-      .then(res => res.json())
-      .then()
+      .then(res => {
+        if (res.status === 204) {
+          this.props.getSharedWith(sharedList);
+        }
+      })
       .catch(err => {
         console.error(err);
       });
   }
 
   renderFriends() {
-    const friendsArray = Object.keys(this.state.friends);
+    const notYetShared = Object.keys(this.state.notYetShared);
     return (
-      friendsArray.map((friend, index) => {
+      notYetShared.map((friend, index) => {
         return (
           <div key={index} className="friend-list-item">
             <input type="checkbox" className="checkbox" id={index} name="friend"
