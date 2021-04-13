@@ -209,7 +209,7 @@ export default class RouteDetails extends React.Component {
             <h2>Shared with</h2>
             <ul>
               {this.props.sharedWith
-                ? this.props.sharedWith.map((friend, index) => {
+                ? this.props.sharedWith.sort().map((friend, index) => {
                     return <li key={index}>{friend}</li>;
                   })
                 : ''}

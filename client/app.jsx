@@ -7,6 +7,7 @@ import SavedRoutes from './pages/saved-routes';
 import ShareForm from './pages/share-form';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
+import AddDateForm from './pages/add-date-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -60,10 +61,12 @@ export default class App extends React.Component {
     if (path === 'saved-routes') {
       return <SavedRoutes selectRoute={this.selectRoute} />;
     }
-
     if (path === 'share-form') {
       return <ShareForm sharedWith={this.state.sharedWith}
         setSharedWith={this.setSharedWith} routeId={this.state.routeId} />;
+    }
+    if (path === 'add-date-form') {
+      return <AddDateForm />;
     }
   }
 
