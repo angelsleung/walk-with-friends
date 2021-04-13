@@ -120,10 +120,7 @@ body {
   margin: 0.5rem 0;
 }
 
-.save-button,
-.share-button,
-.directions-button,
-.edit-button {
+.option-button {
   display: flex;
   align-items: center;
   font-weight: 500;
@@ -131,6 +128,10 @@ body {
   flex-basis: 40%;
   width: 10rem;
   padding: 0 1.2rem;
+}
+
+.option-link {
+  text-decoration: none;
 }
 
 .save-icon {

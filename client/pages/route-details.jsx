@@ -179,17 +179,19 @@ export default class RouteDetails extends React.Component {
         <div className="options">
           <div className="row">
             < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
-            <div className="share-button">
-              <i className="share-icon fas fa-share"></i>
-              <span className="button-text">Share</span>
-            </div>
+            <a className="option-link" href="#share">
+              <div className="option-button">
+                <i className="share-icon fas fa-share"></i>
+                <span className="button-text">Share</span>
+              </div>
+            </a>
           </div>
           <div className="row">
-            <div className="directions-button">
+            <div className="option-button">
               <i className="directions-icon fas fa-directions"></i>
               <span className="button-text">Directions</span>
             </div>
-            <div className="edit-button">
+            <div className="option-button">
               <i className="edit-icon fas fa-edit"></i>
               <span className="button-text">Edit</span>
             </div>
