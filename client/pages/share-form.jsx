@@ -1,14 +1,18 @@
 import React from 'react';
+import AddDateForm from '../components/add-date-form';
 
 export default class ShareForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       alreadyShared: [],
-      notYetShared: {}
+      notYetShared: {},
+      dateModalOpen: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddDate = this.handleAddDate.bind(this);
+    this.toggleDateModal = this.toggleDateModal.bind(this);
   }
 
   componentDidMount() {
@@ -81,23 +85,34 @@ export default class ShareForm extends React.Component {
     );
   }
 
+  handleAddDate() {
+    this.toggleDateModal(true);
+  }
+
+  toggleDateModal(isOpen) {
+    this.setState({ dateModalOpen: isOpen });
+  }
+
   render() {
     return (
-      <div className="page">
-        <form className="share-form" onSubmit={this.handleSubmit}>
-          <h1 className="page-title">Select Friend</h1>
-          <div className="friend-list">
-            {this.renderFriends()}
-          </div>
-          <div className="add-date-div">
-            <i className="add-date-icon fas fa-calendar-plus" />
-            <p className="add-date-text">Add a date</p>
-          </div>
-          <div className="center input-div">
-            <button className="button">Share</button>
-          </div>
-        </form>
-      </div>
+      <>
+      {this.state.dateModalOpen ? <AddDateForm toggle={this.toggleDateModal}/> : ''}
+        <div className="page">
+          <form className="share-form" onSubmit={this.handleSubmit}>
+            <h1 className="page-title">Select Friend</h1>
+            <div className="friend-list">
+              {this.renderFriends()}
+            </div>
+            <div className="add-date-div" onClick={this.handleAddDate}>
+              <i className="add-date-icon fas fa-calendar-plus" />
+              <p className="add-date-text">Add a date</p>
+            </div>
+            <div className="center input-div">
+              <button className="button">Share</button>
+            </div>
+          </form>
+        </div>
+      </>
     );
   }
 }

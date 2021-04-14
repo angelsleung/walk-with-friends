@@ -7,7 +7,7 @@ import SavedRoutes from './pages/saved-routes';
 import ShareForm from './pages/share-form';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
-import AddDateForm from './pages/add-date-form';
+import AddDateForm from './components/add-date-form';
 
 export default class App extends React.Component {
   constructor(props) {
