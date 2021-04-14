@@ -114,11 +114,18 @@ body {
 }
 
 .options {
+  display: flex;
+  justify-content: space-evenly;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
-  padding: 1rem 1rem 1rem 1.5rem;
+  padding: 1rem 1rem 1rem 3rem;
   background-color: white;
   margin: 0.5rem 0;
+}
+
+.options-col {
+  display: flex;
+  flex-direction: column;
 }
 
 .option-button {
@@ -362,11 +369,6 @@ body {
 
 .center {
   text-align: center;
-}
-
-.options-row {
-  display: flex;
-  justify-content: space-between;
 }
 
 @media screen and (min-width: 768px) {
