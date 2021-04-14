@@ -25,8 +25,8 @@ export default class AddDateForm extends React.Component {
       this.handleClose();
       return;
     }
-    const formattedDate = new Date(parsedDate);
-    const date = parsedDate <= Date.now()
+    const formattedDate = new Date(parsedDate).toString();
+    const date = type === 'lastWalked'
       ? { lastWalked: formattedDate }
       : { nextWalk: formattedDate };
     const req = {
