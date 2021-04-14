@@ -177,7 +177,9 @@ app.patch('/api/routes/sharedWith/:routeId', (req, res) => {
 
 app.patch('/api/routes/walkDate/:routeId', (req, res) => {
   const routeId = req.params.routeId;
-  const type = req.body.lastWalked ? 'lastWalked' : 'nextWalk';
+  const type = req.body.lastWalked || req.body.lastWalked === ''
+    ? 'lastWalked'
+    : 'nextWalk';
   const date = req.body[type];
   const sql = `
     update "routes"
