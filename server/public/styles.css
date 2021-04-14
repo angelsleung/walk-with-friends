@@ -126,9 +126,13 @@ body {
   align-items: center;
   font-weight: 500;
   cursor: pointer;
-  flex-basis: 40%;
   width: 10rem;
-  padding: 0 1.2rem;
+  flex-basis: 50%;
+}
+
+.save-button {
+  width: 8rem;
+  flex-basis: 40%;
 }
 
 .option-link {
@@ -360,8 +364,9 @@ body {
   text-align: center;
 }
 
-.row {
+.options-row {
   display: flex;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 768px) {

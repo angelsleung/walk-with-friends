@@ -56,7 +56,7 @@ export default class ShareForm extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sharedWithList)
     };
-    fetch(`/api/routes/${this.props.routeId}`, req)
+    fetch(`/api/routes/sharedWith/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
           this.props.setSharedWith(sharedList);
