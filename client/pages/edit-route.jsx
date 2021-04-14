@@ -1,14 +1,37 @@
 import React from 'react';
 
 export default class EditRoute extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clickedLastWalkedMinusIcon: false,
+      clickedNextWalkMinusIcon: false
+    };
+    this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
+  }
+
+  handleClickMinusIcon(event) {
+    event.target.getAttribute('type') === 'lastWalked'
+      ? this.setState({ clickedLastWalkedMinusIcon: true })
+      : this.setState({ clickedNextWalkMinusIcon: true });
+  }
+
   render() {
     return (
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
         <div className="edit-page">
           <div className="delete-icons">
-            <i className="fas fa-minus-circle"></i>
-            <i className="fas fa-minus-circle"></i>
+            { this.state.clickedLastWalkedMinusIcon
+              ? <i className="fas fa-trash-alt"></i>
+              : <i className="fas fa-minus-circle" type="lastWalked"
+                onClick={this.handleClickMinusIcon} />
+            }
+            { this.state.clickedNextWalkMinusIcon
+              ? <i className="fas fa-trash-alt"></i>
+              : <i className="fas fa-minus-circle" type="nextWalk"
+                onClick={this.handleClickMinusIcon} />
+            }
           </div>
           <div>
             <div className="edit-section">
