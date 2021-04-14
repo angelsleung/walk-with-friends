@@ -17,7 +17,28 @@ export default class AddDateForm extends React.Component {
 
   handleSubmit() {
     event.preventDefault();
-
+    // console.log('state:', Date.parse(this.state.date));
+    // console.log('now:', Date.now());
+    // console.log(Date.parse(this.state.date) <= Date.now());
+    // console.log('now:', now());
+    // console.log('today:', today());
+    const date = Date.parse(this.state.date) <= Date.now()
+      ? { lastWalked: this.state.date }
+      : { nextWalk: this.state.date };
+    const req = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(date)
+    };
+    fetch(`/api/routes/${this.props.routeId}`, req)
+      .then(res => {
+        if (res.status === 204) {
+          this.handleCancel();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   handleCancel() {

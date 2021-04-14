@@ -96,7 +96,10 @@ export default class ShareForm extends React.Component {
   render() {
     return (
       <>
-      {this.state.dateModalOpen ? <AddDateForm toggle={this.toggleDateModal}/> : ''}
+      {this.state.dateModalOpen
+        ? <AddDateForm toggle={this.toggleDateModal} routeId={this.props.routeId}/>
+        : ''
+      }
         <div className="page">
           <form className="share-form" onSubmit={this.handleSubmit}>
             <h1 className="page-title">Select Friend</h1>
