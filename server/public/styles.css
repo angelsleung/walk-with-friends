@@ -330,6 +330,44 @@ body {
   background-color: lightgray;
 }
 
+.edit-page {
+  display: flex;
+}
+
+.delete-icons {
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-icons > i {
+  color: #ffcb91;
+  padding: 2rem 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.edit-section {
+  padding: 1.4rem 0;
+}
+
+.edit-section > h2 {
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.edit-section > p {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.delete-route {
+  color: #ffcb91;
+  font-weight: 500;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;
