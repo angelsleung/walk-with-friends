@@ -1,18 +1,15 @@
 import React from 'react';
-import AddDateForm from '../components/add-date-form';
+import AddDateButton from '../components/add-date-button';
 
 export default class ShareRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       alreadyShared: [],
-      notYetShared: {},
-      dateModalOpen: false
+      notYetShared: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAddDate = this.handleAddDate.bind(this);
-    this.toggleDateModal = this.toggleDateModal.bind(this);
   }
 
   componentDidMount() {
@@ -88,39 +85,22 @@ export default class ShareRoute extends React.Component {
     );
   }
 
-  handleAddDate() {
-    this.toggleDateModal(true);
-  }
-
-  toggleDateModal(isOpen) {
-    this.setState({ dateModalOpen: isOpen });
-  }
-
   render() {
     return (
-      <>
-      {this.state.dateModalOpen
-        ? <AddDateForm toggle={this.toggleDateModal} routeId={this.props.routeId}
+      <div className="page">
+        <form className="share-form" onSubmit={this.handleSubmit}>
+          <h1 className="page-title">Select Friend</h1>
+          <div className="friend-list">
+            {this.renderFriends()}
+          </div>
+          <AddDateButton routeId={this.props.routeId}
             lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
-            nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk}/>
-        : ''
-      }
-        <div className="page">
-          <form className="share-form" onSubmit={this.handleSubmit}>
-            <h1 className="page-title">Select Friend</h1>
-            <div className="friend-list">
-              {this.renderFriends()}
-            </div>
-            <div className="add-date-div" onClick={this.handleAddDate}>
-              <i className="add-date-icon fas fa-calendar-plus" />
-              <p className="add-date-text">Add a date</p>
-            </div>
-            <div className="center input-div">
-              <button className="button">Share</button>
-            </div>
-          </form>
-        </div>
-      </>
+            nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
+          <div className="center input-div">
+            <button className="button">Share</button>
+          </div>
+        </form>
+      </div>
     );
   }
 }
