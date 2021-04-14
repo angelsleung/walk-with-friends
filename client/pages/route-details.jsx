@@ -7,9 +7,7 @@ export default class RouteDetails extends React.Component {
     this.state = {
       isSaved: false,
       distance: '',
-      duration: '',
-      lastWalked: '',
-      nextWalk: ''
+      duration: ''
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -64,10 +62,8 @@ export default class RouteDetails extends React.Component {
           travelMode: 'WALKING'
         };
         this.displayRoute(request);
-        this.setState({
-          lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk
-        });
+        this.props.setLastWalked(route.lastWalked);
+        this.props.setNextWalk(route.nextWalk);
         this.props.setSharedWith(JSON.parse(route.sharedWith));
       });
   }
@@ -200,11 +196,11 @@ export default class RouteDetails extends React.Component {
         <div className="walk-details-text">
           <div className="walk-details-section">
             <h2>Last walked</h2>
-            <span>{this.state.lastWalked}</span>
+            <span>{this.props.lastWalked}</span>
           </div>
           <div className="walk-details-section">
             <h2>Next walk</h2>
-            <span>{this.state.nextWalk}</span>
+            <span>{this.props.nextWalk}</span>
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>

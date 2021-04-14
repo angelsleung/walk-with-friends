@@ -20,11 +20,15 @@ export default class App extends React.Component {
         C: ''
       },
       routeId: null,
-      sharedWith: []
+      sharedWith: [],
+      lastWalked: '',
+      nextWalk: ''
     };
     this.setLocations = this.setLocations.bind(this);
     this.selectRoute = this.selectRoute.bind(this);
     this.setSharedWith = this.setSharedWith.bind(this);
+    this.setLastWalked = this.setLastWalked.bind(this);
+    this.setNextWalk = this.setNextWalk.bind(this);
   }
 
   componentDidMount() {
@@ -48,6 +52,14 @@ export default class App extends React.Component {
     window.location.hash = 'route-details';
   }
 
+  setLastWalked(lastWalked) {
+    this.setState({ lastWalked });
+  }
+
+  setNextWalk(nextWalk) {
+    this.setState({ nextWalk });
+  }
+
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
@@ -56,7 +68,9 @@ export default class App extends React.Component {
     if (path === 'route-details') {
       return <RouteDetails locations={this.state.locations}
         routeId={this.state.routeId} setSharedWith={this.setSharedWith}
-        sharedWith={this.state.sharedWith} />;
+        sharedWith={this.state.sharedWith} lastWalked={this.state.lastWalked}
+        setLastWalked={this.setLastWalked} nextWalk={this.state.nextWalk}
+        setNextWalk={this.setNextWalk}/>;
     }
     if (path === 'saved-routes') {
       return <SavedRoutes selectRoute={this.selectRoute} />;
