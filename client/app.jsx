@@ -4,7 +4,7 @@ import Navbar from './components/navbar';
 import LocationForm from './pages/location-form';
 import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
-import ShareForm from './pages/share-form';
+import ShareRoute from './pages/share-route';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 import AddDateForm from './components/add-date-form';
@@ -25,7 +25,7 @@ export default class App extends React.Component {
       nextWalk: ''
     };
     this.setLocations = this.setLocations.bind(this);
-    this.selectRoute = this.selectRoute.bind(this);
+    this.setRouteId = this.setRouteId.bind(this);
     this.setSharedWith = this.setSharedWith.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
@@ -42,7 +42,7 @@ export default class App extends React.Component {
     window.location.hash = 'route-details';
   }
 
-  selectRoute(routeId) {
+  setRouteId(routeId) {
     this.setState({ routeId });
     window.location.hash = 'route-details';
   }
@@ -63,7 +63,8 @@ export default class App extends React.Component {
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
-      return <LocationForm setLocations={this.setLocations} />;
+      return <LocationForm setLocations={this.setLocations}
+        setRouteId={this.setRouteId} />;
     }
     if (path === 'route-details') {
       return <RouteDetails locations={this.state.locations}
@@ -73,10 +74,10 @@ export default class App extends React.Component {
         setNextWalk={this.setNextWalk}/>;
     }
     if (path === 'saved-routes') {
-      return <SavedRoutes selectRoute={this.selectRoute} />;
+      return <SavedRoutes setRouteId={this.setRouteId} />;
     }
-    if (path === 'share-form') {
-      return <ShareForm sharedWith={this.state.sharedWith}
+    if (path === 'share-route') {
+      return <ShareRoute sharedWith={this.state.sharedWith}
         setSharedWith={this.setSharedWith} routeId={this.state.routeId}
         lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
         nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;

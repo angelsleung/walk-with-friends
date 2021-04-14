@@ -13,12 +13,12 @@ insert into "routes" (
   '10503 NE 4th St #200',
   '575 Bellevue Square',
   '0.9 mi',
-  '19 min',
+  '19 mins',
   '["ChIJYVqRI4dskFQRVWnuu-Qjk0E","ChIJW4VXzodskFQRseSBkOHh9Vg","ChIJF7Wdd4ZskFQRhk02OceIcdo","ChIJYVqRI4dskFQRVWnuu-Qjk0E"]',
-   '4/1/21',
+   '4/1/21 @ 11:00am',
    '4/17/21 @ 12:00pm',
-   '["Misty","Brock"]'
+   ''
 );
 
 insert into "friends" ("friendsList")
-values ('["Misty","Brock","Ash"]');
+values ('["Misty","Brock","Ash","Jessie","James","Jenny","Joy","Gary"]');

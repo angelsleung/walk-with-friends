@@ -181,7 +181,7 @@ export default class RouteDetails extends React.Component {
             </div>
           </div>
           <div className="options-col">
-            <a className="option-link" href="#share-form">
+            <a className="option-link" href="#share-route">
               <div className="option-button">
                 <i className="share-icon fas fa-share" />
                 <span className="button-text">Share</span>

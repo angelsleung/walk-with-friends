@@ -1,7 +1,7 @@
 import React from 'react';
 import AddDateForm from '../components/add-date-form';
 
-export default class ShareForm extends React.Component {
+export default class ShareRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
