@@ -69,6 +69,9 @@ export default class ShareForm extends React.Component {
 
   renderFriends() {
     const notYetShared = Object.keys(this.state.notYetShared).sort();
+    if (notYetShared.length === 0) {
+      return <p className="empty-list">No friends availble to share with!</p>;
+    }
     return (
       notYetShared.map((friend, index) => {
         return (

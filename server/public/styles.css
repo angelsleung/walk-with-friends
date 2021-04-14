@@ -209,7 +209,7 @@ body {
   flex-basis: 25%;
 }
 
-.no-routes {
+.empty-list {
   text-align: center;
   font-style: italic;
   color: darkgray;
