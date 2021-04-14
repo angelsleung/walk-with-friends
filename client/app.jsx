@@ -77,7 +77,9 @@ export default class App extends React.Component {
     }
     if (path === 'share-form') {
       return <ShareForm sharedWith={this.state.sharedWith}
-        setSharedWith={this.setSharedWith} routeId={this.state.routeId} />;
+        setSharedWith={this.setSharedWith} routeId={this.state.routeId}
+        lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
+        nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;
     }
     if (path === 'add-date-form') {
       return <AddDateForm />;

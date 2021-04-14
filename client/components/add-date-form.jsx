@@ -7,7 +7,7 @@ export default class AddDateForm extends React.Component {
     this.state = { date: null };
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleChangeDate(event) {
@@ -17,9 +17,18 @@ export default class AddDateForm extends React.Component {
 
   handleSubmit() {
     event.preventDefault();
-    const date = Date.parse(this.state.date) <= Date.now()
-      ? { lastWalked: this.state.date }
-      : { nextWalk: this.state.date };
+    const parsedDate = Date.parse(this.state.date);
+    const type = parsedDate <= Date.now() ? 'lastWalked' : 'nextWalk';
+    const existingDate = Date.parse(this.props[type]);
+    if ((type === 'lastWalked' && existingDate >= parsedDate) ||
+      (type === 'nextWalk' && existingDate <= parsedDate)) {
+      this.handleClose();
+      return;
+    }
+    const formattedDate = new Date(parsedDate);
+    const date = parsedDate <= Date.now()
+      ? { lastWalked: formattedDate }
+      : { nextWalk: formattedDate };
     const req = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -28,7 +37,7 @@ export default class AddDateForm extends React.Component {
     fetch(`/api/routes/walkDate/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
-          this.handleCancel();
+          this.handleClose();
         }
       })
       .catch(err => {
@@ -36,7 +45,7 @@ export default class AddDateForm extends React.Component {
       });
   }
 
-  handleCancel() {
+  handleClose() {
     this.props.toggle(false);
   }
 
@@ -53,7 +62,7 @@ export default class AddDateForm extends React.Component {
                 onChange={this.handleChangeDate}></input>
             </div>
             <div className="date-button-div">
-              <button onClick={this.handleCancel}
+              <button onClick={this.handleClose}
                 className="date-button cancel">Cancel</button>
               <button className="date-button save">Save</button>
             </div>

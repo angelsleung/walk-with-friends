@@ -97,7 +97,9 @@ export default class ShareForm extends React.Component {
     return (
       <>
       {this.state.dateModalOpen
-        ? <AddDateForm toggle={this.toggleDateModal} routeId={this.props.routeId}/>
+        ? <AddDateForm toggle={this.toggleDateModal} routeId={this.props.routeId}
+            lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
+            nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk}/>
         : ''
       }
         <div className="page">
