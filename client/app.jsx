@@ -83,7 +83,7 @@ export default class App extends React.Component {
         nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;
     }
     if (path === 'edit-route') {
-      return <EditRoute />;
+      return <EditRoute routeId={this.state.routeId} />;
     }
   }
 

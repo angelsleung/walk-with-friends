@@ -8,6 +8,7 @@ export default class EditRoute extends React.Component {
       clickedNextWalkMinusIcon: false
     };
     this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
+    this.handleClickTrashIcon = this.handleClickTrashIcon.bind(this);
   }
 
   handleClickMinusIcon(event) {
@@ -16,19 +17,42 @@ export default class EditRoute extends React.Component {
       : this.setState({ clickedNextWalkMinusIcon: true });
   }
 
+  handleClickTrashIcon(event) {
+    const type = event.target.getAttribute('type');
+    const date = type === 'lastWalked'
+      ? { lastWalked: '' }
+      : { nextWalk: '' };
+    const req = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(date)
+    };
+    fetch(`/api/routes/walkDate/${this.props.routeId}`, req)
+      .then(res => {
+        if (res.status === 204) {
+          return 'something';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   render() {
     return (
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
         <div className="edit-page">
           <div className="delete-icons">
-            { this.state.clickedLastWalkedMinusIcon
-              ? <i className="fas fa-trash-alt"></i>
+            {this.state.clickedLastWalkedMinusIcon
+              ? <i className="fas fa-trash-alt" type="lastWalked"
+                onClick={this.handleClickTrashIcon} />
               : <i className="fas fa-minus-circle" type="lastWalked"
                 onClick={this.handleClickMinusIcon} />
             }
-            { this.state.clickedNextWalkMinusIcon
-              ? <i className="fas fa-trash-alt"></i>
+            {this.state.clickedNextWalkMinusIcon
+              ? <i className="fas fa-trash-alt" type="nextWalk"
+                onClick={this.handleClickTrashIcon} />
               : <i className="fas fa-minus-circle" type="nextWalk"
                 onClick={this.handleClickMinusIcon} />
             }
