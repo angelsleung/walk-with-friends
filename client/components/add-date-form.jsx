@@ -55,7 +55,7 @@ export default class AddDateForm extends React.Component {
         <div className="modal">
           <form className="add-date-form" onSubmit={this.handleSubmit}>
             <div className="date-label">
-              <label htmlFor="date-time">Date & Time</label>
+              <label htmlFor="date-time">Add a date and time</label>
             </div>
             <div>
               <input type="datetime-local" id="date-time" className="date-time"
