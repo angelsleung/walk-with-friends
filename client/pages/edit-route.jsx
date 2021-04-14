@@ -68,7 +68,7 @@ export default class EditRoute extends React.Component {
             <div className="edit-section">
               <h2>Last walked</h2>
               { this.state.lastWalkedClicks < 2
-                ? <p>4/1/21</p>
+                ? <p>{this.props.lastWalked}</p>
                 : <AddDateButton routeId={this.props.routeId}
                   lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
                   nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
@@ -77,7 +77,7 @@ export default class EditRoute extends React.Component {
             <div className="edit-section">
               <h2>Next walk</h2>
               { this.state.nextWalkClicks < 2
-                ? <p>4/17/21 @ 2:00pm</p>
+                ? <p>{this.props.nextWalk}</p>
                 : <AddDateButton routeId={this.props.routeId}
                   lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
                   nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
