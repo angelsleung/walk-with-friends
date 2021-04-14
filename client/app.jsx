@@ -5,9 +5,9 @@ import LocationForm from './pages/location-form';
 import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
 import ShareRoute from './pages/share-route';
+import EditRoute from './pages/edit-route';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
-import AddDateForm from './components/add-date-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -82,8 +82,8 @@ export default class App extends React.Component {
         lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
         nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;
     }
-    if (path === 'add-date-form') {
-      return <AddDateForm />;
+    if (path === 'edit-route') {
+      return <EditRoute />;
     }
   }
 

@@ -187,10 +187,12 @@ export default class RouteDetails extends React.Component {
                 <span className="button-text">Share</span>
               </div>
             </a>
-            <div className="option-button">
-              <i className="edit-icon fas fa-edit" />
-              <span className="button-text">Edit</span>
-            </div>
+            <a className="option-link" href="#edit-route">
+              <div className="option-button">
+                <i className="edit-icon fas fa-edit" />
+                <span className="button-text">Edit</span>
+              </div>
+            </a>
           </div>
         </div>
         <div className="walk-details-text">
