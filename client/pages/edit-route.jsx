@@ -6,6 +6,7 @@ export default class EditRoute extends React.Component {
     this.state = {
       clickedLastWalkedMinusIcon: false,
       clickedNextWalkMinusIcon: false
+
     };
     this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
     this.handleClickTrashIcon = this.handleClickTrashIcon.bind(this);
