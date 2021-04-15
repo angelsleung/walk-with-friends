@@ -1,5 +1,6 @@
 import React from 'react';
 import SaveButton from '../components/save-button';
+import formatDate from '../lib/format-date';
 
 export default class RouteDetails extends React.Component {
   constructor(props) {
@@ -181,13 +182,15 @@ export default class RouteDetails extends React.Component {
             </div>
           </div>
           <div className="options-col">
-            <a className="option-link" href="#share-route">
+            <a className="option-link"
+              href={`#share-route?routeId=${this.props.routeId}`}>
               <div className="option-button">
                 <i className="share-icon fas fa-share" />
                 <span className="button-text">Share</span>
               </div>
             </a>
-            <a className="option-link" href="#edit-route">
+            <a className="option-link"
+              href={`#edit-route?routeId=${this.props.routeId}`}>
               <div className="option-button">
                 <i className="edit-icon fas fa-edit" />
                 <span className="button-text">Edit</span>
@@ -198,11 +201,11 @@ export default class RouteDetails extends React.Component {
         <div className="walk-details-text">
           <div className="walk-details-section">
             <h2>Last walked</h2>
-            <span>{this.props.lastWalked}</span>
+            <span>{formatDate(this.props.lastWalked)}</span>
           </div>
           <div className="walk-details-section">
             <h2>Next walk</h2>
-            <span>{this.props.nextWalk}</span>
+            <span>{formatDate(this.props.nextWalk)}</span>
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
@@ -217,6 +220,15 @@ export default class RouteDetails extends React.Component {
         </div>
       </div>
     );
+  }
+
+  formatDate(parsedDate) {
+    const dateString = new Date(parsedDate).toString();
+    // Thu, Apr 01, 2021 @ 11:09pm GMT-0700 (Pacific Daylight Time)
+    const [day, month, date, year, time] = dateString.split(' ');
+    const [hour, min] = time.split(':');
+    const amPm = hour < 12 ? 'am' : 'pm';
+    return `${day}, ${month} ${date}, ${year} @ ${hour % 12}:${min} ${amPm}`;
   }
 
   render() {

@@ -19,13 +19,11 @@ export default class App extends React.Component {
         B: '',
         C: ''
       },
-      routeId: null,
       sharedWith: [],
       lastWalked: '',
       nextWalk: ''
     };
     this.setLocations = this.setLocations.bind(this);
-    this.setRouteId = this.setRouteId.bind(this);
     this.setSharedWith = this.setSharedWith.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
@@ -39,17 +37,10 @@ export default class App extends React.Component {
 
   setLocations(locations) {
     this.setState({ locations });
-    window.location.hash = 'route-details';
-  }
-
-  setRouteId(routeId) {
-    this.setState({ routeId });
-    window.location.hash = 'route-details';
   }
 
   setSharedWith(sharedWith) {
     this.setState({ sharedWith });
-    window.location.hash = 'route-details';
   }
 
   setLastWalked(lastWalked) {
@@ -61,29 +52,31 @@ export default class App extends React.Component {
   }
 
   renderPage() {
-    const { path } = this.state.route;
-    if (path === '') {
-      return <LocationForm setLocations={this.setLocations}
-        setRouteId={this.setRouteId} />;
+    const { route } = this.state;
+    if (route.path === '') {
+      return <LocationForm setLocations={this.setLocations} />;
     }
-    if (path === 'route-details') {
+    if (route.path === 'route-details') {
+      const routeId = route.params.get('routeId');
       return <RouteDetails locations={this.state.locations}
-        routeId={this.state.routeId} setSharedWith={this.setSharedWith}
+        routeId={routeId} setSharedWith={this.setSharedWith}
         sharedWith={this.state.sharedWith} lastWalked={this.state.lastWalked}
         setLastWalked={this.setLastWalked} nextWalk={this.state.nextWalk}
         setNextWalk={this.setNextWalk}/>;
     }
-    if (path === 'saved-routes') {
-      return <SavedRoutes setRouteId={this.setRouteId} />;
+    if (route.path === 'saved-routes') {
+      return <SavedRoutes />;
     }
-    if (path === 'share-route') {
+    if (route.path === 'share-route') {
+      const routeId = route.params.get('routeId');
       return <ShareRoute sharedWith={this.state.sharedWith}
-        setSharedWith={this.setSharedWith} routeId={this.state.routeId}
+        setSharedWith={this.setSharedWith} routeId={routeId}
         lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
         nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;
     }
-    if (path === 'edit-route') {
-      return <EditRoute routeId={this.state.routeId}
+    if (route.path === 'edit-route') {
+      const routeId = route.params.get('routeId');
+      return <EditRoute routeId={routeId}
         lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
         nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />;
     }

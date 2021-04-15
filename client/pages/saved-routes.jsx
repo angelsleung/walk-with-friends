@@ -20,7 +20,7 @@ export default class SavedRoutes extends React.Component {
   handleClickRoute(event) {
     const clickedRoute = event.target.closest('.route-list-item');
     const routeId = clickedRoute.getAttribute('route-id');
-    this.props.setRouteId(routeId);
+    window.location.hash = `route-details?routeId=${routeId}`;
   }
 
   renderRoutes() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import AddDateButton from '../components/add-date-button';
+import formatDate from '../lib/format-date';
 
 export default class EditRoute extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ export default class EditRoute extends React.Component {
             <div className="edit-section">
               <h2>Last walked</h2>
               { this.props.lastWalked
-                ? <p>{this.props.lastWalked}</p>
+                ? <p>{formatDate(this.props.lastWalked)}</p>
                 : <AddDateButton routeId={this.props.routeId}
                   lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
                   nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
@@ -80,7 +81,7 @@ export default class EditRoute extends React.Component {
             <div className="edit-section">
               <h2>Next walk</h2>
               { this.props.nextWalk
-                ? <p>{this.props.nextWalk}</p>
+                ? <p>{formatDate(this.props.nextWalk)}</p>
                 : <AddDateButton routeId={this.props.routeId}
                   lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
                   nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
@@ -92,7 +93,9 @@ export default class EditRoute extends React.Component {
           </div>
         </div>
         <div className="center input-div">
-          <a href="#route-details"><button className="button">Done</button></a>
+          <a href={`#route-details?routeId=${this.props.routeId}`}>
+            <button className="button">Done</button>
+            </a>
         </div>
       </div>
     );

@@ -57,6 +57,7 @@ export default class ShareRoute extends React.Component {
       .then(res => {
         if (res.status === 204) {
           this.props.setSharedWith(sharedList);
+          window.location.hash = `route-details?routeId=${this.props.routeId}`;
         }
       })
       .catch(err => {

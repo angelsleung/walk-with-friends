@@ -80,8 +80,8 @@ export default class LocationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.setRouteId(null);
     this.props.setLocations(this.state);
+    window.location.hash = 'route-details';
   }
 
   render() {
