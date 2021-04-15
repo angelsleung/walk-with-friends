@@ -21,6 +21,8 @@ create table "routes" (
   primary key ("routeId")
 );
 
-create table "friends" (
-  "friendsList"      text    not null
+create table "users" (
+  "userId"           serial,
+  "friends"          text    not null,
+  "friendsRouteIds"  text    not null
 );

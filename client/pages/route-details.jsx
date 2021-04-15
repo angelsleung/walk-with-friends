@@ -1,5 +1,6 @@
 import React from 'react';
 import SaveButton from '../components/save-button';
+import formatDate from '../lib/format-date';
 
 export default class RouteDetails extends React.Component {
   constructor(props) {
@@ -7,7 +8,10 @@ export default class RouteDetails extends React.Component {
     this.state = {
       isSaved: false,
       distance: '',
-      duration: ''
+      duration: '',
+      lastWalked: '',
+      nextWalk: '',
+      sharedWith: []
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -32,13 +36,13 @@ export default class RouteDetails extends React.Component {
   }
 
   calcNewRoute() {
-    const { A, B, C } = this.props.locations;
+    const [locationA, locationB, locationC] = this.props.locations;
     const request = {
-      origin: { placeId: A.place_id },
-      destination: { placeId: A.place_id },
+      origin: { placeId: locationA },
+      destination: { placeId: locationA },
       waypoints: [
-        { location: { placeId: B.place_id } },
-        { location: { placeId: C.place_id } }
+        { location: { placeId: locationB } },
+        { location: { placeId: locationC } }
       ],
       travelMode: 'WALKING'
     };
@@ -46,7 +50,6 @@ export default class RouteDetails extends React.Component {
   }
 
   calcSavedRoute() {
-    this.setState({ isSaved: true });
     fetch(`/api/routes/${this.props.routeId}`)
       .then(res => res.json())
       .then(route => {
@@ -62,9 +65,12 @@ export default class RouteDetails extends React.Component {
           travelMode: 'WALKING'
         };
         this.displayRoute(request);
-        this.props.setLastWalked(route.lastWalked);
-        this.props.setNextWalk(route.nextWalk);
-        this.props.setSharedWith(JSON.parse(route.sharedWith));
+        this.setState({
+          isSaved: true,
+          lastWalked: route.lastWalked,
+          nextWalk: route.nextWalk,
+          sharedWith: JSON.parse(route.sharedWith)
+        });
       });
   }
 
@@ -105,22 +111,23 @@ export default class RouteDetails extends React.Component {
   }
 
   saveRoute() {
-    const waypoints = this.directionsRenderer.getDirections().geocoded_waypoints;
+    const directionsResult = this.directionsRenderer.getDirections();
+    const legs = directionsResult.routes[0].legs;
+    const waypoints = directionsResult.geocoded_waypoints;
     const placeIds = [];
     for (let i = 0; i < waypoints.length; i++) {
       placeIds.push(waypoints[i].place_id);
     }
-    const { A, B, C } = this.props.locations;
     const route = {
-      locationA: A.name,
-      locationB: B.name,
-      locationC: C.name,
+      locationA: legs[legs.length - 1].end_address,
+      locationB: legs[0].end_address,
+      locationC: legs[1].end_address,
       distance: this.state.distance,
       duration: this.state.duration,
       placeIds: JSON.stringify(placeIds),
-      lastWalked: '',
-      nextWalk: '',
-      sharedWith: JSON.stringify(this.props.sharedWith)
+      lastWalked: this.state.lastWalked,
+      nextWalk: this.state.nextWalk,
+      sharedWith: JSON.stringify(this.state.sharedWith)
     };
     const req = {
       method: 'POST',
@@ -181,36 +188,47 @@ export default class RouteDetails extends React.Component {
             </div>
           </div>
           <div className="options-col">
-            <a className="option-link" href="#share-form">
+            <a className="option-link"
+              href={`#share-route?routeId=${this.props.routeId}`}>
               <div className="option-button">
                 <i className="share-icon fas fa-share" />
                 <span className="button-text">Share</span>
               </div>
             </a>
-            <div className="option-button">
-              <i className="edit-icon fas fa-edit" />
-              <span className="button-text">Edit</span>
-            </div>
+            <a className="option-link"
+              href={`#edit-route?routeId=${this.props.routeId}`}>
+              <div className="option-button">
+                <i className="edit-icon fas fa-edit" />
+                <span className="button-text">Edit</span>
+              </div>
+            </a>
           </div>
         </div>
         <div className="walk-details-text">
           <div className="walk-details-section">
             <h2>Last walked</h2>
-            <span>{this.props.lastWalked}</span>
+            { this.state.lastWalked
+              ? <span>{formatDate(this.state.lastWalked)}</span>
+              : <span className="no-data">No date added yet</span>
+            }
           </div>
           <div className="walk-details-section">
             <h2>Next walk</h2>
-            <span>{this.props.nextWalk}</span>
+            { this.state.nextWalk
+              ? <span>{formatDate(this.state.nextWalk)}</span>
+              : <span className="no-data">No date added yet</span>
+            }
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
-            <ul>
-              {this.props.sharedWith
-                ? this.props.sharedWith.sort().map((friend, index) => {
+            { this.state.sharedWith.length > 0
+              ? <ul>
+                  {this.state.sharedWith.sort().map((friend, index) => {
                     return <li key={index}>{friend}</li>;
-                  })
-                : ''}
-            </ul>
+                  })}
+                </ul>
+              : <span className="no-data">Shared with no one yet</span>
+            }
           </div>
         </div>
       </div>

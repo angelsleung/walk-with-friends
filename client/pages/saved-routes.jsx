@@ -20,12 +20,12 @@ export default class SavedRoutes extends React.Component {
   handleClickRoute(event) {
     const clickedRoute = event.target.closest('.route-list-item');
     const routeId = clickedRoute.getAttribute('route-id');
-    this.props.selectRoute(routeId);
+    window.location.hash = `route-details?routeId=${routeId}`;
   }
 
   renderRoutes() {
     if (this.state.routes.length === 0) {
-      return <p className="empty-list">No saved routes yet!</p>;
+      return <p className="no-routes">No saved routes yet!</p>;
     }
     return (
       this.state.routes.map(route => {

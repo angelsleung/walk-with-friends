@@ -1,36 +1,46 @@
 import React from 'react';
+import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 
-export default class ShareForm extends React.Component {
+export default class ShareRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alreadyShared: [],
+      sharedWith: [],
       notYetShared: {},
-      dateModalOpen: false
+      lastWalked: '',
+      nextWalk: '',
+      modalOpen: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAddDate = this.handleAddDate.bind(this);
-    this.toggleDateModal = this.toggleDateModal.bind(this);
+    this.setLastWalked = this.setLastWalked.bind(this);
+    this.setNextWalk = this.setNextWalk.bind(this);
+    this.setModal = this.setModal.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/friends')
+    fetch(`/api/routes/${this.props.routeId}`)
+      .then(res => res.json())
+      .then(route => {
+        this.setState({ sharedWith: JSON.parse(route.sharedWith) });
+        this.getRemainingFriends();
+      });
+  }
+
+  getRemainingFriends() {
+    fetch('/api/users')
       .then(res => res.json())
       .then(friends => {
-        const friendsList = JSON.parse(friends[0].friendsList);
-        const alreadyShared = [];
+        const friendsList = JSON.parse(friends[0].friends);
         const notYetShared = {};
         for (let i = 0; i < friendsList.length; i++) {
           const name = friendsList[i];
-          if (this.props.sharedWith.includes(name)) {
-            alreadyShared.push(name);
-          } else {
+          if (!this.state.sharedWith.includes(name)) {
             notYetShared[name] = false;
           }
         }
-        this.setState({ alreadyShared, notYetShared });
+        this.setState({ notYetShared });
       });
   }
 
@@ -49,7 +59,7 @@ export default class ShareForm extends React.Component {
         notYetShared.push(friendName);
       }
     }
-    const sharedList = this.state.alreadyShared.concat(notYetShared);
+    const sharedList = this.state.sharedWith.concat(notYetShared);
     const sharedWithList = { sharedWith: JSON.stringify(sharedList) };
     const req = {
       method: 'PATCH',
@@ -59,7 +69,7 @@ export default class ShareForm extends React.Component {
     fetch(`/api/routes/sharedWith/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
-          this.props.setSharedWith(sharedList);
+          window.location.hash = `route-details?routeId=${this.props.routeId}`;
         }
       })
       .catch(err => {
@@ -67,10 +77,22 @@ export default class ShareForm extends React.Component {
       });
   }
 
+  setLastWalked(lastWalked) {
+    this.setState({ lastWalked });
+  }
+
+  setNextWalk(nextWalk) {
+    this.setState({ nextWalk });
+  }
+
+  setModal(modalOpen) {
+    this.setState({ modalOpen });
+  }
+
   renderFriends() {
     const notYetShared = Object.keys(this.state.notYetShared).sort();
     if (notYetShared.length === 0) {
-      return <p className="empty-list">No friends available to share this route with</p>;
+      return <p className="no-friends">No friends available to share this route with</p>;
     }
     return (
       notYetShared.map((friend, index) => {
@@ -88,39 +110,26 @@ export default class ShareForm extends React.Component {
     );
   }
 
-  handleAddDate() {
-    this.toggleDateModal(true);
-  }
-
-  toggleDateModal(isOpen) {
-    this.setState({ dateModalOpen: isOpen });
-  }
-
   render() {
     return (
-      <>
-      {this.state.dateModalOpen
-        ? <AddDateForm toggle={this.toggleDateModal} routeId={this.props.routeId}
-            lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
-            nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk}/>
-        : ''
-      }
-        <div className="page">
-          <form className="share-form" onSubmit={this.handleSubmit}>
-            <h1 className="page-title">Select Friend</h1>
-            <div className="friend-list">
-              {this.renderFriends()}
-            </div>
-            <div className="add-date-div" onClick={this.handleAddDate}>
-              <i className="add-date-icon fas fa-calendar-plus" />
-              <p className="add-date-text">Add a date</p>
-            </div>
-            <div className="center input-div">
-              <button className="button">Share</button>
-            </div>
-          </form>
-        </div>
-      </>
+      <div className="page">
+        <form className="share-form" onSubmit={this.handleSubmit}>
+          <h1 className="page-title">Select Friend</h1>
+          <div className="friend-list">
+            {this.renderFriends()}
+          </div>
+          <AddDateButton setModal={this.setModal} />
+          <div className="center input-div">
+            <button className="button">Share</button>
+          </div>
+        </form>
+        { this.state.modalOpen
+          ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}
+            lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
+            nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          : ''
+        }
+      </div>
     );
   }
 }

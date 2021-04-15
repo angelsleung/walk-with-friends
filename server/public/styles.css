@@ -126,6 +126,7 @@ body {
 .options-col {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 }
 
 .option-button {
@@ -209,12 +210,12 @@ body {
   flex-basis: 25%;
 }
 
-.empty-list {
+.no-routes {
   text-align: center;
   font-style: italic;
   color: darkgray;
-  border-top: 1px solid lightgray;
   padding: 2rem;
+  border-top: 1px solid lightgray;
 }
 
 .walk-details {
@@ -234,7 +235,16 @@ body {
 
 .walk-details-section > h2 {
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+}
+
+.walk-details-section li {
+  padding: 0.5rem 0;
+}
+
+.no-data {
+  font-style: italic;
+  color: darkgray;
 }
 
 .friend-list {
@@ -266,6 +276,13 @@ body {
   font-size: 1.5rem;
 }
 
+.no-friends {
+  text-align: center;
+  font-style: italic;
+  color: darkgray;
+  padding: 2rem;
+}
+
 .add-date-div {
   display: flex;
   justify-content: center;
@@ -281,7 +298,7 @@ body {
 
 .add-date-text {
   color: #ffcb91;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 500;
 }
 
@@ -330,6 +347,48 @@ body {
   background-color: lightgray;
 }
 
+.edit-row {
+  display: flex;
+  align-items: center;
+}
+
+.edit-row > i {
+  color: #ffcb91;
+  padding: 0 1.5rem 0 0;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.edit-section {
+  margin: 1rem 0;
+}
+
+.edit-section > h2 {
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.edit-section > p {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.delete.edit-row {
+  padding: 3rem 0 1rem;
+  justify-content: center;
+}
+
+.delete-route {
+  color: #ffcb91;
+  font-weight: 500;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;
@@ -364,6 +423,7 @@ body {
   background-color: rgb(0, 0, 0, 0.5);
   min-height: 100vh;
   top: 0;
+  left: 0;
   z-index: 1;
 }
 
@@ -449,6 +509,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .edit-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .edit-row {
+    width: 23rem;
   }
 
   .modal {

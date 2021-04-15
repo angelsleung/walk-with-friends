@@ -4,31 +4,17 @@ import Navbar from './components/navbar';
 import LocationForm from './pages/location-form';
 import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
-import ShareForm from './pages/share-form';
+import ShareRoute from './pages/share-route';
+import EditRoute from './pages/edit-route';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
-import AddDateForm from './components/add-date-form';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash),
-      locations: {
-        A: '',
-        B: '',
-        C: ''
-      },
-      routeId: null,
-      sharedWith: [],
-      lastWalked: '',
-      nextWalk: ''
+      route: parseRoute(window.location.hash)
     };
-    this.setLocations = this.setLocations.bind(this);
-    this.selectRoute = this.selectRoute.bind(this);
-    this.setSharedWith = this.setSharedWith.bind(this);
-    this.setLastWalked = this.setLastWalked.bind(this);
-    this.setNextWalk = this.setNextWalk.bind(this);
   }
 
   componentDidMount() {
@@ -37,52 +23,29 @@ export default class App extends React.Component {
     });
   }
 
-  setLocations(locations) {
-    this.setState({ locations });
-    window.location.hash = 'route-details';
-  }
-
-  selectRoute(routeId) {
-    this.setState({ routeId });
-    window.location.hash = 'route-details';
-  }
-
-  setSharedWith(sharedWith) {
-    this.setState({ sharedWith });
-    window.location.hash = 'route-details';
-  }
-
-  setLastWalked(lastWalked) {
-    this.setState({ lastWalked });
-  }
-
-  setNextWalk(nextWalk) {
-    this.setState({ nextWalk });
-  }
-
   renderPage() {
-    const { path } = this.state.route;
-    if (path === '') {
-      return <LocationForm setLocations={this.setLocations} />;
+    const { route } = this.state;
+    if (route.path === '') {
+      return <LocationForm />;
     }
-    if (path === 'route-details') {
-      return <RouteDetails locations={this.state.locations}
-        routeId={this.state.routeId} setSharedWith={this.setSharedWith}
-        sharedWith={this.state.sharedWith} lastWalked={this.state.lastWalked}
-        setLastWalked={this.setLastWalked} nextWalk={this.state.nextWalk}
-        setNextWalk={this.setNextWalk}/>;
+    if (route.path === 'route-details') {
+      const locationA = route.params.get('locationA');
+      const locationB = route.params.get('locationB');
+      const locationC = route.params.get('locationC');
+      const routeId = route.params.get('routeId');
+      return <RouteDetails locations={[locationA, locationB, locationC]}
+        routeId={routeId} />;
     }
-    if (path === 'saved-routes') {
-      return <SavedRoutes selectRoute={this.selectRoute} />;
+    if (route.path === 'saved-routes') {
+      return <SavedRoutes />;
     }
-    if (path === 'share-form') {
-      return <ShareForm sharedWith={this.state.sharedWith}
-        setSharedWith={this.setSharedWith} routeId={this.state.routeId}
-        lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
-        nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;
+    if (route.path === 'share-route') {
+      const routeId = route.params.get('routeId');
+      return <ShareRoute routeId={routeId} />;
     }
-    if (path === 'add-date-form') {
-      return <AddDateForm />;
+    if (route.path === 'edit-route') {
+      const routeId = route.params.get('routeId');
+      return <EditRoute routeId={routeId} />;
     }
   }
 

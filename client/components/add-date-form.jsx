@@ -4,10 +4,12 @@ export default class AddDateForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { date: null };
+    this.state = {
+      date: null
+    };
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   handleChangeDate(event) {
@@ -22,7 +24,7 @@ export default class AddDateForm extends React.Component {
     const existingDate = Date.parse(this.props[type]);
     if ((type === 'lastWalked' && existingDate >= parsedDate) ||
       (type === 'nextWalk' && existingDate <= parsedDate)) {
-      this.handleClose();
+      this.props.setModal(false);
       return;
     }
     const formattedDate = new Date(parsedDate).toString();
@@ -37,7 +39,10 @@ export default class AddDateForm extends React.Component {
     fetch(`/api/routes/walkDate/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
-          this.handleClose();
+          type === 'lastWalked'
+            ? this.props.setLastWalked(formattedDate)
+            : this.props.setNextWalk(formattedDate);
+          this.props.setModal(false);
         }
       })
       .catch(err => {
@@ -45,8 +50,8 @@ export default class AddDateForm extends React.Component {
       });
   }
 
-  handleClose() {
-    this.props.toggle(false);
+  handleCancel() {
+    this.props.setModal(false);
   }
 
   render() {
@@ -62,9 +67,9 @@ export default class AddDateForm extends React.Component {
                 onChange={this.handleChangeDate}></input>
             </div>
             <div className="date-button-div">
-              <button onClick={this.handleClose}
+              <button onClick={this.handleCancel}
                 className="date-button cancel">Cancel</button>
-              <button className="date-button save">Save</button>
+              <input type="submit" className="date-button save" value="Save" />
             </div>
           </form>
         </div>
@@ -72,4 +77,5 @@ export default class AddDateForm extends React.Component {
       </>
     );
   }
+
 }
