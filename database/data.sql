@@ -20,5 +20,5 @@ insert into "routes" (
    ''
 );
 
-insert into "friends" ("friendsList")
-values ('["Misty","Brock","Ash","Jessie","James","Jenny","Joy","Gary"]');
+insert into "user" ("userId", "friendsList", "friendsRouteIds")
+values ('1','["Misty","Brock","Ash","Jessie","James","Jenny","Joy","Gary"]','[]');
