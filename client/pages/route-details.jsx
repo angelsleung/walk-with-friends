@@ -206,21 +206,28 @@ export default class RouteDetails extends React.Component {
         <div className="walk-details-text">
           <div className="walk-details-section">
             <h2>Last walked</h2>
-            <span>{formatDate(this.state.lastWalked)}</span>
+            { this.state.lastWalked
+              ? <span>{formatDate(this.state.lastWalked)}</span>
+              : <span className="no-data">No date added yet</span>
+            }
           </div>
           <div className="walk-details-section">
             <h2>Next walk</h2>
-            <span>{formatDate(this.state.nextWalk)}</span>
+            { this.state.nextWalk
+              ? <span>{formatDate(this.state.nextWalk)}</span>
+              : <span className="no-data">No date added yet</span>
+            }
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
-            <ul>
-              { this.state.sharedWith.length > 0
-                ? this.state.sharedWith.sort().map((friend, index) => {
+            { this.state.sharedWith.length > 0
+              ? <ul>
+                  {this.state.sharedWith.sort().map((friend, index) => {
                     return <li key={index}>{friend}</li>;
-                  })
-                : ''}
-            </ul>
+                  })}
+                </ul>
+              : <span className="no-data">Shared with no one yet</span>
+            }
           </div>
         </div>
       </div>

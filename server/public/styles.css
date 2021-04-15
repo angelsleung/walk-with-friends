@@ -210,12 +210,12 @@ body {
   flex-basis: 25%;
 }
 
-.empty-list {
+.no-routes {
   text-align: center;
   font-style: italic;
   color: darkgray;
-  border-top: 1px solid lightgray;
   padding: 2rem;
+  border-top: 1px solid lightgray;
 }
 
 .walk-details {
@@ -240,6 +240,11 @@ body {
 
 .walk-details-section li {
   padding: 0.5rem 0;
+}
+
+.no-data {
+  font-style: italic;
+  color: darkgray;
 }
 
 .friend-list {
@@ -269,6 +274,13 @@ body {
 
 .friend-name {
   font-size: 1.5rem;
+}
+
+.no-friends {
+  text-align: center;
+  font-style: italic;
+  color: darkgray;
+  padding: 2rem;
 }
 
 .add-date-div {
