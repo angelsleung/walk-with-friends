@@ -76,9 +76,7 @@ export default class App extends React.Component {
     }
     if (route.path === 'edit-route') {
       const routeId = route.params.get('routeId');
-      return <EditRoute routeId={routeId}
-        lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
-        nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />;
+      return <EditRoute routeId={routeId} />;
     }
   }
 

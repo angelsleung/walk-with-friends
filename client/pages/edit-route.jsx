@@ -6,11 +6,24 @@ export default class EditRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      lastWalked: '',
+      nextWalk: '',
       clickedLastWalked: false,
       clickedNextWalk: false
     };
     this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
     this.handleClickTrashIcon = this.handleClickTrashIcon.bind(this);
+    this.setLastWalked = this.setLastWalked.bind(this);
+    this.setNextWalk = this.setNextWalk.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(`/api/routes/${this.props.routeId}`)
+      .then(res => res.json())
+      .then(route => {
+        this.setState({ lastWalked: route.lastWalked });
+        this.setState({ nextWalk: route.nextWalk });
+      });
   }
 
   handleClickMinusIcon(event) {
@@ -34,8 +47,8 @@ export default class EditRoute extends React.Component {
       .then(res => {
         if (res.status === 204) {
           type === 'lastWalked'
-            ? this.props.setLastWalked('')
-            : this.props.setNextWalk('');
+            ? this.setState({ lastWalked: '' })
+            : this.setState({ nextWalk: '' });
           this.setState({
             clickedLastWalked: false,
             clickedNextWalk: false
@@ -47,9 +60,17 @@ export default class EditRoute extends React.Component {
       });
   }
 
+  setLastWalked(lastWalked) {
+    this.setState({ lastWalked });
+  }
+
+  setNextWalk(nextWalk) {
+    this.setState({ nextWalk });
+  }
+
   render() {
-    const lastWalkedClass = this.props.lastWalked ? '' : 'invisible';
-    const nextWalkClass = this.props.nextWalk ? '' : 'invisible';
+    const lastWalkedClass = this.state.lastWalked ? '' : 'invisible';
+    const nextWalkClass = this.state.nextWalk ? '' : 'invisible';
     return (
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
@@ -63,11 +84,11 @@ export default class EditRoute extends React.Component {
             }
             <div className="edit-section">
               <h2>Last walked</h2>
-              { this.props.lastWalked
-                ? <p>{formatDate(this.props.lastWalked)}</p>
+              { this.state.lastWalked
+                ? <p>{formatDate(this.state.lastWalked)}</p>
                 : <AddDateButton routeId={this.props.routeId}
-                  lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
-                  nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
+                  lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
+                  nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
               }
             </div>
           </div>
@@ -80,11 +101,11 @@ export default class EditRoute extends React.Component {
             }
             <div className="edit-section">
               <h2>Next walk</h2>
-              { this.props.nextWalk
-                ? <p>{formatDate(this.props.nextWalk)}</p>
+              { this.state.nextWalk
+                ? <p>{formatDate(this.state.nextWalk)}</p>
                 : <AddDateButton routeId={this.props.routeId}
-                  lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
-                  nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
+                  lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
+                  nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
               }
             </div>
           </div>
