@@ -36,13 +36,13 @@ export default class RouteDetails extends React.Component {
   }
 
   calcNewRoute() {
-    const { A, B, C } = this.props.locations;
+    const [locationA, locationB, locationC] = this.props.locations;
     const request = {
-      origin: { placeId: A.place_id },
-      destination: { placeId: A.place_id },
+      origin: { placeId: locationA },
+      destination: { placeId: locationA },
       waypoints: [
-        { location: { placeId: B.place_id } },
-        { location: { placeId: C.place_id } }
+        { location: { placeId: locationB } },
+        { location: { placeId: locationC } }
       ],
       travelMode: 'WALKING'
     };
@@ -111,16 +111,17 @@ export default class RouteDetails extends React.Component {
   }
 
   saveRoute() {
-    const waypoints = this.directionsRenderer.getDirections().geocoded_waypoints;
+    const directionsResult = this.directionsRenderer.getDirections();
+    const legs = directionsResult.routes[0].legs;
+    const waypoints = directionsResult.geocoded_waypoints;
     const placeIds = [];
     for (let i = 0; i < waypoints.length; i++) {
       placeIds.push(waypoints[i].place_id);
     }
-    const { A, B, C } = this.props.locations;
     const route = {
-      locationA: A.name,
-      locationB: B.name,
-      locationC: C.name,
+      locationA: legs[legs.length - 1].end_address,
+      locationB: legs[0].end_address,
+      locationC: legs[1].end_address,
       distance: this.state.distance,
       duration: this.state.duration,
       placeIds: JSON.stringify(placeIds),

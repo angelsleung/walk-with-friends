@@ -13,14 +13,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash),
-      locations: {
-        A: '',
-        B: '',
-        C: ''
-      }
+      route: parseRoute(window.location.hash)
     };
-    this.setLocations = this.setLocations.bind(this);
   }
 
   componentDidMount() {
@@ -29,18 +23,18 @@ export default class App extends React.Component {
     });
   }
 
-  setLocations(locations) {
-    this.setState({ locations });
-  }
-
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <LocationForm setLocations={this.setLocations} />;
+      return <LocationForm />;
     }
     if (route.path === 'route-details') {
+      const locationA = route.params.get('locationA');
+      const locationB = route.params.get('locationB');
+      const locationC = route.params.get('locationC');
       const routeId = route.params.get('routeId');
-      return <RouteDetails locations={this.state.locations} routeId={routeId} />;
+      return <RouteDetails locations={[locationA, locationB, locationC]}
+        routeId={routeId} />;
     }
     if (route.path === 'saved-routes') {
       return <SavedRoutes />;
