@@ -1,5 +1,6 @@
 import React from 'react';
 import AddDateButton from '../components/add-date-button';
+import AddDateForm from '../components/add-date-form';
 import formatDate from '../lib/format-date';
 
 export default class EditRoute extends React.Component {
@@ -9,12 +10,14 @@ export default class EditRoute extends React.Component {
       lastWalked: '',
       nextWalk: '',
       clickedLastWalked: false,
-      clickedNextWalk: false
+      clickedNextWalk: false,
+      modalOpen: false
     };
     this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
     this.handleClickTrashIcon = this.handleClickTrashIcon.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
+    this.setModal = this.setModal.bind(this);
   }
 
   componentDidMount() {
@@ -68,6 +71,10 @@ export default class EditRoute extends React.Component {
     this.setState({ nextWalk });
   }
 
+  setModal(modalOpen) {
+    this.setState({ modalOpen });
+  }
+
   render() {
     const lastWalkedClass = this.state.lastWalked ? '' : 'invisible';
     const nextWalkClass = this.state.nextWalk ? '' : 'invisible';
@@ -86,9 +93,7 @@ export default class EditRoute extends React.Component {
               <h2>Last walked</h2>
               { this.state.lastWalked
                 ? <p>{formatDate(this.state.lastWalked)}</p>
-                : <AddDateButton routeId={this.props.routeId}
-                  lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
-                  nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+                : <AddDateButton setModal={this.setModal} />
               }
             </div>
           </div>
@@ -103,9 +108,7 @@ export default class EditRoute extends React.Component {
               <h2>Next walk</h2>
               { this.state.nextWalk
                 ? <p>{formatDate(this.state.nextWalk)}</p>
-                : <AddDateButton routeId={this.props.routeId}
-                  lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
-                  nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+                : <AddDateButton setModal={this.setModal} />
               }
             </div>
           </div>
@@ -118,6 +121,12 @@ export default class EditRoute extends React.Component {
             <button className="button">Done</button>
             </a>
         </div>
+        { this.state.modalOpen
+          ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}
+            lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
+            nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          : ''
+        }
       </div>
     );
   }

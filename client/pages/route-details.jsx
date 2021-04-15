@@ -8,7 +8,10 @@ export default class RouteDetails extends React.Component {
     this.state = {
       isSaved: false,
       distance: '',
-      duration: ''
+      duration: '',
+      lastWalked: '',
+      nextWalk: '',
+      sharedWith: []
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -47,7 +50,6 @@ export default class RouteDetails extends React.Component {
   }
 
   calcSavedRoute() {
-    this.setState({ isSaved: true });
     fetch(`/api/routes/${this.props.routeId}`)
       .then(res => res.json())
       .then(route => {
@@ -63,9 +65,12 @@ export default class RouteDetails extends React.Component {
           travelMode: 'WALKING'
         };
         this.displayRoute(request);
-        this.props.setLastWalked(route.lastWalked);
-        this.props.setNextWalk(route.nextWalk);
-        this.props.setSharedWith(JSON.parse(route.sharedWith));
+        this.setState({
+          isSaved: true,
+          lastWalked: route.lastWalked,
+          nextWalk: route.nextWalk,
+          sharedWith: JSON.parse(route.sharedWith)
+        });
       });
   }
 
@@ -119,9 +124,9 @@ export default class RouteDetails extends React.Component {
       distance: this.state.distance,
       duration: this.state.duration,
       placeIds: JSON.stringify(placeIds),
-      lastWalked: '',
-      nextWalk: '',
-      sharedWith: JSON.stringify(this.props.sharedWith)
+      lastWalked: this.state.lastWalked,
+      nextWalk: this.state.nextWalk,
+      sharedWith: JSON.stringify(this.state.sharedWith)
     };
     const req = {
       method: 'POST',
@@ -201,17 +206,17 @@ export default class RouteDetails extends React.Component {
         <div className="walk-details-text">
           <div className="walk-details-section">
             <h2>Last walked</h2>
-            <span>{formatDate(this.props.lastWalked)}</span>
+            <span>{formatDate(this.state.lastWalked)}</span>
           </div>
           <div className="walk-details-section">
             <h2>Next walk</h2>
-            <span>{formatDate(this.props.nextWalk)}</span>
+            <span>{formatDate(this.state.nextWalk)}</span>
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
             <ul>
-              {this.props.sharedWith
-                ? this.props.sharedWith.sort().map((friend, index) => {
+              { this.state.sharedWith.length > 0
+                ? this.state.sharedWith.sort().map((friend, index) => {
                     return <li key={index}>{friend}</li>;
                   })
                 : ''}
@@ -220,15 +225,6 @@ export default class RouteDetails extends React.Component {
         </div>
       </div>
     );
-  }
-
-  formatDate(parsedDate) {
-    const dateString = new Date(parsedDate).toString();
-    // Thu, Apr 01, 2021 @ 11:09pm GMT-0700 (Pacific Daylight Time)
-    const [day, month, date, year, time] = dateString.split(' ');
-    const [hour, min] = time.split(':');
-    const amPm = hour < 12 ? 'am' : 'pm';
-    return `${day}, ${month} ${date}, ${year} @ ${hour % 12}:${min} ${amPm}`;
   }
 
   render() {

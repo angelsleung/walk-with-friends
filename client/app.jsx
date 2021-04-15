@@ -18,15 +18,9 @@ export default class App extends React.Component {
         A: '',
         B: '',
         C: ''
-      },
-      sharedWith: [],
-      lastWalked: '',
-      nextWalk: ''
+      }
     };
     this.setLocations = this.setLocations.bind(this);
-    this.setSharedWith = this.setSharedWith.bind(this);
-    this.setLastWalked = this.setLastWalked.bind(this);
-    this.setNextWalk = this.setNextWalk.bind(this);
   }
 
   componentDidMount() {
@@ -39,18 +33,6 @@ export default class App extends React.Component {
     this.setState({ locations });
   }
 
-  setSharedWith(sharedWith) {
-    this.setState({ sharedWith });
-  }
-
-  setLastWalked(lastWalked) {
-    this.setState({ lastWalked });
-  }
-
-  setNextWalk(nextWalk) {
-    this.setState({ nextWalk });
-  }
-
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
@@ -58,21 +40,14 @@ export default class App extends React.Component {
     }
     if (route.path === 'route-details') {
       const routeId = route.params.get('routeId');
-      return <RouteDetails locations={this.state.locations}
-        routeId={routeId} setSharedWith={this.setSharedWith}
-        sharedWith={this.state.sharedWith} lastWalked={this.state.lastWalked}
-        setLastWalked={this.setLastWalked} nextWalk={this.state.nextWalk}
-        setNextWalk={this.setNextWalk}/>;
+      return <RouteDetails locations={this.state.locations} routeId={routeId} />;
     }
     if (route.path === 'saved-routes') {
       return <SavedRoutes />;
     }
     if (route.path === 'share-route') {
       const routeId = route.params.get('routeId');
-      return <ShareRoute sharedWith={this.state.sharedWith}
-        setSharedWith={this.setSharedWith} routeId={routeId}
-        lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
-        nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk}/>;
+      return <ShareRoute routeId={routeId} />;
     }
     if (route.path === 'edit-route') {
       const routeId = route.params.get('routeId');
