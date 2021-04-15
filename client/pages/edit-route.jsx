@@ -5,8 +5,8 @@ export default class EditRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastWalkedClicks: 0,
-      nextWalkClicks: 0
+      clickedLastWalked: false,
+      clickedNextWalk: false
     };
     this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
     this.handleClickTrashIcon = this.handleClickTrashIcon.bind(this);
@@ -15,8 +15,8 @@ export default class EditRoute extends React.Component {
   handleClickMinusIcon(event) {
     const type = event.target.getAttribute('type');
     type === 'lastWalked'
-      ? this.setState({ lastWalkedClicks: 1 })
-      : this.setState({ nextWalkClicks: 1 });
+      ? this.setState({ clickedLastWalked: true })
+      : this.setState({ clickedNextWalk: true });
   }
 
   handleClickTrashIcon(event) {
@@ -33,9 +33,12 @@ export default class EditRoute extends React.Component {
       .then(res => {
         if (res.status === 204) {
           type === 'lastWalked'
-            ? this.setState({ lastWalkedClicks: 2 })
-            : this.setState({ nextWalkClicks: 2 });
-
+            ? this.props.setLastWalked('')
+            : this.props.setNextWalk('');
+          this.setState({
+            clickedLastWalked: false,
+            clickedNextWalk: false
+          });
         }
       })
       .catch(err => {
@@ -44,52 +47,52 @@ export default class EditRoute extends React.Component {
   }
 
   render() {
-    const lastWalkedIconClass = this.state.lastWalkedClicks === 2 ? 'invisible' : '';
-    const nextWalkIconClass = this.state.nextWalkClicks === 2 ? 'invisible' : '';
+    const lastWalkedClass = this.props.lastWalked ? '' : 'invisible';
+    const nextWalkClass = this.props.nextWalk ? '' : 'invisible';
     return (
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
         <div className="edit-page">
-          <div className="delete-icons">
-            {this.state.lastWalkedClicks === 0
-              ? <i className="fas fa-minus-circle" type="lastWalked"
-                onClick={this.handleClickMinusIcon} />
-              : <i className={`${lastWalkedIconClass} fas fa-trash-alt`} type="lastWalked"
-                onClick={this.handleClickTrashIcon} />
+          <div className="edit-row">
+            { this.state.clickedLastWalked
+              ? <i className={`${lastWalkedClass} fas fa-trash-alt`} type="lastWalked"
+              onClick={this.handleClickTrashIcon} />
+              : <i className={`${lastWalkedClass} fas fa-minus-circle`} type="lastWalked"
+              onClick={this.handleClickMinusIcon} />
             }
-            {this.state.nextWalkClicks === 0
-              ? <i className="fas fa-minus-circle" type="nextWalk"
-                onClick={this.handleClickMinusIcon} />
-              : <i className={`${nextWalkIconClass} fas fa-trash-alt`} type="nextWalk"
-                onClick={this.handleClickTrashIcon} />
-            }
-          </div>
-          <div>
             <div className="edit-section">
               <h2>Last walked</h2>
-              { this.state.lastWalkedClicks < 2
+              { this.props.lastWalked
                 ? <p>{this.props.lastWalked}</p>
                 : <AddDateButton routeId={this.props.routeId}
                   lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
                   nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
               }
             </div>
+          </div>
+          <div className="edit-row">
+            { this.state.clickedNextWalk
+              ? <i className={`${nextWalkClass} fas fa-trash-alt`} type="nextWalk"
+              onClick={this.handleClickTrashIcon} />
+              : <i className={`${nextWalkClass} fas fa-minus-circle`} type="nextWalk"
+              onClick={this.handleClickMinusIcon} />
+            }
             <div className="edit-section">
               <h2>Next walk</h2>
-              { this.state.nextWalkClicks < 2
+              { this.props.nextWalk
                 ? <p>{this.props.nextWalk}</p>
                 : <AddDateButton routeId={this.props.routeId}
                   lastWalked={this.props.lastWalked} setLastWalked={this.props.setLastWalked}
                   nextWalk={this.props.nextWalk} setNextWalk={this.props.setNextWalk} />
               }
             </div>
-            <div className="edit-section">
-              <span className="delete-route">Delete Route</span>
-            </div>
+          </div>
+          <div className="delete edit-row">
+            <span className="delete-route">Delete Route</span>
           </div>
         </div>
         <div className="center input-div">
-          <button className="button">Done</button>
+          <a href="#route-details"><button className="button">Done</button></a>
         </div>
       </div>
     );

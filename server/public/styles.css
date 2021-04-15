@@ -234,7 +234,7 @@ body {
 
 .walk-details-section > h2 {
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 
 .friend-list {
@@ -331,17 +331,22 @@ body {
 }
 
 .edit-page {
+  /* display: flex; */
+
+  /* justify-content: center; */
+
+  /* padding-top: 1rem; */
+}
+
+.edit-row {
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding-top: 1rem;
+
+  /* padding-right: 4rem; */
 }
 
-.delete-icons {
-  display: flex;
-  flex-direction: column;
-}
-
-.delete-icons > i {
+.edit-row > i {
   color: #ffcb91;
   padding: 2rem 1.5rem;
   font-size: 2rem;
@@ -349,13 +354,12 @@ body {
 }
 
 .edit-section {
-  padding: 1.4rem 0;
+  padding: 1.4rem 2rem 0 0;
 }
 
 .edit-section > h2 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.4rem;
-  margin: 0;
 }
 
 .edit-section > p {
@@ -363,11 +367,17 @@ body {
   font-size: 1.4rem;
 }
 
+.delete.edit-row {
+  padding: 3rem 0 1rem;
+}
+
 .delete-route {
   color: #ffcb91;
   font-weight: 500;
   font-size: 1.4rem;
   cursor: pointer;
+
+  /* padding: 1.4rem 1.4rem 1.4rem 5rem; */
 }
 
 .invisible {

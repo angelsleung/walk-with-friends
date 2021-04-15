@@ -40,6 +40,9 @@ export default class AddDateButton extends React.Component {
     fetch(`/api/routes/walkDate/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
+          type === 'lastWalked'
+            ? this.props.setLastWalked(formattedDate)
+            : this.props.setNextWalk(formattedDate);
           this.setState({ modalOpen: false });
         }
       })
