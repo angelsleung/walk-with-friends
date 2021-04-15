@@ -331,20 +331,10 @@ body {
   background-color: lightgray;
 }
 
-.edit-page {
-  /* display: flex; */
-
-  /* justify-content: center; */
-
-  /* padding-top: 1rem; */
-}
-
 .edit-row {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* padding-right: 4rem; */
 }
 
 .edit-row > i {
@@ -377,8 +367,6 @@ body {
   font-weight: 500;
   font-size: 1.4rem;
   cursor: pointer;
-
-  /* padding: 1.4rem 1.4rem 1.4rem 5rem; */
 }
 
 .invisible {
