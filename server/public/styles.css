@@ -405,6 +405,39 @@ body {
   visibility: hidden;
 }
 
+.week {
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: center;
+  color: darkgray;
+  padding: 1rem 0;
+}
+
+.friends-list {
+  display: flex;
+  justify-content: center;
+}
+
+.friend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40rem;
+}
+
+.friend-name-rank {
+  display: flex;
+  align-items: center;
+}
+
+.friend-rank {
+  font-size: 1.5rem;
+}
+
+.friend-distance {
+  font-size: 1.4rem;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;
