@@ -46,7 +46,7 @@ export default class FriendsRoutes extends React.Component {
                 <p>{time}</p>
               </div>
             </div>
-            <div className="route-item-totals">
+            <div className="friend route-item-totals">
               <div className="route-item-distance">{route.distance}</div>
               <div className="route-item-duration">{duration}</div>
             </div>

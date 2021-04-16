@@ -27,6 +27,7 @@ export default class SavedRoutes extends React.Component {
     }
     return (
       this.state.routes.map(route => {
+        const duration = route.duration.replace('minutes', 'mins');
         return (
           <div key={route.routeId} className="route-list-item"
             onClick={this.handleClickRoute} data-route-id={route.routeId}>
@@ -46,7 +47,7 @@ export default class SavedRoutes extends React.Component {
             </div>
             <div className="route-item-totals">
               <div className="route-item-distance">{route.distance}</div>
-              <div className="route-item-duration">{route.duration}</div>
+              <div className="route-item-duration">{duration}</div>
             </div>
           </div>
         );
