@@ -20,8 +20,17 @@ insert into "routes" (
    '["Misty","Joy"]'
 );
 
-insert into "users" ("userId", "friends", "friendsRouteIds")
-values ('1','["Misty","Brock","Ash","Jessie","James","Jenny","Joy","Gary"]','[]');
+insert into "users" ("name", "weeklyDistance", "friends", "friendsRouteIds")
+values (
+  'Misty', '3.4', '["Brock","Ash","Jessie","James","Jenny","Joy","Gary"]','[]'
+  ),
+  (
+  'Brock', '2.8', '["Misty","Ash","Jessie","James","Jenny","Joy","Gary"]','[]'
+  ),
+  (
+  'Ash', '5.2','["Misty","Brock","Jessie","James","Jenny","Joy","Gary"]','[]'
+  );
+
 
 insert into "friendsRoutes" ("friendName", "locationA", "locationB", "locationC", "distance", "duration", "placeIds", "nextWalk")
 values (

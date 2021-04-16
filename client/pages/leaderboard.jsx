@@ -1,6 +1,15 @@
 import React from 'react';
 
 export default class Leaderboard extends React.Component {
+  componentDidMount() {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(route => {
+        this.setState({ sharedWith: JSON.parse(route.sharedWith) });
+        this.getRemainingFriends();
+      });
+  }
+
   renderFriends() {
     return (
       <div className="friend-item">

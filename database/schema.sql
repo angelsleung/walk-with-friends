@@ -23,6 +23,8 @@ create table "routes" (
 
 create table "users" (
   "userId"           serial,
+  "name"             text    not null,
+  "weeklyDistance"   float   not null,
   "friends"          text    not null,
   "friendsRouteIds"  text    not null
 );
