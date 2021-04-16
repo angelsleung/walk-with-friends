@@ -9,7 +9,7 @@ insert into "routes" (
   "nextWalk",
   "sharedWith"
 ) values (
-   '100 100th Ave NE, Bellevue, WA 98004, USA',
+  '100 100th Ave NE, Bellevue, WA 98004, USA',
   '10214 NE 8th St, Bellevue, WA 98004, USA',
   '1111 110th Ave NE, Bellevue, WA 98004, USA',
   '2.4 mi',

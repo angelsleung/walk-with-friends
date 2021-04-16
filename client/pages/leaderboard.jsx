@@ -1,12 +1,17 @@
 import React from 'react';
 
 export default class Leaderboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { friends: [] };
+  }
+
   componentDidMount() {
     fetch('/api/users')
       .then(res => res.json())
-      .then(route => {
-        this.setState({ sharedWith: JSON.parse(route.sharedWith) });
-        this.getRemainingFriends();
+      .then(friendsList => {
+        const friends = JSON.parse(friendsList[0].friends);
+        this.setState({ friends });
       });
   }
 
