@@ -1,6 +1,19 @@
 import React from 'react';
 
 export default class FriendsRoutes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { routes: [] };
+  }
+
+  componentDidMount() {
+    fetch('/api/friendsRoutes')
+      .then(res => res.json())
+      .then(routes => {
+        this.setState({ routes });
+      });
+  }
+
   renderRoutes() {
     return (
       <div className="route-list-item">
