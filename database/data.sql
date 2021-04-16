@@ -9,15 +9,15 @@ insert into "routes" (
   "nextWalk",
   "sharedWith"
 ) values (
-   'Downtown Park, 10201 NE 4th St',
-  '10503 NE 4th St #200',
-  '575 Bellevue Square',
-  '0.9 mi',
-  '19 mins',
-  '["ChIJYVqRI4dskFQRVWnuu-Qjk0E","ChIJW4VXzodskFQRseSBkOHh9Vg","ChIJF7Wdd4ZskFQRhk02OceIcdo","ChIJYVqRI4dskFQRVWnuu-Qjk0E"]',
-   '4/1/21 @ 11:00am',
-   '4/17/21 @ 12:00pm',
-   ''
+   '100 100th Ave NE, Bellevue, WA 98004, USA',
+  '10214 NE 8th St, Bellevue, WA 98004, USA',
+  '1111 110th Ave NE, Bellevue, WA 98004, USA',
+  '2.4 mi',
+  '49 minutes',
+  '["ChIJYVqRI4dskFQRVWnuu-Qjk0E","ChIJTdIWiYVskFQRGVoHhMIyhXg","ChIJAf2ta4xskFQRMkLmAk-vP7o","ChIJP6vf-2BtkFQReluuaGJrqDY","ChIJycsFgDZtkFQRsTHN40YMGro"]',
+   'Thu Apr 15 2021 13:00:00 GMT-0700 (Pacific Daylight Time)',
+   'Sat Apr 24 2022 14:00:00 GMT-0700 (Pacific Daylight Time)',
+   '["Misty","Joy"]'
 );
 
 insert into "users" ("userId", "friends", "friendsRouteIds")

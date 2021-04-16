@@ -11,10 +11,13 @@ export default class EditRoute extends React.Component {
       nextWalk: '',
       clickedLastWalked: false,
       clickedNextWalk: false,
+      clickedDeleteRoute: false,
       modalOpen: false
     };
-    this.handleClickMinusIcon = this.handleClickMinusIcon.bind(this);
-    this.handleClickTrashIcon = this.handleClickTrashIcon.bind(this);
+    this.handleClickMinusDate = this.handleClickMinusDate.bind(this);
+    this.handleClickTrashDate = this.handleClickTrashDate.bind(this);
+    this.handleClickDeleteRoute = this.handleClickDeleteRoute.bind(this);
+    this.handleClickTrashRoute = this.handleClickTrashRoute.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
     this.setModal = this.setModal.bind(this);
@@ -29,14 +32,14 @@ export default class EditRoute extends React.Component {
       });
   }
 
-  handleClickMinusIcon(event) {
+  handleClickMinusDate(event) {
     const type = event.target.getAttribute('type');
     type === 'lastWalked'
       ? this.setState({ clickedLastWalked: true })
       : this.setState({ clickedNextWalk: true });
   }
 
-  handleClickTrashIcon(event) {
+  handleClickTrashDate(event) {
     const type = event.target.getAttribute('type');
     const date = type === 'lastWalked'
       ? { lastWalked: '' }
@@ -63,6 +66,26 @@ export default class EditRoute extends React.Component {
       });
   }
 
+  handleClickDeleteRoute() {
+    this.setState({ clickedDeleteRoute: true });
+  }
+
+  handleClickTrashRoute() {
+    const req = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    };
+    fetch(`/api/routes/${this.props.routeId}`, req)
+      .then(res => {
+        if (res.status === 204) {
+          window.location.hash = 'saved-routes';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   setLastWalked(lastWalked) {
     this.setState({ lastWalked });
   }
@@ -78,6 +101,7 @@ export default class EditRoute extends React.Component {
   render() {
     const lastWalkedClass = this.state.lastWalked ? '' : 'invisible';
     const nextWalkClass = this.state.nextWalk ? '' : 'invisible';
+    const deleteRouteClass = this.state.clickedDeleteRoute ? '' : 'invisible';
     return (
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
@@ -85,9 +109,9 @@ export default class EditRoute extends React.Component {
           <div className="edit-row">
             { this.state.clickedLastWalked
               ? <i className={`${lastWalkedClass} fas fa-trash-alt`} type="lastWalked"
-              onClick={this.handleClickTrashIcon} />
+              onClick={this.handleClickTrashDate} />
               : <i className={`${lastWalkedClass} fas fa-minus-circle`} type="lastWalked"
-              onClick={this.handleClickMinusIcon} />
+              onClick={this.handleClickMinusDate} />
             }
             <div className="edit-section">
               <h2>Last walked</h2>
@@ -100,9 +124,9 @@ export default class EditRoute extends React.Component {
           <div className="edit-row">
             { this.state.clickedNextWalk
               ? <i className={`${nextWalkClass} fas fa-trash-alt`} type="nextWalk"
-              onClick={this.handleClickTrashIcon} />
+              onClick={this.handleClickTrashDate} />
               : <i className={`${nextWalkClass} fas fa-minus-circle`} type="nextWalk"
-              onClick={this.handleClickMinusIcon} />
+              onClick={this.handleClickMinusDate} />
             }
             <div className="edit-section">
               <h2>Next walk</h2>
@@ -112,8 +136,14 @@ export default class EditRoute extends React.Component {
               }
             </div>
           </div>
-          <div className="delete edit-row">
-            <span className="delete-route">Delete Route</span>
+          <div className="edit-row">
+            <i className={`${deleteRouteClass} fas fa-trash-alt`} type="nextWalk"
+              onClick={this.handleClickTrashRoute} />
+            <div className="edit-section">
+              <span className="delete-route" onClick={this.handleClickDeleteRoute}>
+                Delete Route
+              </span>
+            </div>
           </div>
         </div>
         <div className="center input-div">
