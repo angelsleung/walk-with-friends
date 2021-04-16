@@ -51,7 +51,6 @@ export default class App extends React.Component {
       const routeId = route.params.get('routeId');
       return <EditRoute routeId={routeId} />;
     }
-
     if (route.path === 'friends-routes') {
       return <FriendsRoutes />;
     }

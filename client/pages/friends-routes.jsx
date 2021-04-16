@@ -5,6 +5,7 @@ export default class FriendsRoutes extends React.Component {
   constructor(props) {
     super(props);
     this.state = { routes: [] };
+    this.handleClickRoute = this.handleClickRoute.bind(this);
   }
 
   componentDidMount() {
@@ -13,6 +14,15 @@ export default class FriendsRoutes extends React.Component {
       .then(routes => {
         this.setState({ routes });
       });
+  }
+
+  handleClickRoute(event) {
+    const route = event.target.closest('.route-list-item');
+    const [placeIdA, placeIdB, placeIdC] = JSON.parse(route.dataset.placeIds);
+    const locationA = route.dataset.locationA;
+    const locationB = route.dataset.locationB;
+    const locationC = route.dataset.locationC;
+    window.location.hash = `route-details?nameA=${locationA}&nameB=${locationB}&nameC=${locationC}&placeA=${placeIdA}&placeB=${placeIdB}&placeC=${placeIdC}`;
   }
 
   renderRoutes() {
@@ -24,7 +34,10 @@ export default class FriendsRoutes extends React.Component {
         const [date, time] = formatDate(route.nextWalk).split(' @ ');
         const duration = route.duration.replace('minutes', 'mins');
         return (
-          <div key={route.routeId} className="route-list-item">
+          <div key={route.routeId} onClick={this.handleClickRoute}
+            className="route-list-item" data-place-ids={route.placeIds}
+            data-location-a={route.locationA} data-location-b={route.locationB}
+            data-location-c={route.locationC}>
             <div className="route-icon-details">
               <i className="shoes-icon fas fa-shoe-prints"></i>
               <div className="route-item-details">
