@@ -164,8 +164,7 @@ body {
   border-top: 1px solid lightgray;
   padding: 1rem 0;
   cursor: pointer;
-  align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .route-item-locations {
@@ -381,12 +380,14 @@ body {
 
 .route-icon-details {
   display: flex;
+  align-items: center;
 }
 
 .shoes-icon {
   color: #ffcb91;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   transform: rotate(-90deg);
+  padding-right: 0.5rem;
 }
 
 .route-item-details > h2 {
@@ -502,6 +503,7 @@ body {
 
   .route-list-item {
     padding-left: 5rem;
+    justify-content: space-around;
   }
 
   .options {

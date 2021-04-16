@@ -3,9 +3,7 @@ import React from 'react';
 export default class SavedRoutes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      routes: []
-    };
+    this.state = { routes: [] };
     this.handleClickRoute = this.handleClickRoute.bind(this);
   }
 

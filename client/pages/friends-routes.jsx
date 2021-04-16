@@ -1,4 +1,5 @@
 import React from 'react';
+import formatDate from '../lib/format-date';
 
 export default class FriendsRoutes extends React.Component {
   constructor(props) {
@@ -15,21 +16,30 @@ export default class FriendsRoutes extends React.Component {
   }
 
   renderRoutes() {
+    if (this.state.routes.length === 0) {
+      return <p className="no-routes">No routes yet</p>;
+    }
     return (
-      <div className="route-list-item">
-        <div className="route-icon-details">
-          <i className="shoes-icon fas fa-shoe-prints"></i>
-          <div className="route-item-details">
-            <h2>{"Misty's Route"}</h2>
-            <p>Saturday 4/3/21</p>
-            <p>11:00am</p>
+      this.state.routes.map(route => {
+        const [date, time] = formatDate(route.nextWalk).split(' @ ');
+        const duration = route.duration.replace('minutes', 'mins');
+        return (
+          <div key={route.routeId} className="route-list-item">
+            <div className="route-icon-details">
+              <i className="shoes-icon fas fa-shoe-prints"></i>
+              <div className="route-item-details">
+                <h2>{`${route.friendName}'s Route`}</h2>
+                <p>{date}</p>
+                <p>{time}</p>
+              </div>
+            </div>
+            <div className="route-item-totals">
+              <div className="route-item-distance">{route.distance}</div>
+              <div className="route-item-duration">{duration}</div>
+            </div>
           </div>
-        </div>
-        <div className="route-item-totals">
-          <div className="route-item-distance">0.7 mi</div>
-          <div className="route-item-duration">15 mins</div>
-        </div>
-      </div>
+        );
+      })
     );
   }
 
