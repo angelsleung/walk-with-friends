@@ -26,7 +26,7 @@ export default class AppDrawer extends React.Component {
               <a onClick={this.handleClickExit} href="#"><p>Leaderboard</p></a>
               <a onClick={this.handleClickExit} href="#"><p>Map a Route</p></a>
               <a onClick={this.handleClickExit} href="#saved-routes"><p>Saved Routes</p></a>
-              <a onClick={this.handleClickExit} href="#"><p>{"My Friends' Routes"}</p></a>
+              <a onClick={this.handleClickExit} href="#friends-routes"><p>{"My Friends' Routes"}</p></a>
             </div>
             <div className="overlay" onClick={this.handleClickExit} />
           </>

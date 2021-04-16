@@ -6,6 +6,7 @@ import RouteDetails from './pages/route-details';
 import SavedRoutes from './pages/saved-routes';
 import ShareRoute from './pages/share-route';
 import EditRoute from './pages/edit-route';
+import FriendsRoutes from './pages/friends-routes';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 
@@ -49,6 +50,10 @@ export default class App extends React.Component {
     if (route.path === 'edit-route') {
       const routeId = route.params.get('routeId');
       return <EditRoute routeId={routeId} />;
+    }
+
+    if (route.path === 'friends-routes') {
+      return <FriendsRoutes />;
     }
   }
 
