@@ -3,7 +3,7 @@ values ('Me', 0),
        ('Ash', 5.2),
        ('Misty', 3.4),
        ('Brock', 2.8),
-       ('Jessie', 0.8)
+       ('Jessie', 0.8),
        ('James', 0.7),
        ('Jenny', 1.2),
        ('Joy', 1.1),
@@ -27,7 +27,7 @@ insert into "routes" (
   '2.3 mi',
   '48 minutes',
   '["ChIJPcr187JrkFQRLApO8QKP8ZM","ChIJ-bfVTh8VkFQRDZLQnmioK9s","ChIJaYxSWbJqkFQRIx56JsKqNCA","ChIJPcr187JrkFQRLApO8QKP8ZM"]',
-  'Sat Apr 10 2021 14:00:00 GMT-0700 (Pacific Daylight Time)'
+  'Sat Apr 10 2021 14:00:00 GMT-0700 (Pacific Daylight Time)',
   ''
 ), (
   2,
@@ -48,7 +48,7 @@ insert into "routes" (
   '51 minutes',
   '["ChIJvYSnKAEVkFQR35lxzvEE250","ChIJydSuSkkUkFQRsqhB-cEtYnw","ChIJHYrunbIVkFQR1jMy4kiywDE","ChIJvYSnKAEVkFQR35lxzvEE250"]',
   'Thu Apr 15 2021 13:00:00 GMT-0700 (Pacific Daylight Time)',
-  'Sat Apr 24 2022 14:00:00 GMT-0700 (Pacific Daylight Time)',
+  'Sat Apr 24 2022 14:00:00 GMT-0700 (Pacific Daylight Time)'
 ), (
   4,
   'LearningFuze Coding',
@@ -57,6 +57,7 @@ insert into "routes" (
   '3.9 mi',
   '1 hr 18 mins',
   '["ChIJKZcT2t_n3IARhA7AdKhMkuQ","ChIJR892-fvn3IARQnnqgTu-Phc","ChIJK1FF_m7n3IARfaMt7B-ljH0","ChIJKZcT2t_n3IARhA7AdKhMkuQ"]',
+  '',
   'Sat May 01 2021 12:00:00 GMT-0700 (Pacific Daylight Time)'
 ), (
   5,
@@ -66,6 +67,7 @@ insert into "routes" (
   '3.7 mi',
   '1 hr 15 mins',
   '["ChIJa147K9HX3IAR-lwiGIQv9i4","ChIJPSkYXt7X3IARFClnE7qisj4","ChIJdQM2fiMo3YARCMLPgLCm9XQ","ChIJa147K9HX3IAR-lwiGIQv9i4"]',
+  '',
   'Sun May 02 2021 13:00:00 GMT-0700 (Pacific Daylight Time)'
 );
 

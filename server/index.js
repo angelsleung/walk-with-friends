@@ -20,14 +20,9 @@ app.use(jsonMiddleware);
 
 app.get('/api/routes', (req, res) => {
   const sql = `
-    select "routeId",
-           "locationA",
-           "locationB",
-           "locationC",
-           "distance",
-           "duration",
-           "createdAt"
+    select *
       from "routes"
+     where userId = $1
     order by "createdAt"
   `;
   db.query(sql)
@@ -215,6 +210,10 @@ app.get('/api/friendsRoutes', (req, res) => {
       });
     });
 });
+
+// app.get('/api/users', (req, res) => {
+
+// })
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
