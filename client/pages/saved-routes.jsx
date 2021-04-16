@@ -3,9 +3,7 @@ import React from 'react';
 export default class SavedRoutes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      routes: []
-    };
+    this.state = { routes: [] };
     this.handleClickRoute = this.handleClickRoute.bind(this);
   }
 
@@ -19,7 +17,7 @@ export default class SavedRoutes extends React.Component {
 
   handleClickRoute(event) {
     const clickedRoute = event.target.closest('.route-list-item');
-    const routeId = clickedRoute.getAttribute('route-id');
+    const routeId = clickedRoute.dataset.routeId;
     window.location.hash = `route-details?routeId=${routeId}`;
   }
 
@@ -29,9 +27,10 @@ export default class SavedRoutes extends React.Component {
     }
     return (
       this.state.routes.map(route => {
+        const duration = route.duration.replace('minutes', 'mins');
         return (
           <div key={route.routeId} className="route-list-item"
-            onClick={this.handleClickRoute} route-id={route.routeId}>
+            onClick={this.handleClickRoute} data-route-id={route.routeId}>
             <div className="route-item-locations">
               <div className="route-item-icon-location">
                 <i className="walk-icon fas fa-walking"></i>
@@ -48,7 +47,7 @@ export default class SavedRoutes extends React.Component {
             </div>
             <div className="route-item-totals">
               <div className="route-item-distance">{route.distance}</div>
-              <div className="route-item-duration">{route.duration}</div>
+              <div className="route-item-duration">{duration}</div>
             </div>
           </div>
         );

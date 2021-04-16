@@ -22,3 +22,33 @@ insert into "routes" (
 
 insert into "users" ("userId", "friends", "friendsRouteIds")
 values ('1','["Misty","Brock","Ash","Jessie","James","Jenny","Joy","Gary"]','[]');
+
+insert into "friendsRoutes" ("friendName", "locationA", "locationB", "locationC", "distance", "duration", "placeIds", "nextWalk")
+values (
+  'Jessie',
+  'Pike Place Market, Pike Street, Seattle, WA, USA',
+  'Space Needle, Broad Street, Seattle, WA, USA',
+  'Gum Wall, Post Alley, Seattle, WA, USA',
+  '2.3 mi',
+  '48 minutes',
+  '["ChIJPcr187JrkFQRLApO8QKP8ZM","ChIJ-bfVTh8VkFQRDZLQnmioK9s","ChIJaYxSWbJqkFQRIx56JsKqNCA","ChIJPcr187JrkFQRLApO8QKP8ZM"]',
+  'Sat Apr 24 2021 14:00:00 GMT-0700 (Pacific Daylight Time)'
+),
+( 'James',
+  'Downtown Park, Northeast 4th Street, Bellevue, WA, USA',
+  'Starbucks, Northeast 8th Street, Bellevue, WA, USA',
+  'Chipotle Mexican Grill, Northeast 4th Street, Bellevue, WA, USA',
+  '1.4 mi',
+  '29 minutes',
+  '["ChIJYVqRI4dskFQRVWnuu-Qjk0E","ChIJTdIWiYVskFQRGVoHhMIyhXg","ChIJW4VXzodskFQRseSBkOHh9Vg","ChIJYVqRI4dskFQRVWnuu-Qjk0E"]',
+  'Sun Apr 25 2021 11:00:00 GMT-0700 (Pacific Daylight Time)'
+),
+( 'Brock',
+  'LearningFuze Coding',
+  'Irvine Spectrum Center, Spectrum Center Drive, Irvine, CA, USA',
+  'Los Olivos Community Park, Alfonso Dr, Irvine, CA, USA',
+  '3.9 mi',
+  '1 hr 18 mins',
+  '["ChIJKZcT2t_n3IARhA7AdKhMkuQ","ChIJR892-fvn3IARQnnqgTu-Phc","ChIJK1FF_m7n3IARfaMt7B-ljH0","ChIJKZcT2t_n3IARhA7AdKhMkuQ"]',
+  'Sat May 01 2021 12:00:00 GMT-0700 (Pacific Daylight Time)'
+);

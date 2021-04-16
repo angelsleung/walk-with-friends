@@ -26,3 +26,15 @@ create table "users" (
   "friends"          text    not null,
   "friendsRouteIds"  text    not null
 );
+
+create table "friendsRoutes" (
+  "routeId"          serial,
+  "friendName"       text    not null,
+  "locationA"        text    not null,
+  "locationB"        text    not null,
+  "locationC"        text    not null,
+  "distance"         text    not null,
+  "duration"         text    not null,
+  "placeIds"         text    not null,
+  "nextWalk"         text    not null
+);

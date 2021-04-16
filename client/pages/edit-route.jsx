@@ -33,14 +33,14 @@ export default class EditRoute extends React.Component {
   }
 
   handleClickMinusDate(event) {
-    const type = event.target.getAttribute('type');
+    const type = event.target.dataset.type;
     type === 'lastWalked'
       ? this.setState({ clickedLastWalked: true })
       : this.setState({ clickedNextWalk: true });
   }
 
   handleClickTrashDate(event) {
-    const type = event.target.getAttribute('type');
+    const type = event.target.dataset.type;
     const date = type === 'lastWalked'
       ? { lastWalked: '' }
       : { nextWalk: '' };
@@ -108,9 +108,9 @@ export default class EditRoute extends React.Component {
         <div className="edit-page">
           <div className="edit-row">
             { this.state.clickedLastWalked
-              ? <i className={`${lastWalkedClass} fas fa-trash-alt`} type="lastWalked"
+              ? <i className={`${lastWalkedClass} fas fa-trash-alt`} data-type="lastWalked"
               onClick={this.handleClickTrashDate} />
-              : <i className={`${lastWalkedClass} fas fa-minus-circle`} type="lastWalked"
+              : <i className={`${lastWalkedClass} fas fa-minus-circle`} data-type="lastWalked"
               onClick={this.handleClickMinusDate} />
             }
             <div className="edit-section">
@@ -123,9 +123,9 @@ export default class EditRoute extends React.Component {
           </div>
           <div className="edit-row">
             { this.state.clickedNextWalk
-              ? <i className={`${nextWalkClass} fas fa-trash-alt`} type="nextWalk"
+              ? <i className={`${nextWalkClass} fas fa-trash-alt`} data-type="nextWalk"
               onClick={this.handleClickTrashDate} />
-              : <i className={`${nextWalkClass} fas fa-minus-circle`} type="nextWalk"
+              : <i className={`${nextWalkClass} fas fa-minus-circle`} data-type="nextWalk"
               onClick={this.handleClickMinusDate} />
             }
             <div className="edit-section">
@@ -137,7 +137,7 @@ export default class EditRoute extends React.Component {
             </div>
           </div>
           <div className="edit-row">
-            <i className={`${deleteRouteClass} fas fa-trash-alt`} type="nextWalk"
+            <i className={`${deleteRouteClass} fas fa-trash-alt`} data-type="nextWalk"
               onClick={this.handleClickTrashRoute} />
             <div className="delete-route-section">
               <span className="delete-route" onClick={this.handleClickDeleteRoute}>

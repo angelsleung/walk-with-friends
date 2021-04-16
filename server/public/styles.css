@@ -147,17 +147,9 @@ body {
   text-decoration: none;
 }
 
-.save-icon {
+.option-button > i {
   color: #ffcb91;
-  font-size: 2rem;
-  padding: 0.5rem;
-}
-
-.share-icon,
-.directions-icon,
-.edit-icon {
-  color: #ffcb91;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   padding: 0.5rem;
 }
 
@@ -172,6 +164,7 @@ body {
   border-top: 1px solid lightgray;
   padding: 1rem 0;
   cursor: pointer;
+  justify-content: space-between;
 }
 
 .route-item-locations {
@@ -230,7 +223,7 @@ body {
 }
 
 .walk-details-section {
-  padding: 1rem;
+  padding: 1rem 1rem 3rem;
 }
 
 .walk-details-section > h2 {
@@ -385,6 +378,29 @@ body {
   cursor: pointer;
 }
 
+.route-icon-details {
+  display: flex;
+  align-items: center;
+}
+
+.shoes-icon {
+  color: #ffcb91;
+  font-size: 1.6rem;
+  transform: rotate(-90deg);
+  padding-right: 0.5rem;
+}
+
+.route-item-details > h2 {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.route-item-details > p {
+  margin: 0;
+  padding-left: 0.5rem;
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -482,11 +498,26 @@ body {
   }
 
   .route-list {
-    margin: 0 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .route-list-item {
-    padding-left: 5rem;
+    padding-left: 2rem;
+    width: 50rem;
+  }
+
+  .route-item-totals {
+    flex-basis: 15%;
+  }
+
+  .friend.route-list-item {
+    width: 40rem;
+  }
+
+  .friend.route-item-totals {
+    flex-basis: 25%;
   }
 
   .options {
