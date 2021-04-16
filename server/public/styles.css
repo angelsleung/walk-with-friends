@@ -357,6 +357,7 @@ body {
   padding: 0 1.5rem 0 0;
   font-size: 2rem;
   cursor: pointer;
+  width: 4rem;
 }
 
 .edit-section {
@@ -373,9 +374,8 @@ body {
   font-size: 1.4rem;
 }
 
-.delete.edit-row {
-  padding: 3rem 0 1rem;
-  justify-content: center;
+.delete-route-section {
+  margin: 3rem 0;
 }
 
 .delete-route {
