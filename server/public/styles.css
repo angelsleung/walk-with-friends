@@ -499,11 +499,22 @@ body {
 
   .route-list {
     margin: 0 5rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .route-list-item {
     padding-left: 5rem;
+  }
+
+  .friend.route-list-item {
     justify-content: space-around;
+    padding: 1rem 0;
+  }
+
+  .route-icon-details,
+  .route-item-locations {
+    width: 30rem;
   }
 
   .options {

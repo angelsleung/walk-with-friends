@@ -35,7 +35,7 @@ export default class FriendsRoutes extends React.Component {
         const duration = route.duration.replace('minutes', 'mins');
         return (
           <div key={route.routeId} onClick={this.handleClickRoute}
-            className="route-list-item" data-place-ids={route.placeIds}
+            className="friend route-list-item" data-place-ids={route.placeIds}
             data-location-a={route.locationA} data-location-b={route.locationB}
             data-location-c={route.locationC}>
             <div className="route-icon-details">

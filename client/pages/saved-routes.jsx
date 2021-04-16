@@ -29,7 +29,7 @@ export default class SavedRoutes extends React.Component {
       this.state.routes.map(route => {
         return (
           <div key={route.routeId} className="route-list-item"
-            onClick={this.handleClickRoute} data-routeId={route.routeId}>
+            onClick={this.handleClickRoute} data-route-id={route.routeId}>
             <div className="route-item-locations">
               <div className="route-item-icon-location">
                 <i className="walk-icon fas fa-walking"></i>
