@@ -374,6 +374,10 @@ body {
   font-size: 1.4rem;
 }
 
+.delete-route-section {
+  margin: 2rem 0;
+}
+
 .delete-route {
   color: #ffcb91;
   font-weight: 500;
