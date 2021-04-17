@@ -30,10 +30,10 @@ create table "routes" (
 
 create table "friends" (
   "userId"          integer  not null,
-  "friendUserId"     text    not null
+  "friendUserId"    integer  not null
 );
 
 create table "sharedRoutes" (
   "routeId"          serial,
-  "userId"           text    not null
+  "userId"          integer  not null
 );

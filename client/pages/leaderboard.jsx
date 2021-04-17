@@ -7,24 +7,28 @@ export default class Leaderboard extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/users')
+    const userId = 1;
+    fetch(`/api/friends/${userId}`)
       .then(res => res.json())
-      .then(friendsList => {
-        const friends = JSON.parse(friendsList[0].friends);
+      .then(friends => {
         this.setState({ friends });
       });
   }
 
   renderFriends() {
     return (
-      <div className="friend-item">
-        <div className="friend-name-rank">
-          <div className="friend-rank">1</div>
-          <i className="friend-icon fas fa-user-circle"></i>
-          <div className="friend-name">Ash</div>
-        </div>
-        <div className="friend-distance">5.2 mi</div>
-      </div>
+      this.state.friends.map((friend, index) => {
+        return (
+          <div key={friend.userId} className="friend-item">
+            <div className="friend-name-rank">
+              <div className="friend-rank">{index + 1}</div>
+              <i className="friend-icon fas fa-user-circle"></i>
+              <div className="friend-name">{friend.name}</div>
+            </div>
+            <div className="friend-distance">{`${friend.weeklyDistance} mi`}</div>
+          </div>
+        );
+      })
     );
   }
 
@@ -33,7 +37,7 @@ export default class Leaderboard extends React.Component {
       <div className="page">
         <h1 className="page-title">Friends</h1>
         <h2 className="week">Sun 4/4 - Sat 4/10</h2>
-        <div className="friends-list">
+        <div className="home-friends-list">
           {this.renderFriends()}
         </div>
       </div>

@@ -413,16 +413,10 @@ body {
   padding: 1rem 0;
 }
 
-.friends-list {
-  display: flex;
-  justify-content: center;
-}
-
 .friend-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 40rem;
 }
 
 .friend-name-rank {
@@ -587,6 +581,17 @@ body {
 
   .modal {
     left: 36%;
+  }
+
+  .home-friends-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .friend-item {
+    width: 25rem;
+    padding: 0.5rem 0;
   }
 
   .navbar {

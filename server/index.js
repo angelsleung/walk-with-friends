@@ -211,9 +211,28 @@ app.get('/api/friendsRoutes', (req, res) => {
     });
 });
 
-// app.get('/api/users', (req, res) => {
-
-// })
+app.get('/api/friends/:userId', (req, res) => {
+  const { userId } = req.params;
+  const sql = `
+    select *
+      from "friends"
+      inner join "users"
+        on "friends"."friendUserId" = "users"."userId"
+     where "friends"."userId" = $1
+     order by "users"."weeklyDistance" desc
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
