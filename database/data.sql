@@ -30,7 +30,7 @@ insert into "routes" (
   'Sat Apr 10 2021 14:00:00 GMT-0700 (Pacific Daylight Time)',
   ''
 ), (
-  2,
+  1,
   'Downtown Park, Northeast 4th Street, Bellevue, WA, USA',
   'Starbucks, Northeast 8th Street, Bellevue, WA, USA',
   'Chipotle Mexican Grill, Northeast 4th Street, Bellevue, WA, USA',
@@ -40,7 +40,7 @@ insert into "routes" (
   '',
   'Sun Apr 25 2021 11:00:00 GMT-0700 (Pacific Daylight Time)'
 ), (
-  3,
+  2,
   'Fremont Troll, North 36th Street, Seattle, WA, USA',
   'Woodland Park Zoo, Phinney Avenue North, Seattle, WA, USA',
   'Fremont Peak Park, Palatine Avenue North, Seattle, WA, USA',
@@ -50,7 +50,7 @@ insert into "routes" (
   'Thu Apr 15 2021 13:00:00 GMT-0700 (Pacific Daylight Time)',
   'Sat Apr 24 2022 14:00:00 GMT-0700 (Pacific Daylight Time)'
 ), (
-  4,
+  3,
   'LearningFuze Coding',
   'Irvine Spectrum Center, Spectrum Center Drive, Irvine, CA, USA',
   'Los Olivos Community Park, Alfonso Dr, Irvine, CA, USA',
@@ -60,7 +60,7 @@ insert into "routes" (
   '',
   'Sat May 01 2021 12:00:00 GMT-0700 (Pacific Daylight Time)'
 ), (
-  5,
+  4,
   'Disneyland Park, Disneyland Drive, Anaheim, CA, USA',
   'Anaheim Convention Center, West Katella Avenue, Anaheim, CA, USA',
   'Stoddard Park, 9th Street, Anaheim, CA, USA',

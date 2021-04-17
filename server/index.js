@@ -18,14 +18,17 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
-app.get('/api/routes', (req, res) => {
+app.get('/api/routes/:userId', (req, res) => {
+  const { userId } = req.params;
   const sql = `
     select *
       from "routes"
-     where userId = $1
-    order by "createdAt"
+      join "users"
+        on "friends"."friendUserId" = "users"."userId"
+     where "friends"."userId" = $1
   `;
-  db.query(sql)
+  const params = [userId];
+  db.query(sql, params)
     .then(result => {
       res.json(result.rows);
     })
@@ -216,7 +219,7 @@ app.get('/api/friends/:userId', (req, res) => {
   const sql = `
     select *
       from "friends"
-      inner join "users"
+      join "users"
         on "friends"."friendUserId" = "users"."userId"
      where "friends"."userId" = $1
      order by "users"."weeklyDistance" desc
