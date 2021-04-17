@@ -20,11 +20,17 @@ export default class ShareRoute extends React.Component {
   }
 
   componentDidMount() {
+    const userId = 1;
+    fetch(`/api/friends/${userId}`)
+      .then(res => res.json())
+      .then(friends => {
+
+      });
+
     fetch(`/api/sharedRoutes/${this.props.routeId}`)
       .then(res => res.json())
-      .then(route => {
-        this.setState({ sharedWith: JSON.parse(route.sharedWith) });
-        this.getRemainingFriends();
+      .then(sharedWith => {
+
       });
   }
 
