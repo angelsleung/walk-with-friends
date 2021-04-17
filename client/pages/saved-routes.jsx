@@ -47,7 +47,7 @@ export default class SavedRoutes extends React.Component {
               </div>
             </div>
             <div className="route-item-totals">
-              <div className="route-item-distance">{route.distance}</div>
+              <div className="route-item-distance">{`${route.distance} mi`}</div>
               <div className="route-item-duration">{duration}</div>
             </div>
           </div>

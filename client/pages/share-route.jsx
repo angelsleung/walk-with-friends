@@ -6,8 +6,7 @@ export default class ShareRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sharedWith: [],
-      notYetShared: {},
+      notYetShared: [],
       lastWalked: '',
       nextWalk: '',
       modalOpen: false
@@ -24,63 +23,50 @@ export default class ShareRoute extends React.Component {
     fetch(`/api/friends/${userId}`)
       .then(res => res.json())
       .then(friends => {
-
-      });
-
-    fetch(`/api/sharedRoutes/${this.props.routeId}`)
-      .then(res => res.json())
-      .then(sharedWith => {
-
-      });
-  }
-
-  getRemainingFriends() {
-    fetch('/api/users')
-      .then(res => res.json())
-      .then(friends => {
-        const friendsList = JSON.parse(friends[0].friends);
-        const notYetShared = {};
-        for (let i = 0; i < friendsList.length; i++) {
-          const name = friendsList[i];
-          if (!this.state.sharedWith.includes(name)) {
-            notYetShared[name] = false;
-          }
-        }
-        this.setState({ notYetShared });
+        fetch(`/api/sharedRoutes/${this.props.routeId}`)
+          .then(res => res.json())
+          .then(sharedWith => {
+            const sharedWithUserIds = {};
+            for (let i = 0; i < sharedWith.length; i++) {
+              sharedWithUserIds[sharedWith[i].userId] = true;
+            }
+            const notYetShared = friends.filter(friend => !sharedWithUserIds[friend.userId]);
+            this.setState({ notYetShared });
+          });
       });
   }
 
   handleChange(event) {
-    const friendName = event.target.value;
+    const userId = parseInt(event.target.value);
     const notYetShared = this.state.notYetShared;
-    notYetShared[friendName] = event.target.checked;
+    for (let i = 0; i < notYetShared.length; i++) {
+      if (notYetShared[i].userId === userId) {
+        notYetShared[i].selected = event.target.checked;
+      }
+    }
     this.setState({ notYetShared });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const notYetShared = [];
-    for (const friendName in this.state.notYetShared) {
-      if (this.state.notYetShared[friendName]) {
-        notYetShared.push(friendName);
-      }
+    for (let i = 0; i < this.state.notYetShared.length; i++) {
+      const friend = this.state.notYetShared[i];
+      if (!friend.selected) continue;
+      const req = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: friend.userId })
+      };
+      fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
+        .then(res => {
+          if (res.status === 204) {
+            window.location.hash = `route-details?routeId=${this.props.routeId}`;
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
-    const sharedList = this.state.sharedWith.concat(notYetShared);
-    const sharedWithList = { sharedWith: JSON.stringify(sharedList) };
-    const req = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sharedWithList)
-    };
-    fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
-      .then(res => {
-        if (res.status === 204) {
-          window.location.hash = `route-details?routeId=${this.props.routeId}`;
-        }
-      })
-      .catch(err => {
-        console.error(err);
-      });
   }
 
   setLastWalked(lastWalked) {
@@ -96,19 +82,18 @@ export default class ShareRoute extends React.Component {
   }
 
   renderFriends() {
-    const notYetShared = Object.keys(this.state.notYetShared).sort();
-    if (notYetShared.length === 0) {
+    if (this.state.notYetShared.length === 0) {
       return <p className="no-friends">No friends available to share this route with</p>;
     }
     return (
-      notYetShared.map((friend, index) => {
+      this.state.notYetShared.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
         return (
-          <div key={index} className="friend-list-item">
-            <input type="checkbox" className="checkbox" id={index} name="friend"
-              value={friend} onChange={this.handleChange}/>
-            <label className="friend-label" htmlFor={index}>
+          <div key={friend.userId} className="friend-list-item">
+            <input type="checkbox" className="checkbox" id={friend.userId} name="friend"
+              value={friend.userId} onChange={this.handleChange}/>
+            <label className="friend-label" htmlFor={friend.userId}>
               <i className="friend-icon fas fa-user-circle" />
-              <p className="friend-name">{friend}</p>
+              <p className="friend-name">{friend.name}</p>
             </label>
           </div>
         );
