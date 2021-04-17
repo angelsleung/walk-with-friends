@@ -59,8 +59,9 @@ app.get('/api/routes/:routeId', (req, res) => {
     });
 });
 
-app.post('/api/savedRoutes/:userId', (req, res) => {
+app.post('/api/routes/', (req, res) => {
   const {
+    userId,
     locationA,
     locationB,
     locationC,
@@ -68,11 +69,11 @@ app.post('/api/savedRoutes/:userId', (req, res) => {
     duration,
     placeIds,
     lastWalked,
-    nextWalk,
-    sharedWith
+    nextWalk
   } = req.body;
   const sql = `
     insert into "routes" (
+      "userId",
       "locationA",
       "locationB",
       "locationC",
@@ -80,12 +81,12 @@ app.post('/api/savedRoutes/:userId', (req, res) => {
       "duration",
       "placeIds",
       "lastWalked",
-      "nextWalk",
-      "sharedWith"
+      "nextWalk"
     ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     returning *
   `;
   const params = [
+    userId,
     locationA,
     locationB,
     locationC,
@@ -93,8 +94,7 @@ app.post('/api/savedRoutes/:userId', (req, res) => {
     duration,
     placeIds,
     lastWalked,
-    nextWalk,
-    sharedWith
+    nextWalk
   ];
   db.query(sql, params)
     .then(result => {
@@ -108,14 +108,13 @@ app.post('/api/savedRoutes/:userId', (req, res) => {
     });
 });
 
-app.delete('/api/savedRoutes/:userId/:routeId', (req, res) => {
-  const { userId, routeId } = req.params;
+app.delete('/api/routes/:routeId', (req, res) => {
+  const { routeId } = req.params;
   const sql = `
   delete from "routes"
         where "routeId" = $1
-        and "userId" = $2
   `;
-  const params = [routeId, userId];
+  const params = [routeId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(204);
@@ -128,15 +127,35 @@ app.delete('/api/savedRoutes/:userId/:routeId', (req, res) => {
     });
 });
 
-app.patch('/api/routes/sharedWith/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
-  const { sharedWith } = req.body;
+app.get('/api/sharedRoutes/:routeId', (req, res) => {
+  const { routeId } = req.params;
   const sql = `
-  update "routes"
-  set "sharedWith" = $1
-  where "routeId" = $2
+  select *
+    from "sharedRoutes"
+   where "routeId" = $1
   `;
-  const params = [sharedWith, routeId];
+  const params = [routeId];
+  db.query(sql, params)
+    .then(result => {
+      const [route] = result.rows;
+      res.json(route);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.patch('/api/sharedRoutes/:routeId', (req, res) => {
+  const { routeId } = req.params;
+  const { userId } = req.body;
+  const sql = `
+  insert into "sharedRoutes"
+  values ($1, $2)
+  `;
+  const params = [routeId, userId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(204);

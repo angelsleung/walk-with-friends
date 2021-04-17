@@ -20,7 +20,7 @@ export default class ShareRoute extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/routes/${this.props.routeId}`)
+    fetch(`/api/sharedRoutes/${this.props.routeId}`)
       .then(res => res.json())
       .then(route => {
         this.setState({ sharedWith: JSON.parse(route.sharedWith) });
@@ -66,7 +66,7 @@ export default class ShareRoute extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sharedWithList)
     };
-    fetch(`/api/routes/sharedWith/${this.props.routeId}`, req)
+    fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
           window.location.hash = `route-details?routeId=${this.props.routeId}`;

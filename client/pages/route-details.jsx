@@ -117,7 +117,9 @@ export default class RouteDetails extends React.Component {
     for (let i = 0; i < waypoints.length; i++) {
       placeIds.push(waypoints[i].place_id);
     }
+    const userId = 1;
     const route = {
+      userId,
       locationA,
       locationB,
       locationC,
@@ -133,8 +135,7 @@ export default class RouteDetails extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(route)
     };
-    const userId = 1;
-    fetch(`api/savedRoutes/${userId}`, req)
+    fetch(`api/routes/${userId}`, req)
       .then(res => res.json())
       .then(route => {
         this.setState({ isSaved: true });
@@ -165,7 +166,7 @@ export default class RouteDetails extends React.Component {
       <div className="route-details-text">
         <div className="route-info">
           <div className="route-totals">
-            <div>{`Total Distance: ${this.state.distance}`}</div>
+            <div>{`Total Distance: ${this.state.distance} mi`}</div>
             <div>{`About ${this.state.duration}`}</div>
           </div>
           < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
