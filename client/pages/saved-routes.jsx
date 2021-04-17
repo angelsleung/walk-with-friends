@@ -8,7 +8,8 @@ export default class SavedRoutes extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/routes')
+    const userId = 1;
+    fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
         this.setState({ routes });

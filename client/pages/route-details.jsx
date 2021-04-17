@@ -133,7 +133,8 @@ export default class RouteDetails extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(route)
     };
-    fetch('api/routes', req)
+    const userId = 1;
+    fetch(`api/savedRoutes/${userId}`, req)
       .then(res => res.json())
       .then(route => {
         this.setState({ isSaved: true });

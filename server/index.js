@@ -18,14 +18,12 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
-app.get('/api/routes/:userId', (req, res) => {
+app.get('/api/savedRoutes/:userId', (req, res) => {
   const { userId } = req.params;
   const sql = `
     select *
       from "routes"
-      join "users"
-        on "friends"."friendUserId" = "users"."userId"
-     where "friends"."userId" = $1
+     where "userId" = $1
   `;
   const params = [userId];
   db.query(sql, params)
@@ -41,15 +39,11 @@ app.get('/api/routes/:userId', (req, res) => {
 });
 
 app.get('/api/routes/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
+  const { routeId } = req.params;
   const sql = `
-  select "routeId",
-         "placeIds",
-         "lastWalked",
-         "nextWalk",
-         "sharedWith"
+  select *
     from "routes"
-  where "routeId" = $1
+   where "routeId" = $1
   `;
   const params = [routeId];
   db.query(sql, params)
@@ -65,7 +59,7 @@ app.get('/api/routes/:routeId', (req, res) => {
     });
 });
 
-app.post('/api/routes', (req, res) => {
+app.post('/api/savedRoutes/:userId', (req, res) => {
   const {
     locationA,
     locationB,
@@ -88,8 +82,7 @@ app.post('/api/routes', (req, res) => {
       "lastWalked",
       "nextWalk",
       "sharedWith"
-    )
-    values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     returning *
   `;
   const params = [
@@ -105,8 +98,7 @@ app.post('/api/routes', (req, res) => {
   ];
   db.query(sql, params)
     .then(result => {
-      const [route] = result.rows;
-      res.status(201).json(route);
+      res.sendStatus(201);
     })
     .catch(err => {
       console.error(err);
@@ -116,13 +108,14 @@ app.post('/api/routes', (req, res) => {
     });
 });
 
-app.delete('/api/routes/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
+app.delete('/api/savedRoutes/:userId/:routeId', (req, res) => {
+  const { userId, routeId } = req.params;
   const sql = `
   delete from "routes"
         where "routeId" = $1
+        and "userId" = $2
   `;
-  const params = [routeId];
+  const params = [routeId, userId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(204);
@@ -222,7 +215,6 @@ app.get('/api/friends/:userId', (req, res) => {
       join "users"
         on "friends"."friendUserId" = "users"."userId"
      where "friends"."userId" = $1
-     order by "users"."weeklyDistance" desc
   `;
   const params = [userId];
   db.query(sql, params)

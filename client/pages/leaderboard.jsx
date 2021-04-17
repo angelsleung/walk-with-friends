@@ -10,16 +10,46 @@ export default class Leaderboard extends React.Component {
 
   componentDidMount() {
     const userId = 1;
-    fetch(`/api/friends/${userId}`)
+    fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
-      .then(friends => {
-        this.setState({ friends });
+      .then(routes => {
+        let weeklyDistance = 0;
+        for (let i = 0; i < routes.length; i++) {
+          if (routes[i].lastWalked) {
+            const parsedDate = Date.parse(routes[i].lastWalked);
+            const [weekStart, weekEnd] = this.getWeek();
+            if (parsedDate >= weekStart && parsedDate <= weekEnd) {
+              weeklyDistance += routes[i].distance;
+            }
+          }
+        }
+        fetch(`/api/friends/${userId}`)
+          .then(res => res.json())
+          .then(friends => {
+            const me = {
+              name: 'Me',
+              userId,
+              weeklyDistance
+            };
+            friends.push(me);
+            this.setState({ friends });
+          });
       });
   }
 
+  getWeek() {
+    const now = new Date();
+    const today = new Date(now.toLocaleDateString());
+    const weekStart = new Date(today.setDate(today.getDate() - today.getDay()));
+    const weekEnd = new Date(today.setDate(today.getDate() + 6));
+    return [weekStart, weekEnd];
+  }
+
   renderFriends() {
+    const sortedFriends = this.state.friends.sort((a, b) => b.weeklyDistance -
+      a.weeklyDistance);
     return (
-      this.state.friends.map((friend, index) => {
+      sortedFriends.map((friend, index) => {
         return (
           <div key={friend.userId} className="friend-item">
             <div className="friend-name-rank">
@@ -35,10 +65,13 @@ export default class Leaderboard extends React.Component {
   }
 
   render() {
+    const [weekStart, weekEnd] = this.getWeek();
+    const weekFormatted = `Sun ${weekStart.getMonth() + 1}/${weekStart.getDate()}
+      - Sat ${weekEnd.getMonth() + 1}/${weekEnd.getDate()}`;
     return (
       <div className="page">
         <h1 className="page-title">Friends</h1>
-        <h2 className="week">Sun 4/4 - Sat 4/10</h2>
+        <h2 className="week">{weekFormatted}</h2>
         <div className="home-friends-list">
           {this.renderFriends()}
         </div>

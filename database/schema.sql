@@ -19,7 +19,7 @@ create table "routes" (
   "locationA"        text    not null,
   "locationB"        text    not null,
   "locationC"        text    not null,
-  "distance"         text    not null,
+  "distance"         float   not null,
   "duration"         text    not null,
   "placeIds"         text    not null,
   "lastWalked"       text    not null,
