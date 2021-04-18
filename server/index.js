@@ -136,6 +136,7 @@ app.get('/api/savedRoutes/:userId', (req, res) => {
         select *
           from "routes"
          where "userId" = $1
+         order by "createdAt"
       `;
   const params = [userId];
   db.query(sql, params)

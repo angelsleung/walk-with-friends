@@ -101,10 +101,11 @@ body {
 
 .route-details-text {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 30px;
   padding: 0.5rem;
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 0;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  padding-bottom: 2rem;
 }
 
 .route-info {
@@ -120,7 +121,7 @@ body {
   border-radius: 50px;
   padding: 1rem 1rem 1rem 3rem;
   background-color: white;
-  margin: 0.5rem 0;
+  margin: 0.5rem;
 }
 
 .options-col {
@@ -211,15 +212,12 @@ body {
   border-top: 1px solid lightgray;
 }
 
-.walk-details {
-  margin: 0.8rem;
-}
-
 .walk-details-text {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
   padding: 1rem;
   background-color: white;
+  margin: 0 0.5rem;
 }
 
 .walk-details-section {
@@ -376,6 +374,7 @@ body {
   font-weight: 500;
   font-size: 1.4rem;
   cursor: pointer;
+  text-align: center;
 }
 
 .route-icon-details {
@@ -403,6 +402,10 @@ body {
 
 .invisible {
   visibility: hidden;
+}
+
+.hidden {
+  display: none;
 }
 
 .week {
@@ -517,6 +520,7 @@ body {
     max-height: 40rem;
     overflow-y: scroll;
     margin-left: 0.5rem;
+    padding-bottom: 0;
   }
 
   .map {
@@ -591,7 +595,7 @@ body {
   }
 
   .friend-item {
-    width: 25rem;
+    width: 30rem;
     padding: 0.5rem 0;
   }
 
