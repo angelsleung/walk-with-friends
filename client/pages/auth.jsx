@@ -4,11 +4,12 @@ import AppContext from '../lib/app-context';
 
 export default class Auth extends React.Component {
   render() {
-    // const { user, route, handleSignIn } = this.context;
+    const { route, handleSignIn } = this.context;
+
     return (
       <div className="auth-page">
         <h1 className="auth-app-name">Walk with Friends</h1>
-        <AuthForm />
+        <AuthForm action={route.path} onSignIn={handleSignIn}/>
         <div className="auth-text">
           <p>Because walks are more fun with friends!</p>
           <div className="auth-icons">

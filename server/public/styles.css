@@ -497,11 +497,15 @@ body {
   cursor: pointer;
 }
 
-.sign-up-div {
+.alternate-action-div {
   text-align: center;
 }
 
-.sign-up {
+.alternate-action-div > a {
+  text-decoration: none;
+}
+
+.alternate-action {
   color: white;
   margin: 0;
   font-size: 1.3rem;

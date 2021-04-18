@@ -85,7 +85,7 @@ export default class App extends React.Component {
     const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
       <AppContext.Provider value={contextValue}>
-        { route.path === 'sign-in' || route.path === 'sign-up'
+        { route.path === 'log-in' || route.path === 'sign-up'
           ? <Auth />
           : <>
               <div className="container">
