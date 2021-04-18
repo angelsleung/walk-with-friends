@@ -15,7 +15,6 @@ export default class AuthForm extends React.Component {
         <div>
           <button type="submit"></button>
         </div>
-
       </form>
     );
   }
