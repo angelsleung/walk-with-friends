@@ -510,15 +510,16 @@ body {
 .auth-text {
   color: white;
   font-size: 1.6rem;
+  font-weight: 500;
   padding: 0 1rem;
-  width: 20rem;
+  width: 22rem;
   position: absolute;
   bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* text-align: center; */
+  font-style: italic;
+  letter-spacing: 0.1rem;
 }
 
 .auth-text > p {
@@ -697,6 +698,14 @@ body {
   .friend-item {
     width: 30rem;
     padding: 0.5rem 0;
+  }
+
+  .auth-form {
+    width: 30rem;
+  }
+
+  .auth-text {
+    width: 100%;
   }
 
   .navbar {
