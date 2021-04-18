@@ -66,6 +66,7 @@ body {
   padding: 1rem;
   margin: 0.5rem 0;
   width: 100%;
+  font-family: 'Raleway', sans-serif;
 }
 
 .read-only {
@@ -434,6 +435,105 @@ body {
 
 .friend-distance {
   font-size: 1.4rem;
+}
+
+.auth-page {
+  background-color: #ffcb91;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-form {
+  width: 100%;
+  padding-bottom: 5rem;
+}
+
+.auth-app-name {
+  text-align: center;
+  font-size: 2.3rem;
+  font-family: 'Amaranth', sans-serif;
+  color: white;
+  font-weight: normal;
+  letter-spacing: 0.05rem;
+}
+
+.auth-input-div {
+  margin: 2.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-input {
+  font-size: 1.3rem;
+  border-radius: 50px;
+  border: 1px solid darkgray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  height: 1.8rem;
+  padding: 1.2rem 0 1.2rem 1.2rem;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.auth-input::placeholder {
+  color: darkgray;
+}
+
+.submit.auth-input-div {
+  margin: 3rem 0 1rem;
+}
+
+.auth-submit {
+  padding: 0.5rem 2.5rem;
+  border-radius: 50px;
+  border: 1px solid lightgray;
+  background-color: rgb(195, 195, 195);
+  color: white;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.sign-up-div {
+  text-align: center;
+}
+
+.sign-up {
+  color: white;
+  margin: 0;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.auth-text {
+  color: white;
+  font-size: 1.6rem;
+  padding: 0 1rem;
+  width: 20rem;
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* text-align: center; */
+}
+
+.auth-text > p {
+  padding-left: 1.5rem;
+}
+
+.auth-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-icons > i {
+  transform: rotate(-90deg);
+  font-size: 2rem;
+  padding: 0 1rem;
 }
 
 .navbar {

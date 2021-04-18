@@ -3,17 +3,20 @@ import React from 'react';
 export default class AuthForm extends React.Component {
   render() {
     return (
-      <form>
-        <div>
-          <label htmlFor="username" className="form-label">Username</label>
-          <input required autoFocus id="username" type="text" name="username"></input>
+      <form className="auth-form">
+        <div className="auth-input-div">
+          <input required autoFocus type="text" name="username"
+            className="auth-input" placeholder="Username"></input>
         </div>
-        <div>
-          <label htmlFor="password" className="form-label">Password</label>
-          <input required id="password" type="password" name="password"></input>
+        <div className="auth-input-div">
+          <input required type="password" name="password"
+            className="auth-input" placeholder="Password"></input>
         </div>
-        <div>
-          <button type="submit"></button>
+        <div className="submit auth-input-div">
+          <button type="submit" className="auth-submit">Log In</button>
+        </div>
+        <div className="sign-up-div">
+          <p className="sign-up">Sign Up</p>
         </div>
       </form>
     );

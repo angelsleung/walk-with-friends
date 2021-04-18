@@ -45,10 +45,6 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-
-    if (route.path === 'sign-in' || route.path === 'sign-up') {
-      return <Auth />;
-    }
     if (route.path === '') {
       return <Leaderboard />;
     }
@@ -89,11 +85,16 @@ export default class App extends React.Component {
     const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
       <AppContext.Provider value={contextValue}>
-        <div className="container">
-          <Header />
-          { this.renderPage() }
-        </div>
-        <Navbar />
+        { route.path === 'sign-in' || route.path === 'sign-up'
+          ? <Auth />
+          : <>
+              <div className="container">
+                <Header />
+                { this.renderPage() }
+              </div>
+              <Navbar />
+            </>
+        }
       </AppContext.Provider>
     );
   }
