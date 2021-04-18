@@ -87,6 +87,30 @@ app.post('/api/routes', (req, res) => {
     });
 });
 
+app.patch('/api/routes/:routeId', (req, res) => {
+  const { routeId } = req.params;
+  const type = req.body.lastWalked || req.body.lastWalked === ''
+    ? 'lastWalked'
+    : 'nextWalk';
+  const date = req.body[type];
+  const sql = `
+  update "routes"
+     set "${type}" = $1
+   where "routeId" = $2
+  `;
+  const params = [date, routeId];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.delete('/api/routes/:routeId', (req, res) => {
   const { routeId } = req.params;
   const sql = `
@@ -155,30 +179,6 @@ app.patch('/api/sharedRoutes/:routeId', (req, res) => {
     values ($1, $2)
   `;
   const params = [routeId, userId];
-  db.query(sql, params)
-    .then(result => {
-      res.sendStatus(204);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
-});
-
-app.patch('/api/routes/:routeId', (req, res) => {
-  const { routeId } = req.params;
-  const type = req.body.lastWalked || req.body.lastWalked === ''
-    ? 'lastWalked'
-    : 'nextWalk';
-  const date = req.body[type];
-  const sql = `
-  update "routes"
-     set "${type}" = $1
-   where "routeId" = $2
-  `;
-  const params = [date, routeId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(204);

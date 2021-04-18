@@ -17,8 +17,10 @@ export default class Leaderboard extends React.Component {
         for (let i = 0; i < routes.length; i++) {
           if (routes[i].lastWalked) {
             const parsedDate = Date.parse(routes[i].lastWalked);
-            const [weekStart, weekEnd] = this.getWeek();
-            if (parsedDate >= weekStart && parsedDate <= weekEnd) {
+            const weekStart = this.getSunday();
+            const weekEnd = new Date(this.getSunday().setDate(this.getSunday().getDate() +
+              7));
+            if (parsedDate >= weekStart && parsedDate < weekEnd) {
               weeklyDistance += routes[i].distance;
             }
           }
@@ -37,12 +39,10 @@ export default class Leaderboard extends React.Component {
       });
   }
 
-  getWeek() {
+  getSunday() {
     const now = new Date();
     const today = new Date(now.toLocaleDateString());
-    const weekStart = new Date(today.setDate(today.getDate() - today.getDay()));
-    const weekEnd = new Date(today.setDate(today.getDate() + 6));
-    return [weekStart, weekEnd];
+    return new Date(today.setDate(today.getDate() - today.getDay()));
   }
 
   renderFriends() {
@@ -65,9 +65,11 @@ export default class Leaderboard extends React.Component {
   }
 
   render() {
-    const [weekStart, weekEnd] = this.getWeek();
-    const weekFormatted = `Sun ${weekStart.getMonth() + 1}/${weekStart.getDate()}
-      - Sat ${weekEnd.getMonth() + 1}/${weekEnd.getDate()}`;
+    const sunday = this.getSunday();
+    const saturday = new Date(this.getSunday().setDate(this.getSunday().getDate() +
+      6));
+    const weekFormatted = `Sun ${sunday.getMonth() + 1}/${sunday.getDate()}
+      - Sat ${saturday.getMonth() + 1}/${saturday.getDate()}`;
     return (
       <div className="page">
         <h1 className="page-title">Friends</h1>

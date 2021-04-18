@@ -27,7 +27,7 @@ insert into "routes" (
   2.3,
   '48 minutes',
   '["ChIJPcr187JrkFQRLApO8QKP8ZM","ChIJ-bfVTh8VkFQRDZLQnmioK9s","ChIJaYxSWbJqkFQRIx56JsKqNCA","ChIJPcr187JrkFQRLApO8QKP8ZM"]',
-  'Sun Apr 11 2021 14:00:00 GMT-0700 (Pacific Daylight Time)',
+  'Sat Apr 10 2021 14:00:00 GMT-0700 (Pacific Daylight Time)',
   ''
 ), (
   1,
