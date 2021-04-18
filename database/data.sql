@@ -1,13 +1,13 @@
-insert into "users" ("name", "weeklyDistance")
-values ('Me', 0),
-       ('Ash', 5.2),
-       ('Misty', 3.4),
-       ('Brock', 2.8),
-       ('Jessie', 0.8),
-       ('James', 0.7),
-       ('Jenny', 1.2),
-       ('Joy', 1.1),
-       ('Gary', 2.5);
+insert into "users" ("name", "weeklyDistance", "username", "hashedPassword")
+values ('Me', 0, 'me', 'password'),
+       ('Ash', 5.2, 'ash', 'password'),
+       ('Misty', 3.4, 'misty', 'password'),
+       ('Brock', 2.8, 'brock', 'password'),
+       ('Jessie', 0.8, 'jessie', 'password'),
+       ('James', 0.7, 'james', 'password'),
+       ('Jenny', 1.2, 'jenny', 'password'),
+       ('Joy', 1.1, 'joy', 'password'),
+       ('Gary', 2.5, 'gary', 'password');
 
 insert into "routes" (
   "userId",
