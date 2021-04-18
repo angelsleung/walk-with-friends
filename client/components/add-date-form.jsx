@@ -36,7 +36,7 @@ export default class AddDateForm extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(date)
     };
-    fetch(`/api/routes/walkDate/${this.props.routeId}`, req)
+    fetch(`/api/routes/${this.props.routeId}`, req)
       .then(res => {
         if (res.status === 204) {
           type === 'lastWalked'

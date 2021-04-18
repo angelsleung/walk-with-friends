@@ -68,9 +68,17 @@ export default class RouteDetails extends React.Component {
         this.setState({
           isSaved: true,
           lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk,
-          sharedWith: JSON.parse(route.sharedWith)
+          nextWalk: route.nextWalk
         });
+      });
+
+    fetch(`/api/sharedRoutes/${this.props.routeId}`)
+      .then(res => res.json())
+      .then(sharedWith => {
+        this.setState({ sharedWith });
+      })
+      .catch(err => {
+        console.error(err);
       });
   }
 
@@ -222,12 +230,13 @@ export default class RouteDetails extends React.Component {
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
-            { this.state.sharedWith.length > 0
+            {this.state.sharedWith.length > 0
               ? <ul>
-                  {this.state.sharedWith.sort().map((friend, index) => {
-                    return <li key={index}>{friend}</li>;
-                  })}
-                </ul>
+                {this.state.sharedWith.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+                  return <li key={friend.userId}>{friend.name}</li>;
+                })
+                }
+              </ul>
               : <span className="no-data">Shared with no one yet</span>
             }
           </div>

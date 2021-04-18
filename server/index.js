@@ -168,16 +168,16 @@ app.patch('/api/sharedRoutes/:routeId', (req, res) => {
     });
 });
 
-app.patch('/api/routes/walkDate/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
+app.patch('/api/routes/:routeId', (req, res) => {
+  const { routeId } = req.params;
   const type = req.body.lastWalked || req.body.lastWalked === ''
     ? 'lastWalked'
     : 'nextWalk';
   const date = req.body[type];
   const sql = `
   update "routes"
-  set "${type}" = $1
-  where "routeId" = $2
+     set "${type}" = $1
+   where "routeId" = $2
   `;
   const params = [date, routeId];
   db.query(sql, params)
@@ -196,23 +196,6 @@ app.get('/api/users', (req, res) => {
   const sql = `
     select *
       from "users"
-  `;
-  db.query(sql)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
-});
-
-app.get('/api/friendsRoutes', (req, res) => {
-  const sql = `
-    select *
-      from "friendsRoutes"
   `;
   db.query(sql)
     .then(result => {
