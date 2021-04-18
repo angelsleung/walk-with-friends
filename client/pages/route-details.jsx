@@ -98,7 +98,7 @@ export default class RouteDetails extends React.Component {
       distanceMeters += legs[i].distance.value;
       durationSeconds += legs[i].duration.value;
     }
-    const distanceMiles = `${(distanceMeters / 1609.34).toFixed(1)} mi`;
+    const distanceMiles = (distanceMeters / 1609.34).toFixed(1);
     const durationMinutes = Math.floor(durationSeconds / 60);
     let durationString = durationMinutes > 60
       ? `${Math.floor(durationMinutes / 60)} hr ${durationMinutes % 60} min`
@@ -135,18 +135,18 @@ export default class RouteDetails extends React.Component {
       duration: this.state.duration,
       placeIds: JSON.stringify(placeIds),
       lastWalked: this.state.lastWalked,
-      nextWalk: this.state.nextWalk,
-      sharedWith: JSON.stringify(this.state.sharedWith)
+      nextWalk: this.state.nextWalk
     };
     const req = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(route)
     };
-    fetch(`api/routes/${userId}`, req)
-      .then(res => res.json())
-      .then(route => {
-        this.setState({ isSaved: true });
+    fetch('api/routes', req)
+      .then(res => {
+        if (res.status === 201) {
+          this.setState({ isSaved: true });
+        }
       })
       .catch(err => {
         console.error(err);

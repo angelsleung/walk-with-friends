@@ -39,7 +39,7 @@ app.get('/api/routes/:routeId', (req, res) => {
     });
 });
 
-app.post('/api/routes/', (req, res) => {
+app.post('/api/routes', (req, res) => {
   const {
     userId,
     locationA,
@@ -63,7 +63,6 @@ app.post('/api/routes/', (req, res) => {
       "lastWalked",
       "nextWalk"
       ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-      returning *
       `;
   const params = [
     userId,
