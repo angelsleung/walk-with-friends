@@ -11,8 +11,9 @@ create table "users" (
   "username"         text    not null,
   "hashedPassword"   text    not null,
   "name"             text    not null,
-  "weeklyDistance"   float   not null,
-  primary key ("userId")
+  "weeklyDistance"   float   not null default 0.0,
+  primary key ("userId"),
+  unique ("username")
 );
 
 create table "routes" (

@@ -29,10 +29,13 @@ export default class AuthForm extends React.Component {
     fetch(`/api/auth/${action}`, req)
       .then(res => res.json())
       .then(result => {
-        if (action === 'sign-up') {
-          window.location.hash = 'log-in';
-        } else if (result.user && result.token) {
+        // console.log('result:', result);
+        // console.log('result.user:', result.user);
+        // console.log('result.token:', result.token);
+        if (result.user && result.token) {
           this.props.onSignIn(result);
+        } else {
+          // console.log('error');
         }
       });
   }
@@ -43,11 +46,11 @@ export default class AuthForm extends React.Component {
       ? '#log-in'
       : '#sign-up';
     const alternateActionText = action === 'sign-up'
-      ? 'Sign Up'
-      : 'Log In';
-    const submitButtonText = action === 'sign-up'
       ? 'Log In'
       : 'Sign Up';
+    const submitButtonText = action === 'sign-up'
+      ? 'Sign Up'
+      : 'Log In';
     return (
       <form className="auth-form" onSubmit={this.handleSubmit}>
         <div className="auth-input-div">

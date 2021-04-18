@@ -2,6 +2,8 @@ require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const pg = require('pg');
+const argon2 = require('argon2');
+// const jwt = require('jsonwebtoken');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -192,23 +194,6 @@ app.patch('/api/sharedRoutes/:routeId', (req, res) => {
     });
 });
 
-app.get('/api/users', (req, res) => {
-  const sql = `
-    select *
-      from "users"
-  `;
-  db.query(sql)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
-});
-
 app.get('/api/friends/:userId', (req, res) => {
   const { userId } = req.params;
   const sql = `
@@ -244,6 +229,31 @@ app.get('/api/friendsRoutes/:userId', (req, res) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.post('/api/auth/sign-up', (req, res) => {
+  const { username, password } = req.body;
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+        insert into "users" ("username", "hashedPassword", "name", "weeklyDistance")
+          values ($1, $2, $3, $4)
+          returning "userId", "username"
+      `;
+      const params = [username, hashedPassword, username, 0.0];
+      return db.query(sql, params);
+    })
+    .then(result => {
+      const [user] = result.rows;
+      res.status(201).json(user);
     })
     .catch(err => {
       console.error(err);
