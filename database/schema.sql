@@ -6,35 +6,34 @@ drop schema "public" cascade;
 
 create schema "public";
 
+create table "users" (
+  "userId"           serial,
+  "name"             text    not null,
+  "weeklyDistance"   float   not null,
+  primary key ("userId")
+);
+
 create table "routes" (
-  "routeId"          serial,
+  "routeId"         serial,
+  "userId"          integer  not null,
   "locationA"        text    not null,
   "locationB"        text    not null,
   "locationC"        text    not null,
-  "distance"         text    not null,
+  "distance"         float   not null,
   "duration"         text    not null,
   "placeIds"         text    not null,
   "lastWalked"       text    not null,
   "nextWalk"         text    not null,
-  "sharedWith"       text    not null,
   "createdAt"   timestamptz(6) not null default now(),
   primary key ("routeId")
 );
 
-create table "users" (
-  "userId"           serial,
-  "friends"          text    not null,
-  "friendsRouteIds"  text    not null
+create table "friends" (
+  "userId"          integer  not null,
+  "friendUserId"    integer  not null
 );
 
-create table "friendsRoutes" (
+create table "sharedRoutes" (
   "routeId"          serial,
-  "friendName"       text    not null,
-  "locationA"        text    not null,
-  "locationB"        text    not null,
-  "locationC"        text    not null,
-  "distance"         text    not null,
-  "duration"         text    not null,
-  "placeIds"         text    not null,
-  "nextWalk"         text    not null
+  "userId"          integer  not null
 );

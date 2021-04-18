@@ -18,41 +18,13 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
-app.get('/api/routes', (req, res) => {
-  const sql = `
-    select "routeId",
-           "locationA",
-           "locationB",
-           "locationC",
-           "distance",
-           "duration",
-           "createdAt"
-      from "routes"
-    order by "createdAt"
-  `;
-  db.query(sql)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
-});
-
 app.get('/api/routes/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
+  const { routeId } = req.params;
   const sql = `
-  select "routeId",
-         "placeIds",
-         "lastWalked",
-         "nextWalk",
-         "sharedWith"
+  select *
     from "routes"
-  where "routeId" = $1
-  `;
+   where "routeId" = $1
+    `;
   const params = [routeId];
   db.query(sql, params)
     .then(result => {
@@ -69,6 +41,7 @@ app.get('/api/routes/:routeId', (req, res) => {
 
 app.post('/api/routes', (req, res) => {
   const {
+    userId,
     locationA,
     locationB,
     locationC,
@@ -76,11 +49,11 @@ app.post('/api/routes', (req, res) => {
     duration,
     placeIds,
     lastWalked,
-    nextWalk,
-    sharedWith
+    nextWalk
   } = req.body;
   const sql = `
     insert into "routes" (
+      "userId",
       "locationA",
       "locationB",
       "locationC",
@@ -88,13 +61,11 @@ app.post('/api/routes', (req, res) => {
       "duration",
       "placeIds",
       "lastWalked",
-      "nextWalk",
-      "sharedWith"
-    )
-    values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-    returning *
-  `;
+      "nextWalk"
+      ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      `;
   const params = [
+    userId,
     locationA,
     locationB,
     locationC,
@@ -102,13 +73,35 @@ app.post('/api/routes', (req, res) => {
     duration,
     placeIds,
     lastWalked,
-    nextWalk,
-    sharedWith
+    nextWalk
   ];
   db.query(sql, params)
     .then(result => {
-      const [route] = result.rows;
-      res.status(201).json(route);
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.patch('/api/routes/:routeId', (req, res) => {
+  const { routeId } = req.params;
+  const type = req.body.lastWalked || req.body.lastWalked === ''
+    ? 'lastWalked'
+    : 'nextWalk';
+  const date = req.body[type];
+  const sql = `
+  update "routes"
+     set "${type}" = $1
+   where "routeId" = $2
+  `;
+  const params = [date, routeId];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(204);
     })
     .catch(err => {
       console.error(err);
@@ -119,11 +112,11 @@ app.post('/api/routes', (req, res) => {
 });
 
 app.delete('/api/routes/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
+  const { routeId } = req.params;
   const sql = `
-  delete from "routes"
-        where "routeId" = $1
-  `;
+      delete from "routes"
+            where "routeId" = $1
+      `;
   const params = [routeId];
   db.query(sql, params)
     .then(result => {
@@ -137,18 +130,17 @@ app.delete('/api/routes/:routeId', (req, res) => {
     });
 });
 
-app.patch('/api/routes/sharedWith/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
-  const { sharedWith } = req.body;
+app.get('/api/savedRoutes/:userId', (req, res) => {
+  const { userId } = req.params;
   const sql = `
-  update "routes"
-  set "sharedWith" = $1
-  where "routeId" = $2
-  `;
-  const params = [sharedWith, routeId];
+        select *
+          from "routes"
+         where "userId" = $1
+      `;
+  const params = [userId];
   db.query(sql, params)
     .then(result => {
-      res.sendStatus(204);
+      res.json(result.rows);
     })
     .catch(err => {
       console.error(err);
@@ -158,18 +150,35 @@ app.patch('/api/routes/sharedWith/:routeId', (req, res) => {
     });
 });
 
-app.patch('/api/routes/walkDate/:routeId', (req, res) => {
-  const routeId = req.params.routeId;
-  const type = req.body.lastWalked || req.body.lastWalked === ''
-    ? 'lastWalked'
-    : 'nextWalk';
-  const date = req.body[type];
+app.get('/api/sharedRoutes/:routeId', (req, res) => {
+  const { routeId } = req.params;
   const sql = `
-  update "routes"
-  set "${type}" = $1
-  where "routeId" = $2
+      select *
+        from "sharedRoutes"
+        join "users" using ("userId")
+       where "routeId" = $1
+      `;
+  const params = [routeId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.patch('/api/sharedRoutes/:routeId', (req, res) => {
+  const { routeId } = req.params;
+  const { userId } = req.body;
+  const sql = `
+  insert into "sharedRoutes" ("routeId", "userId")
+    values ($1, $2)
   `;
-  const params = [date, routeId];
+  const params = [routeId, userId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(204);
@@ -199,12 +208,39 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-app.get('/api/friendsRoutes', (req, res) => {
+app.get('/api/friends/:userId', (req, res) => {
+  const { userId } = req.params;
   const sql = `
     select *
-      from "friendsRoutes"
+      from "friends"
+      join "users"
+        on "friends"."friendUserId" = "users"."userId"
+     where "friends"."userId" = $1
   `;
-  db.query(sql)
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.get('/api/friendsRoutes/:userId', (req, res) => {
+  const { userId } = req.params;
+  const sql = `
+      select *
+        from "routes"
+        join "sharedRoutes" using ("routeId")
+        join "users" on "users"."userId" = "routes"."userId"
+       where "sharedRoutes"."userId" = $1
+      `;
+  const params = [userId];
+  db.query(sql, params)
     .then(result => {
       res.json(result.rows);
     })

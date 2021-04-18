@@ -223,7 +223,7 @@ body {
 }
 
 .walk-details-section {
-  padding: 1rem 1rem 3rem;
+  padding: 1rem;
 }
 
 .walk-details-section > h2 {
@@ -405,6 +405,34 @@ body {
   visibility: hidden;
 }
 
+.week {
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: center;
+  color: darkgray;
+  padding: 1rem 0;
+}
+
+.friend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friend-name-rank {
+  display: flex;
+  align-items: center;
+}
+
+.friend-rank {
+  font-size: 1.5rem;
+  padding-right: 0.5rem;
+}
+
+.friend-distance {
+  font-size: 1.4rem;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;
@@ -554,6 +582,17 @@ body {
 
   .modal {
     left: 36%;
+  }
+
+  .home-friends-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .friend-item {
+    width: 25rem;
+    padding: 0.5rem 0;
   }
 
   .navbar {

@@ -7,6 +7,7 @@ import SavedRoutes from './pages/saved-routes';
 import ShareRoute from './pages/share-route';
 import EditRoute from './pages/edit-route';
 import FriendsRoutes from './pages/friends-routes';
+import Leaderboard from './pages/leaderboard';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 
@@ -27,6 +28,9 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
+      return <Leaderboard />;
+    }
+    if (route.path === 'map-route') {
       return <LocationForm />;
     }
     if (route.path === 'route-details') {

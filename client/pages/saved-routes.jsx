@@ -8,7 +8,8 @@ export default class SavedRoutes extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/routes')
+    const userId = 1;
+    fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
         this.setState({ routes });
@@ -46,7 +47,7 @@ export default class SavedRoutes extends React.Component {
               </div>
             </div>
             <div className="route-item-totals">
-              <div className="route-item-distance">{route.distance}</div>
+              <div className="route-item-distance">{`${route.distance} mi`}</div>
               <div className="route-item-duration">{duration}</div>
             </div>
           </div>

@@ -68,9 +68,17 @@ export default class RouteDetails extends React.Component {
         this.setState({
           isSaved: true,
           lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk,
-          sharedWith: JSON.parse(route.sharedWith)
+          nextWalk: route.nextWalk
         });
+      });
+
+    fetch(`/api/sharedRoutes/${this.props.routeId}`)
+      .then(res => res.json())
+      .then(sharedWith => {
+        this.setState({ sharedWith });
+      })
+      .catch(err => {
+        console.error(err);
       });
   }
 
@@ -90,7 +98,7 @@ export default class RouteDetails extends React.Component {
       distanceMeters += legs[i].distance.value;
       durationSeconds += legs[i].duration.value;
     }
-    const distanceMiles = `${(distanceMeters / 1609.34).toFixed(1)} mi`;
+    const distanceMiles = (distanceMeters / 1609.34).toFixed(1);
     const durationMinutes = Math.floor(durationSeconds / 60);
     let durationString = durationMinutes > 60
       ? `${Math.floor(durationMinutes / 60)} hr ${durationMinutes % 60} min`
@@ -117,7 +125,9 @@ export default class RouteDetails extends React.Component {
     for (let i = 0; i < waypoints.length; i++) {
       placeIds.push(waypoints[i].place_id);
     }
+    const userId = 1;
     const route = {
+      userId,
       locationA,
       locationB,
       locationC,
@@ -125,8 +135,7 @@ export default class RouteDetails extends React.Component {
       duration: this.state.duration,
       placeIds: JSON.stringify(placeIds),
       lastWalked: this.state.lastWalked,
-      nextWalk: this.state.nextWalk,
-      sharedWith: JSON.stringify(this.state.sharedWith)
+      nextWalk: this.state.nextWalk
     };
     const req = {
       method: 'POST',
@@ -134,9 +143,10 @@ export default class RouteDetails extends React.Component {
       body: JSON.stringify(route)
     };
     fetch('api/routes', req)
-      .then(res => res.json())
-      .then(route => {
-        this.setState({ isSaved: true });
+      .then(res => {
+        if (res.status === 201) {
+          this.setState({ isSaved: true });
+        }
       })
       .catch(err => {
         console.error(err);
@@ -164,7 +174,7 @@ export default class RouteDetails extends React.Component {
       <div className="route-details-text">
         <div className="route-info">
           <div className="route-totals">
-            <div>{`Total Distance: ${this.state.distance}`}</div>
+            <div>{`Total Distance: ${this.state.distance} mi`}</div>
             <div>{`About ${this.state.duration}`}</div>
           </div>
           < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
@@ -220,12 +230,13 @@ export default class RouteDetails extends React.Component {
           </div>
           <div className="walk-details-section">
             <h2>Shared with</h2>
-            { this.state.sharedWith.length > 0
+            {this.state.sharedWith.length > 0
               ? <ul>
-                  {this.state.sharedWith.sort().map((friend, index) => {
-                    return <li key={index}>{friend}</li>;
-                  })}
-                </ul>
+                {this.state.sharedWith.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+                  return <li key={friend.userId}>{friend.name}</li>;
+                })
+                }
+              </ul>
               : <span className="no-data">Shared with no one yet</span>
             }
           </div>
