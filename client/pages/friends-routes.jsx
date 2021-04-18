@@ -9,7 +9,8 @@ export default class FriendsRoutes extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/friendsRoutes')
+    const userId = 1;
+    fetch(`/api/friendsRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
         this.setState({ routes });
@@ -41,13 +42,13 @@ export default class FriendsRoutes extends React.Component {
             <div className="route-icon-details">
               <i className="shoes-icon fas fa-shoe-prints"></i>
               <div className="route-item-details">
-                <h2>{`${route.friendName}'s Route`}</h2>
+                <h2>{`${route.name}'s Route`}</h2>
                 <p>{date}</p>
                 <p>{time}</p>
               </div>
             </div>
             <div className="friend route-item-totals">
-              <div className="route-item-distance">{route.distance}</div>
+              <div className="route-item-distance">{`${route.distance} mi`}</div>
               <div className="route-item-duration">{duration}</div>
             </div>
           </div>

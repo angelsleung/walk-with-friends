@@ -23,7 +23,7 @@ app.get('/api/routes/:routeId', (req, res) => {
   const sql = `
   select *
     from "routes"
-    where "routeId" = $1
+   where "routeId" = $1
     `;
   const params = [routeId];
   db.query(sql, params)
@@ -92,7 +92,7 @@ app.delete('/api/routes/:routeId', (req, res) => {
   const { routeId } = req.params;
   const sql = `
       delete from "routes"
-      where "routeId" = $1
+            where "routeId" = $1
       `;
   const params = [routeId];
   db.query(sql, params)
@@ -131,9 +131,9 @@ app.get('/api/sharedRoutes/:routeId', (req, res) => {
   const { routeId } = req.params;
   const sql = `
       select *
-      from "sharedRoutes"
-      join "users" using ("userId")
-      where "routeId" = $1
+        from "sharedRoutes"
+        join "users" using ("userId")
+       where "routeId" = $1
       `;
   const params = [routeId];
   db.query(sql, params)
@@ -153,7 +153,7 @@ app.patch('/api/sharedRoutes/:routeId', (req, res) => {
   const { userId } = req.body;
   const sql = `
   insert into "sharedRoutes" ("routeId", "userId")
-  values ($1, $2)
+    values ($1, $2)
   `;
   const params = [routeId, userId];
   db.query(sql, params)
@@ -218,6 +218,28 @@ app.get('/api/friends/:userId', (req, res) => {
         on "friends"."friendUserId" = "users"."userId"
      where "friends"."userId" = $1
   `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.get('/api/friendsRoutes/:userId', (req, res) => {
+  const { userId } = req.params;
+  const sql = `
+      select *
+        from "routes"
+        join "sharedRoutes" using ("routeId")
+        join "users" on "users"."userId" = "routes"."userId"
+       where "sharedRoutes"."userId" = $1
+      `;
   const params = [userId];
   db.query(sql, params)
     .then(result => {
