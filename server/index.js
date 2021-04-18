@@ -3,7 +3,7 @@ const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const pg = require('pg');
 const argon2 = require('argon2');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -35,9 +35,7 @@ app.get('/api/routes/:routeId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -83,9 +81,7 @@ app.post('/api/routes', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -107,9 +103,7 @@ app.patch('/api/routes/:routeId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -126,9 +120,7 @@ app.delete('/api/routes/:routeId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'An unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -147,9 +139,7 @@ app.get('/api/savedRoutes/:userId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -168,9 +158,7 @@ app.get('/api/sharedRoutes/:routeId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -188,9 +176,7 @@ app.patch('/api/sharedRoutes/:routeId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -210,9 +196,7 @@ app.get('/api/friends/:userId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -232,9 +216,7 @@ app.get('/api/friendsRoutes/:userId', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -257,9 +239,42 @@ app.post('/api/auth/sign-up', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
+app.post('/api/auth/log-in', (req, res) => {
+  const { username, password } = req.body;
+  const sql = `
+    select "userId"
+           "hashedPassword"
+      from "users"
+     where "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        res.status(401).json({ error: 'invalid login' });
+        return;
+      }
+      const { userId, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            res.status(401).json({ error: 'invalid login' });
+            return;
+          }
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
