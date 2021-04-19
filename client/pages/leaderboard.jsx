@@ -11,6 +11,7 @@ export default class Leaderboard extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.context.user) return <Redirect to="log-in" />;
     const { userId } = this.context.user;
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())

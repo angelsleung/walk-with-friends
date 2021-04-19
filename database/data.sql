@@ -1,5 +1,5 @@
 insert into "users" ("name", "weeklyDistance", "username", "hashedPassword")
-values ('Me', 0, 'me', 'password'),
+values ('Oak', 1.4, 'oak', 'password'),
        ('Ash', 5.2, 'ash', 'password'),
        ('Misty', 3.4, 'misty', 'password'),
        ('Brock', 2.8, 'brock', 'password'),
@@ -20,7 +20,7 @@ insert into "routes" (
   "lastWalked",
   "nextWalk"
 ) values (
-  1,
+  10,
   'Pike Place Market, Pike Street, Seattle, WA, USA',
   'Space Needle, Broad Street, Seattle, WA, USA',
   'Gum Wall, Post Alley, Seattle, WA, USA',
@@ -30,7 +30,7 @@ insert into "routes" (
   'Sat Apr 10 2021 14:00:00 GMT-0700 (Pacific Daylight Time)',
   ''
 ), (
-  1,
+  10,
   'Downtown Park, Northeast 4th Street, Bellevue, WA, USA',
   'Starbucks, Northeast 8th Street, Bellevue, WA, USA',
   'Chipotle Mexican Grill, Northeast 4th Street, Bellevue, WA, USA',
@@ -69,23 +69,43 @@ insert into "routes" (
   '["ChIJa147K9HX3IAR-lwiGIQv9i4","ChIJPSkYXt7X3IARFClnE7qisj4","ChIJdQM2fiMo3YARCMLPgLCm9XQ","ChIJa147K9HX3IAR-lwiGIQv9i4"]',
   '',
   'Sun May 02 2021 13:00:00 GMT-0700 (Pacific Daylight Time)'
+), (
+  10,
+  'Hollywood Walk of Fame, Vine Street, Los Angeles, CA, USA',
+  'TCL Chinese Theatre, Hollywood Boulevard, Hollywood, CA, USA',
+  'Funko Hollywood, Hollywood Boulevard, Los Angeles, CA, USA',
+  2.7,
+  '54 minutes',
+  '["ChIJXyC7WTu_woARPvVMCHBXd4U","ChIJw4DCAdrX3IAR-1_GYNuCOfc","ChIJv1-IVVW_woAReuX1pRWmIdk","ChIJXyC7WTu_woARPvVMCHBXd4U"]',
+  '',
+  ''
+), (
+  9,
+  'Wynn Las Vegas, South Las Vegas Boulevard, Las Vegas, NV, USA',
+  'Tacos El Gordo, South Las Vegas Boulevard, Las Vegas, NV, USA',
+  'Caesars Palace, South Las Vegas Boulevard, Las Vegas, NV, USA',
+  2.5,
+  '51 minutes',
+  '["ChIJlYYq3iLEyIAR7W-7y3M7wbE","ChIJuZ22zmzEyIARH1U2pl31Nes","ChIJleDKRDzEyIAR9z-vovLIyXc","ChIJlYYq3iLEyIAR7W-7y3M7wbE"]',
+  '',
+  'Sat May 01 2021 12:00:00 GMT-0700 (Pacific Daylight Time)'
 );
 
 insert into "friends" ("userId", "friendUserId")
-values (1, 2),
-       (1, 3),
-       (1, 4),
-       (1, 5),
-       (1, 6),
-       (1, 7),
-       (1, 8),
-       (1, 9);
+values (10, 2),
+       (10, 3),
+       (10, 4),
+       (10, 5),
+       (10, 6),
+       (10, 7),
+       (10, 8),
+       (10, 9);
 
 insert into "sharedRoutes" ("routeId", "userId")
 values (1, 2),
        (1, 3),
        (2, 4),
        (2, 7),
-       (3, 1),
-       (4, 1),
-       (5, 1);
+       (3, 10),
+       (4, 10),
+       (5, 10);
