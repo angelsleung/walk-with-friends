@@ -41,7 +41,7 @@ body {
 
 .page {
   border-radius: 50px;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
   background-color: white;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   height: 100%;
@@ -241,7 +241,7 @@ body {
 }
 
 .friend-list {
-  padding: 2rem 0;
+  padding: 2rem 1rem;
 }
 
 .friend-list-item {
