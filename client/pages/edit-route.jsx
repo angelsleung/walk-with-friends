@@ -2,6 +2,8 @@ import React from 'react';
 import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 import formatDate from '../lib/format-date';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class EditRoute extends React.Component {
   constructor(props) {
@@ -99,6 +101,8 @@ export default class EditRoute extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     const lastWalkedClass = this.state.lastWalked ? '' : 'invisible';
     const nextWalkClass = this.state.nextWalk ? '' : 'invisible';
     const deleteRouteClass = this.state.clickedDeleteRoute ? '' : 'invisible';
@@ -161,3 +165,5 @@ export default class EditRoute extends React.Component {
     );
   }
 }
+
+EditRoute.contextType = AppContext;

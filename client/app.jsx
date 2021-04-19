@@ -18,7 +18,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      isAuthorizing: false,
+      isAuthorizing: true,
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -85,6 +85,7 @@ export default class App extends React.Component {
     const { user, route } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, handleSignIn, handleSignOut };
+
     return (
       <AppContext.Provider value={contextValue}>
         { route.path === 'log-in' || route.path === 'sign-up'

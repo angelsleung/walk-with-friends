@@ -1,6 +1,8 @@
 import React from 'react';
 import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class ShareRoute extends React.Component {
   constructor(props) {
@@ -102,6 +104,8 @@ export default class ShareRoute extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     return (
       <div className="page">
         <form className="share-form" onSubmit={this.handleSubmit}>
@@ -124,3 +128,5 @@ export default class ShareRoute extends React.Component {
     );
   }
 }
+
+ShareRoute.contextType = AppContext;

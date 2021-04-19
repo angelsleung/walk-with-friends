@@ -1,6 +1,8 @@
 import React from 'react';
 import SaveButton from '../components/save-button';
 import formatDate from '../lib/format-date';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class RouteDetails extends React.Component {
   constructor(props) {
@@ -277,6 +279,8 @@ export default class RouteDetails extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
@@ -288,3 +292,5 @@ export default class RouteDetails extends React.Component {
     );
   }
 }
+
+RouteDetails.contextType = AppContext;

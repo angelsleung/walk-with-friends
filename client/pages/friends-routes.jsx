@@ -1,4 +1,6 @@
 import React from 'react';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 import formatDate from '../lib/format-date';
 
 export default class FriendsRoutes extends React.Component {
@@ -58,6 +60,8 @@ export default class FriendsRoutes extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     return (
       <div className="page">
         <h1 className="page-title">{"Friends' Routes"}</h1>
@@ -68,3 +72,5 @@ export default class FriendsRoutes extends React.Component {
     );
   }
 }
+
+FriendsRoutes.contextType = AppContext;

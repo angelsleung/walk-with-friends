@@ -497,6 +497,10 @@ body {
   cursor: pointer;
 }
 
+.sign-up {
+  background-color: #6ddccf;
+}
+
 .alternate-action-div {
   text-align: center;
 }

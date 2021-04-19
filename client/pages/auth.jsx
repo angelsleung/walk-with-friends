@@ -8,6 +8,7 @@ export default class Auth extends React.Component {
     const { user, route, handleSignIn } = this.context;
 
     if (user) return <Redirect to="" />;
+
     return (
       <div className="auth-page">
         <h1 className="auth-app-name">Walk with Friends</h1>

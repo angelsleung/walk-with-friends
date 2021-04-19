@@ -29,13 +29,11 @@ export default class AuthForm extends React.Component {
     };
     // console.log('req:', req);
     fetch(`/api/auth/${action}`, req)
-      .then(res => {
-        // console.log('res:', res);
-        return res.json();
-      })
+      .then(res => res.json())
       .then(result => {
         // console.log('result:', result);
         if (action === 'sign-up') {
+          // if ()
           window.location.hash = 'log-in';
         } else if (result.user && result.token) {
           // console.log('result:', result);
@@ -58,6 +56,9 @@ export default class AuthForm extends React.Component {
     const submitButtonText = action === 'sign-up'
       ? 'Sign Up'
       : 'Log In';
+    const submitButtonClass = action === 'sign-up'
+      ? 'sign-up'
+      : 'log-in';
     return (
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-input-div">
@@ -69,7 +70,9 @@ export default class AuthForm extends React.Component {
             placeholder="Password" onChange={this.handleChange}></input>
         </div>
         <div className="submit auth-input-div">
-          <button type="submit" className="auth-submit">{submitButtonText}</button>
+          <button type="submit" className={`auth-submit ${submitButtonClass}`}>
+            {submitButtonText}
+          </button>
         </div>
         <div className="alternate-action-div">
           <a href={alternateActionHref}>
