@@ -19,6 +19,7 @@ export default class AuthForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { action } = this.props;
+    // console.log('action:', action);
     const req = {
       method: 'POST',
       headers: {
@@ -26,9 +27,14 @@ export default class AuthForm extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
+    // console.log('req:', req);
     fetch(`/api/auth/${action}`, req)
-      .then(res => res.json())
+      .then(res => {
+        // console.log('res:', res);
+        return res.json();
+      })
       .then(result => {
+        // console.log('result:', result);
         if (action === 'sign-up') {
           window.location.hash = 'log-in';
         } else if (result.user && result.token) {
@@ -42,6 +48,7 @@ export default class AuthForm extends React.Component {
 
   render() {
     const { action } = this.props;
+    const { handleChange, handleSubmit } = this;
     const alternateActionHref = action === 'sign-up'
       ? '#log-in'
       : '#sign-up';
@@ -52,10 +59,10 @@ export default class AuthForm extends React.Component {
       ? 'Sign Up'
       : 'Log In';
     return (
-      <form className="auth-form" onSubmit={this.handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-input-div">
           <input required autoFocus type="text" name="username" className="auth-input"
-            placeholder="Username" onChange={this.handleChange}></input>
+            placeholder="Username" onChange={handleChange}></input>
         </div>
         <div className="auth-input-div">
           <input required type="password" name="password" className="auth-input"

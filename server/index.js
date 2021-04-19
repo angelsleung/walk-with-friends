@@ -4,6 +4,8 @@ const staticMiddleware = require('./static-middleware');
 const pg = require('pg');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const ClientError = require('./client-error');
+const errorMiddleware = require('./error-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -222,18 +224,22 @@ app.get('/api/friendsRoutes/:userId', (req, res) => {
 
 app.post('/api/auth/sign-up', (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(400, 'username and password are required fields');
+  }
   argon2
     .hash(password)
     .then(hashedPassword => {
       const sql = `
         insert into "users" ("username", "hashedPassword", "name", "weeklyDistance")
           values ($1, $2, $3, $4)
-          returning "userId", "username"
+          returning *
       `;
       const params = [username, hashedPassword, username, 0.0];
       return db.query(sql, params);
     })
     .then(result => {
+
       const [user] = result.rows;
       res.status(201).json(user);
     })
@@ -246,7 +252,7 @@ app.post('/api/auth/sign-up', (req, res) => {
 app.post('/api/auth/log-in', (req, res) => {
   const { username, password } = req.body;
   const sql = `
-    select "userId"
+    select "userId",
            "hashedPassword"
       from "users"
      where "username" = $1
@@ -277,6 +283,25 @@ app.post('/api/auth/log-in', (req, res) => {
       res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
+
+app.get('/api/users', (req, res) => {
+  const sql = `
+    select *
+      from "users"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
