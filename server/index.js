@@ -238,7 +238,7 @@ app.post('/api/auth/sign-up', (req, res) => {
       const { userId } = user;
       const payload = { userId, username };
       const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-      res.status(201).json({ token, user: payload });
+      res.json({ token, user: payload });
     })
     .catch(err => {
       console.error(err);

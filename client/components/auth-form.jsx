@@ -5,7 +5,8 @@ export default class AuthForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      invalidLogin: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,6 +35,8 @@ export default class AuthForm extends React.Component {
         // console.log('result:', result);
         if (result.user && result.token) {
           this.props.onSignIn(result);
+        } else {
+          this.setState({ invalidLogin: true });
         }
       });
   }
@@ -53,6 +56,9 @@ export default class AuthForm extends React.Component {
     const submitButtonClass = action === 'sign-up'
       ? 'sign-up'
       : 'log-in';
+    const invalidLoginClass = this.state.invalidLogin
+      ? ''
+      : 'invisible';
     return (
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-input-div">
@@ -63,6 +69,7 @@ export default class AuthForm extends React.Component {
           <input required type="password" name="password" className="auth-input"
             placeholder="Password" onChange={this.handleChange}></input>
         </div>
+          <p className={`invalid-login ${invalidLoginClass}`}>Invalid login</p>
         <div className="submit auth-input-div">
           <button type="submit" className={`auth-submit ${submitButtonClass}`}>
             {submitButtonText}
