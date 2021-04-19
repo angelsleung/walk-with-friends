@@ -32,13 +32,7 @@ export default class AuthForm extends React.Component {
       .then(res => res.json())
       .then(result => {
         // console.log('result:', result);
-        if (action === 'sign-up') {
-          // if ()
-          window.location.hash = 'log-in';
-        } else if (result.user && result.token) {
-          // console.log('result:', result);
-          // console.log('result.user:', result.user);
-          // console.log('result.token:', result.token);
+        if (result.user && result.token) {
           this.props.onSignIn(result);
         }
       });
