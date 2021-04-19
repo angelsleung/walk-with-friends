@@ -11,7 +11,7 @@ export default class Leaderboard extends React.Component {
   }
 
   componentDidMount() {
-    const userId = 1;
+    const { userId } = this.context.user;
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {

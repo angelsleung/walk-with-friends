@@ -130,7 +130,7 @@ export default class RouteDetails extends React.Component {
     for (let i = 0; i < waypoints.length; i++) {
       placeIds.push(waypoints[i].place_id);
     }
-    const userId = 1;
+    const { userId } = this.context.user;
     const route = {
       userId,
       locationA,
