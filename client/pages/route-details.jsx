@@ -1,6 +1,8 @@
 import React from 'react';
 import SaveButton from '../components/save-button';
 import formatDate from '../lib/format-date';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class RouteDetails extends React.Component {
   constructor(props) {
@@ -11,7 +13,8 @@ export default class RouteDetails extends React.Component {
       duration: '',
       lastWalked: '',
       nextWalk: '',
-      sharedWith: []
+      sharedWith: [],
+      viewDirectionsPanel: false
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -19,6 +22,7 @@ export default class RouteDetails extends React.Component {
     this.directionsService = null;
     this.directionsRenderer = null;
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.handleClickDirections = this.handleClickDirections.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +50,7 @@ export default class RouteDetails extends React.Component {
       ],
       travelMode: 'WALKING'
     };
+    this.setState({ viewDirectionsPanel: true });
     this.displayRoute(request);
   }
 
@@ -125,7 +130,7 @@ export default class RouteDetails extends React.Component {
     for (let i = 0; i < waypoints.length; i++) {
       placeIds.push(waypoints[i].place_id);
     }
-    const userId = 1;
+    const { userId } = this.context.user;
     const route = {
       userId,
       locationA,
@@ -169,15 +174,23 @@ export default class RouteDetails extends React.Component {
       });
   }
 
+  handleClickDirections() {
+    this.setState({ viewDirectionsPanel: !this.state.viewDirectionsPanel });
+  }
+
   renderDirectionsDetails() {
+    const panelClass = this.state.viewDirectionsPanel ? '' : 'hidden';
     return (
-      <div className="route-details-text">
+      <div className={`route-details-text ${panelClass}`}>
         <div className="route-info">
           <div className="route-totals">
             <div>{`Total Distance: ${this.state.distance} mi`}</div>
             <div>{`About ${this.state.duration}`}</div>
           </div>
-          < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
+          { this.props.routeId
+            ? ''
+            : < SaveButton isSaved={this.state.isSaved} onSave={this.handleClickSave} />
+          }
         </div>
         <div className="directionsPanel" ref={this.directionsPanelRef} />
       </div>
@@ -186,70 +199,92 @@ export default class RouteDetails extends React.Component {
 
   renderWalkDetails() {
     return (
-      <div className="walk-details">
-        <div className="options">
-          <div className="options-col">
-            < SaveButton isSaved={this.state.isSaved}
-              onSave={this.handleClickSave} />
-            <div className="option-button">
-              <i className="directions-icon fas fa-directions" />
-              <span className="button-text">Directions</span>
+      <>
+        <div className="walk-details">
+          <div className="options">
+            <div className="options-col">
+              < SaveButton isSaved={this.state.isSaved}
+                onSave={this.handleClickSave} />
+              <div className="option-button" onClick={this.handleClickDirections}>
+                { this.state.viewDirectionsPanel
+                  ? <>
+                      <i className="fas fa-ellipsis-h"></i>
+                      <span className="button-text">Details</span>
+                    </>
+                  : <>
+                      <i className="fas fa-directions" />
+                      <span className="button-text">Directions</span>
+                    </>
+                }
+              </div>
+            </div>
+            <div className="options-col">
+              <a className="option-link"
+                href={`#share-route?routeId=${this.props.routeId}`}>
+                <div className="option-button">
+                  <i className="share-icon fas fa-share" />
+                  <span className="button-text">Share</span>
+                </div>
+              </a>
+              <a className="option-link"
+                href={`#edit-route?routeId=${this.props.routeId}`}>
+                <div className="option-button">
+                  <i className="edit-icon fas fa-edit" />
+                  <span className="button-text">Edit</span>
+                </div>
+              </a>
             </div>
           </div>
-          <div className="options-col">
-            <a className="option-link"
-              href={`#share-route?routeId=${this.props.routeId}`}>
-              <div className="option-button">
-                <i className="share-icon fas fa-share" />
-                <span className="button-text">Share</span>
-              </div>
-            </a>
-            <a className="option-link"
-              href={`#edit-route?routeId=${this.props.routeId}`}>
-              <div className="option-button">
-                <i className="edit-icon fas fa-edit" />
-                <span className="button-text">Edit</span>
-              </div>
-            </a>
-          </div>
+          { this.state.viewDirectionsPanel
+            ? ''
+            : this.renderWalkInfo()
+          }
+        {this.renderDirectionsDetails()}
         </div>
-        <div className="walk-details-text">
-          <div className="walk-details-section">
-            <h2>Last walked</h2>
-            { this.state.lastWalked
-              ? <span>{formatDate(this.state.lastWalked)}</span>
-              : <span className="no-data">No date added yet</span>
-            }
-          </div>
-          <div className="walk-details-section">
-            <h2>Next walk</h2>
-            { this.state.nextWalk
-              ? <span>{formatDate(this.state.nextWalk)}</span>
-              : <span className="no-data">No date added yet</span>
-            }
-          </div>
-          <div className="walk-details-section">
-            <h2>Shared with</h2>
-            {this.state.sharedWith.length > 0
-              ? <ul>
-                {this.state.sharedWith.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
-                  return <li key={friend.userId}>{friend.name}</li>;
-                })
-                }
-              </ul>
-              : <span className="no-data">Shared with no one yet</span>
-            }
-          </div>
+      </>
+    );
+  }
+
+  renderWalkInfo() {
+    return (
+      <div className="walk-details-text">
+        <div className="walk-details-section">
+          <h2>Last walked</h2>
+          {this.state.lastWalked
+            ? <span>{formatDate(this.state.lastWalked)}</span>
+            : <span className="no-data">No date added yet</span>
+          }
+        </div>
+        <div className="walk-details-section">
+          <h2>Next walk</h2>
+          {this.state.nextWalk
+            ? <span>{formatDate(this.state.nextWalk)}</span>
+            : <span className="no-data">No date added yet</span>
+          }
+        </div>
+        <div className="walk-details-section">
+          <h2>Shared with</h2>
+          {this.state.sharedWith.length > 0
+            ? <ul>
+              {this.state.sharedWith.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+                return <li key={friend.userId}>{friend.name}</li>;
+              })
+              }
+            </ul>
+            : <span className="no-data">Shared with no one yet</span>
+          }
         </div>
       </div>
     );
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     return (
       <div className="route-details">
         <div className="map" ref={this.mapRef} />
-        {this.props.routeId
+        { this.props.routeId
           ? this.renderWalkDetails()
           : this.renderDirectionsDetails()
         }
@@ -257,3 +292,5 @@ export default class RouteDetails extends React.Component {
     );
   }
 }
+
+RouteDetails.contextType = AppContext;

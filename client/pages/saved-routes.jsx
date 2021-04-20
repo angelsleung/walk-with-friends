@@ -1,4 +1,6 @@
 import React from 'react';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class SavedRoutes extends React.Component {
   constructor(props) {
@@ -8,7 +10,7 @@ export default class SavedRoutes extends React.Component {
   }
 
   componentDidMount() {
-    const userId = 1;
+    const { userId } = this.context.user;
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
@@ -57,6 +59,8 @@ export default class SavedRoutes extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     return (
       <div className="page">
         <h1 className="page-title">Saved Routes</h1>
@@ -67,3 +71,5 @@ export default class SavedRoutes extends React.Component {
     );
   }
 }
+
+SavedRoutes.contextType = AppContext;

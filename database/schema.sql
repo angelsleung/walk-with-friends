@@ -8,9 +8,12 @@ create schema "public";
 
 create table "users" (
   "userId"           serial,
+  "username"         text    not null,
+  "hashedPassword"   text    not null,
   "name"             text    not null,
   "weeklyDistance"   float   not null,
-  primary key ("userId")
+  primary key ("userId"),
+  unique ("username")
 );
 
 create table "routes" (

@@ -1,4 +1,6 @@
 import React from 'react';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class LocationForm extends React.Component {
   constructor(props) {
@@ -84,6 +86,8 @@ export default class LocationForm extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     return (
       <div className="page flex-center">
         <form className="location-form" onSubmit={this.handleSubmit}>
@@ -116,3 +120,5 @@ export default class LocationForm extends React.Component {
     );
   }
 }
+
+LocationForm.contextType = AppContext;

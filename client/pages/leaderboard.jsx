@@ -1,4 +1,6 @@
 import React from 'react';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 export default class Leaderboard extends React.Component {
   constructor(props) {
@@ -9,7 +11,8 @@ export default class Leaderboard extends React.Component {
   }
 
   componentDidMount() {
-    const userId = 1;
+    if (!this.context.user) return <Redirect to="log-in" />;
+    const { userId } = this.context.user;
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
@@ -65,6 +68,8 @@ export default class Leaderboard extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="log-in" />;
+
     const sunday = this.getSunday();
     const saturday = new Date(this.getSunday().setDate(this.getSunday().getDate() +
       6));
@@ -81,3 +86,5 @@ export default class Leaderboard extends React.Component {
     );
   }
 }
+
+Leaderboard.contextType = AppContext;

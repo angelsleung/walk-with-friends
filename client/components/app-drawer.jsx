@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
 export default class AppDrawer extends React.Component {
   constructor(props) {
@@ -16,7 +17,13 @@ export default class AppDrawer extends React.Component {
     this.setState({ isOpen: false });
   }
 
+  // handleClickSignOut() {
+  //   handleSignOut;
+  //   this.handleClickExit();
+  // }
+
   render() {
+    const { handleSignOut } = this.context;
     return (
       <div className="app-drawer">
         {this.state.isOpen
@@ -27,6 +34,12 @@ export default class AppDrawer extends React.Component {
               <a onClick={this.handleClickExit} href="#map-route"><p>Map a Route</p></a>
               <a onClick={this.handleClickExit} href="#saved-routes"><p>Saved Routes</p></a>
               <a onClick={this.handleClickExit} href="#friends-routes"><p>{"My Friends' Routes"}</p></a>
+              <a onClick={() => {
+                handleSignOut();
+                this.handleClickExit();
+              }} href="#">
+                <p>Sign Out</p>
+              </a>
             </div>
             <div className="overlay" onClick={this.handleClickExit} />
           </>
@@ -36,3 +49,5 @@ export default class AppDrawer extends React.Component {
     );
   }
 }
+
+AppDrawer.contextType = AppContext;
