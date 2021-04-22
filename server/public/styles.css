@@ -597,11 +597,11 @@ header {
   width: 20rem;
   font-size: 1.4rem;
   position: absolute;
-  bottom: 3.1rem;
+  bottom: 3.2rem;
   right: 1.5rem;
   border-radius: 30px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  padding: 2rem 3rem;
+  padding: 1.5rem 3rem;
   z-index: 2;
 }
 
@@ -770,6 +770,7 @@ header {
     min-height: 125rem;
     bottom: auto;
     right: auto;
+    padding: 2rem 3rem;
   }
 
   .hide.bars-icon {
