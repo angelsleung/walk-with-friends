@@ -563,10 +563,12 @@ header {
   width: 100%;
   position: fixed;
   bottom: 0;
+  left: 0;
   padding: 0.5rem 0;
   margin: 0.5rem 0;
   border-radius: 50px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
 .navbar i {
@@ -592,13 +594,14 @@ header {
 
 .menu {
   background: rgb(238, 238, 238);
-  width: 15rem;
+  width: 20rem;
+  font-size: 1.4rem;
   position: absolute;
-  bottom: 0;
-  right: 1rem;
+  bottom: 3.1rem;
+  right: 1.5rem;
   border-radius: 30px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  padding: 2rem;
+  padding: 2rem 3rem;
   z-index: 2;
 }
 
@@ -753,7 +756,7 @@ header {
   }
 
   .app-drawer {
-    position: absolute;
+    position: fixed;
   }
 
   .app-drawer > i {
@@ -766,7 +769,11 @@ header {
   .menu {
     min-height: 125rem;
     bottom: auto;
-    left: auto;
+    right: auto;
+  }
+
+  .hide.bars-icon {
+    display: none;
   }
 
   .flex-center {
