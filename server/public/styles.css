@@ -576,7 +576,7 @@ body {
 }
 
 .app-drawer {
-  display: none;
+  /* display: none; */
 }
 
 .overlay {
