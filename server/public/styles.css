@@ -435,6 +435,7 @@ header {
 .friend-rank {
   font-size: 1.5rem;
   padding-right: 0.5rem;
+  font-weight: 500;
 }
 
 .friend-distance {
@@ -723,12 +724,7 @@ header {
 
   .edit-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .edit-row {
-    width: 23rem;
+    justify-content: center;
   }
 
   .modal {

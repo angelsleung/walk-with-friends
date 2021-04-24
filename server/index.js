@@ -222,6 +222,7 @@ app.get('/api/friendsRoutes/:userId', (req, res) => {
 
 app.post('/api/auth/sign-up', (req, res) => {
   const { username, password } = req.body;
+  const name = username[0].toUpperCase() + username.slice(1);
   argon2
     .hash(password)
     .then(hashedPassword => {
@@ -230,7 +231,7 @@ app.post('/api/auth/sign-up', (req, res) => {
           values ($1, $2, $3, $4)
           returning *
       `;
-      const params = [username, hashedPassword, username, 0.0];
+      const params = [username, hashedPassword, name, 0.0];
       return db.query(sql, params);
     })
     .then(result => {
