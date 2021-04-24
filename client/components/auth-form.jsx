@@ -20,7 +20,6 @@ export default class AuthForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { action } = this.props;
-    // console.log('action:', action);
     const req = {
       method: 'POST',
       headers: {
@@ -28,11 +27,9 @@ export default class AuthForm extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
-    // console.log('req:', req);
     fetch(`/api/auth/${action}`, req)
       .then(res => res.json())
       .then(result => {
-        // console.log('result:', result);
         if (result.user && result.token) {
           this.props.onSignIn(result);
         } else {

@@ -10,8 +10,11 @@ export default class AddFriend extends React.Component {
       <div className="page">
         <form className="add-friend-form">
           <h1 className="page-title">Add a Friend</h1>
-          <input></input>
-          <submit></submit>
+          <input className="add-friend-input" placeholder="Username"></input>
+          <button className="add-friend button">
+            <i className="add-icon fas fa-user-plus" />
+            Submit
+          </button>
         </form>
       </div>
     );
