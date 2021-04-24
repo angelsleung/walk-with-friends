@@ -31,12 +31,17 @@ create table "routes" (
   primary key ("routeId")
 );
 
+create table "sharedRoutes" (
+  "routeId"          serial,
+  "userId"          integer  not null
+);
+
 create table "friends" (
   "userId"          integer  not null,
   "friendUserId"    integer  not null
 );
 
-create table "sharedRoutes" (
-  "routeId"          serial,
-  "userId"          integer  not null
+create table "friendRequests" (
+  "userId"          integer  not null,
+  "friendUserId"    integer  not null
 );

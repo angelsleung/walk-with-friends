@@ -344,9 +344,16 @@ header {
   background-color: lightgray;
 }
 
+.edit-header {
+  font-weight: 500;
+  font-size: 1.4rem;
+  padding: 2rem 1rem 0;
+}
+
 .edit-row {
   display: flex;
   align-items: center;
+  margin: 0 1rem;
 }
 
 .edit-row > i {
@@ -357,27 +364,19 @@ header {
   width: 4rem;
 }
 
-.edit-section {
-  margin: 1rem 0;
-}
-
-.edit-section > h2 {
-  font-weight: 500;
+.edit-row > p {
   font-size: 1.4rem;
+  width: 11rem;
+  margin: 0.5rem 0;
 }
 
-.edit-section > p {
-  margin: 0;
-  font-size: 1.4rem;
-}
-
-.delete-route-section {
-  margin: 3rem 0;
+.delete.edit-row {
+  padding: 4rem 0 3rem;
 }
 
 .delete-route {
   color: #ffcb91;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.4rem;
   cursor: pointer;
   text-align: center;
@@ -436,10 +435,49 @@ header {
 .friend-rank {
   font-size: 1.5rem;
   padding-right: 0.5rem;
+  font-weight: 500;
 }
 
 .friend-distance {
   font-size: 1.4rem;
+}
+
+.add-friend.page {
+  display: flex;
+  justify-content: center;
+}
+
+.add-friend-input {
+  font-size: 1.2rem;
+  border-radius: 50px;
+  border: 1px solid gray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  height: 1.8rem;
+  padding: 1rem 1rem 1rem 1.5rem;
+  margin: 1rem 0;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.add-friend-message {
+  font-style: italic;
+
+  /* font-weight: 500; */
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.add-friend.button {
+  font-size: 1.2rem;
+  padding: 0.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem auto;
+}
+
+.add-icon {
+  padding-right: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .auth-page {
@@ -636,12 +674,16 @@ header {
     width: 100%;
   }
 
-  .app-name > h1 {
+  .app-name > a {
+    text-decoration: none;
+    color: #ffcb91;
+    margin: 0 auto;
     text-align: center;
+  }
+
+  .app-name > h1 {
     font-size: 2rem;
     font-family: 'Amaranth', sans-serif;
-    color: #ffcb91;
-    font-weight: normal;
   }
 
   .page {
@@ -720,12 +762,7 @@ header {
 
   .edit-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .edit-row {
-    width: 23rem;
+    justify-content: center;
   }
 
   .modal {
@@ -741,6 +778,10 @@ header {
   .friend-item {
     width: 30rem;
     padding: 0.5rem 0;
+  }
+
+  .add-friend-form {
+    width: 20rem;
   }
 
   .auth-form {

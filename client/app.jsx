@@ -12,6 +12,7 @@ import Auth from './pages/auth';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 import decodeToken from './lib/decode-token';
+import AddFriend from './pages/add-friend';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -77,6 +78,10 @@ export default class App extends React.Component {
     }
     if (route.path === 'friends-routes') {
       return <FriendsRoutes />;
+    }
+
+    if (route.path === 'add-friend') {
+      return <AddFriend />;
     }
   }
 

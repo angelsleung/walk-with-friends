@@ -220,8 +220,45 @@ app.get('/api/friendsRoutes/:userId', (req, res) => {
     });
 });
 
+app.get('/api/users/:username', (req, res) => {
+  const { username } = req.params;
+  const sql = `
+      select *
+        from "users"
+       where "username" = $1
+      `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
+app.post('/api/friendRequests', (req, res) => {
+  const { userId } = req.body;
+  const { friendUserId } = req.body;
+  const sql = `
+    insert into "friendRequests" ("userId", "friendUserId")
+    values ($1, $2)
+      `;
+  const params = [userId, friendUserId];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.post('/api/auth/sign-up', (req, res) => {
   const { username, password } = req.body;
+  const name = username[0].toUpperCase() + username.slice(1);
   argon2
     .hash(password)
     .then(hashedPassword => {
@@ -230,7 +267,7 @@ app.post('/api/auth/sign-up', (req, res) => {
           values ($1, $2, $3, $4)
           returning *
       `;
-      const params = [username, hashedPassword, username, 0.0];
+      const params = [username, hashedPassword, name, 0.0];
       return db.query(sql, params);
     })
     .then(result => {
