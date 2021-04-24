@@ -110,6 +110,7 @@ export default class EditRoute extends React.Component {
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
         <div className="edit-page">
+          <h2 className="edit-header">Last walked</h2>
           <div className="edit-row">
             { this.state.clickedLastWalked
               ? <i className={`${lastWalkedClass} fas fa-trash-alt`} data-type="lastWalked"
@@ -117,14 +118,12 @@ export default class EditRoute extends React.Component {
               : <i className={`${lastWalkedClass} fas fa-minus-circle`} data-type="lastWalked"
               onClick={this.handleClickMinusDate} />
             }
-            <div className="edit-section">
-              <h2>Last walked</h2>
-              { this.state.lastWalked
-                ? <p>{formatDate(this.state.lastWalked)}</p>
-                : <AddDateButton setModal={this.setModal} />
-              }
-            </div>
+            { this.state.lastWalked
+              ? <p>{formatDate(this.state.lastWalked)}</p>
+              : <AddDateButton setModal={this.setModal} />
+            }
           </div>
+          <h2 className="edit-header">Next walk</h2>
           <div className="edit-row">
             { this.state.clickedNextWalk
               ? <i className={`${nextWalkClass} fas fa-trash-alt`} data-type="nextWalk"
@@ -132,21 +131,16 @@ export default class EditRoute extends React.Component {
               : <i className={`${nextWalkClass} fas fa-minus-circle`} data-type="nextWalk"
               onClick={this.handleClickMinusDate} />
             }
-            <div className="edit-section">
-              <h2>Next walk</h2>
-              { this.state.nextWalk
-                ? <p>{formatDate(this.state.nextWalk)}</p>
-                : <AddDateButton setModal={this.setModal} />
-              }
-            </div>
+            { this.state.nextWalk
+              ? <p>{formatDate(this.state.nextWalk)}</p>
+              : <AddDateButton setModal={this.setModal} />
+            }
           </div>
-          <div className="edit-row">
+          <div className="delete edit-row">
             <i className={`${deleteRouteClass} fas fa-trash-alt`} data-type="nextWalk"
               onClick={this.handleClickTrashRoute} />
-            <div className="delete-route-section">
-              <span className="delete-route" onClick={this.handleClickDeleteRoute}>
-                Delete Route
-              </span>
+            <div className="delete-route" onClick={this.handleClickDeleteRoute}>
+              Delete Route
             </div>
           </div>
         </div>
