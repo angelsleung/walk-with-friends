@@ -6,7 +6,7 @@ export default function Header(props) {
     <header>
       <AppDrawer />
       <div className="app-name">
-        <a href="#"><h1>Walk with Friends</h1></a>
+        <h1>Walk with Friends</h1>
       </div>
     </header>
   );
