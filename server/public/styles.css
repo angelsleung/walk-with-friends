@@ -636,12 +636,16 @@ header {
     width: 100%;
   }
 
-  .app-name > h1 {
+  .app-name > a {
+    text-decoration: none;
+    color: #ffcb91;
+    margin: 0 auto;
     text-align: center;
+  }
+
+  .app-name > h1 {
     font-size: 2rem;
     font-family: 'Amaranth', sans-serif;
-    color: #ffcb91;
-    font-weight: normal;
   }
 
   .page {
