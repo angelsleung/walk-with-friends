@@ -8,7 +8,6 @@ export default class AppDrawer extends React.Component {
     this.state = { isOpen: false };
     this.handleClickIcon = this.handleClickIcon.bind(this);
     this.handleClickExit = this.handleClickExit.bind(this);
-    // this.setModal = this.setModal.bind(this);
   }
 
   handleClickIcon() {
@@ -31,6 +30,7 @@ export default class AppDrawer extends React.Component {
           <a onClick={this.handleClickExit} href="#map-route"><p>Map a Route</p></a>
           <a onClick={this.handleClickExit} href="#saved-routes"><p>Saved Routes</p></a>
           <a onClick={this.handleClickExit} href="#friends-routes"><p>{"My Friends' Routes"}</p></a>
+          <a onClick={this.handleClickExit} href="#add-friend"><p>Add a Friend</p></a>
           <a onClick={() => {
             handleSignOut();
             this.handleClickExit();
