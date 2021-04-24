@@ -87,7 +87,17 @@ insert into "routes" (
   '51 minutes',
   '["ChIJlYYq3iLEyIAR7W-7y3M7wbE","ChIJuZ22zmzEyIARH1U2pl31Nes","ChIJleDKRDzEyIAR9z-vovLIyXc","ChIJlYYq3iLEyIAR7W-7y3M7wbE"]',
   '',
-  'Sat May 01 2021 12:00:00 GMT-0700 (Pacific Daylight Time)'
+  'Sun May 02 2021 11:00:00 GMT-0700 (Pacific Daylight Time)'
+), (
+  6,
+  'Hollywood Walk of Fame, Vine Street, Los Angeles, CA, USA',
+  'TCL Chinese Theatre, Hollywood Boulevard, Hollywood, CA, USA',
+  'Funko Hollywood, Hollywood Boulevard, Los Angeles, CA, USA',
+  2.7,
+  '54 minutes',
+  '["ChIJXyC7WTu_woARPvVMCHBXd4U","ChIJw4DCAdrX3IAR-1_GYNuCOfc","ChIJv1-IVVW_woAReuX1pRWmIdk","ChIJXyC7WTu_woARPvVMCHBXd4U"]',
+  '',
+  'Sat May 08 2021 14:00:00 GMT-0700 (Pacific Daylight Time)'
 );
 
 insert into "friends" ("userId", "friendUserId")
@@ -107,4 +117,6 @@ values (1, 1),
        (2, 4),
        (4, 9),
        (5, 9),
-       (6, 9);
+       (6, 9),
+       (7, 9),
+       (8, 9);
