@@ -119,6 +119,4 @@ values (9, 1),
        (9, 8);
 
 insert into "friendRequests" ("userId", "friendUserId")
-values (9, 4),
-       (9, 5),
-       (9, 7);
+values (5, 9);
