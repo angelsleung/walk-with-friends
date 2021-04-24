@@ -38,7 +38,7 @@ export default class AddFriend extends React.Component {
         fetch('api/friendRequests', req)
           .then(res => {
             if (res.status === 201) {
-              this.setState({ message: `Sent friend request to ${this.state.username}` });
+              this.setState({ message: `Sent a friend request to ${this.state.username}` });
               this.setState({ username: '' });
             }
           })

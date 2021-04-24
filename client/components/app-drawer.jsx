@@ -31,6 +31,7 @@ export default class AppDrawer extends React.Component {
           <a onClick={this.handleClickExit} href="#saved-routes"><p>Saved Routes</p></a>
           <a onClick={this.handleClickExit} href="#friends-routes"><p>{"My Friends' Routes"}</p></a>
           <a onClick={this.handleClickExit} href="#add-friend"><p>Add a Friend</p></a>
+          <a onClick={this.handleClickExit} href="#friend-requests"><p>Friend Requests</p></a>
           <a onClick={() => {
             handleSignOut();
             this.handleClickExit();
