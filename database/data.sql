@@ -100,16 +100,6 @@ insert into "routes" (
   'Sat May 08 2021 14:00:00 GMT-0700 (Pacific Daylight Time)'
 );
 
-insert into "friends" ("userId", "friendUserId")
-values (9, 1),
-       (9, 2),
-       (9, 3),
-       (9, 4),
-       (9, 5),
-       (9, 6),
-       (9, 7),
-       (9, 8);
-
 insert into "sharedRoutes" ("routeId", "userId")
 values (1, 1),
        (1, 2),
@@ -120,3 +110,15 @@ values (1, 1),
        (6, 9),
        (7, 9),
        (8, 9);
+
+insert into "friends" ("userId", "friendUserId")
+values (9, 1),
+       (9, 2),
+       (9, 3),
+       (9, 6),
+       (9, 8);
+
+insert into "friendRequests" ("userId", "friendUserId")
+values (9, 4),
+       (9, 5),
+       (9, 7);
