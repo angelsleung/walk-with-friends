@@ -238,6 +238,25 @@ app.get('/api/users/:username', (req, res) => {
     });
 });
 
+app.get('/api/friendRequests/:userId', (req, res) => {
+  const { userId } = req.params;
+  const sql = `
+      select *
+        from "friendRequests"
+        join "users" on "friendRequests"."friendUserId" = "users"."userId"
+       where "friendRequests"."userId" = $1
+      `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.post('/api/friendRequests', (req, res) => {
   const { userId } = req.body;
   const { friendUserId } = req.body;

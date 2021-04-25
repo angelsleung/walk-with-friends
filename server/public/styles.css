@@ -822,6 +822,17 @@ header {
     width: 20rem;
   }
 
+  .friend-requests {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .request-item {
+    width: 40rem;
+    padding: 0 2rem;
+  }
+
   .auth-form {
     width: 30rem;
   }

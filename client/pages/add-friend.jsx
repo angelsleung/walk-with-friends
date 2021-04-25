@@ -19,7 +19,6 @@ export default class AddFriend extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     fetch(`/api/users/${this.state.username}`)
       .then(res => res.json())
       .then(friend => {
