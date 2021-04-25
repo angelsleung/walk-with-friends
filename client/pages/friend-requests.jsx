@@ -19,26 +19,45 @@ export default class FriendRequests extends React.Component {
       });
   }
 
-  handleClickConfirm() {
-    this.handleClickDelete();
+  handleClickConfirm(event) {
+    const request = event.target.closest('.request-item');
+    const friendUserId = parseInt(request.dataset.userId);
+    const { userId } = this.context.user;
+    const req = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, friendUserId })
+    };
+    fetch('api/friends', req)
+      .then(res => {
+        if (res.status === 201) {
+          this.deleteRequest('accepted', friendUserId);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   handleClickDelete(event) {
     const request = event.target.closest('.request-item');
+    const requesterUserId = parseInt(request.dataset.userId);
+    this.deleteRequest('deleted', requesterUserId);
+  }
+
+  deleteRequest(action, requesterUserId) {
     const { userId } = this.context.user;
-    const friendUserId = parseInt(request.dataset.userId);
     const req = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     };
-    fetch(`/api/friendRequests/${userId}/${friendUserId}`, req)
+    fetch(`/api/friendRequests/${userId}/${requesterUserId}`, req)
       .then(res => {
         if (res.status !== 204) return;
         const requests = this.state.requests;
         for (let i = 0; i < requests.length; i++) {
-          if (requests[i].userId === friendUserId) {
-            requests.splice(i, 1);
-            break;
+          if (requests[i].userId === requesterUserId) {
+            requests[i].message = `Request ${action}!`;
           }
         }
         this.setState({ requests });
@@ -57,16 +76,19 @@ export default class FriendRequests extends React.Component {
               <i className="friend-icon fas fa-user-circle" />
               <span className="request-name">{request.name}</span>
             </div>
-            <div className="request-buttons">
-              <button className="confirm button" onClick={this.handleClickConfirm}>
-                <i className="fas fa-user-plus" />
-                <span className="request-text">Confirm</span>
-              </button>
-              <button className="delete button" onClick={this.handleClickDelete}>
-                <i className="fas fa-user-slash" />
-                <span className="request-text">Delete</span>
-              </button>
-            </div>
+            { request.message
+              ? <div className="request-message">{request.message}</div>
+              : <div className="request-buttons">
+                <button className="confirm button" onClick={this.handleClickConfirm}>
+                  <i className="fas fa-user-plus" />
+                  <span className="request-text">Confirm</span>
+                </button>
+                <button className="delete button" onClick={this.handleClickDelete}>
+                  <i className="fas fa-user-slash" />
+                  <span className="request-text">Delete</span>
+                </button>
+              </div>
+            }
           </div>
         );
       })

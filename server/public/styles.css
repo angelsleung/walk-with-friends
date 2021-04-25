@@ -494,6 +494,14 @@ header {
   font-size: 1.4rem;
 }
 
+.request-message {
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  width: 7rem;
+  padding: 1rem;
+}
+
 .request-buttons {
   display: flex;
   flex-direction: column;
@@ -575,7 +583,8 @@ header {
 }
 
 .auth-submit {
-  padding: 0.5rem 2.5rem;
+  padding: 0.5rem 2rem;
+  width: 10rem;
   border-radius: 50px;
   border: 1px solid lightgray;
   background-color: rgb(195, 195, 195);

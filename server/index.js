@@ -200,6 +200,24 @@ app.get('/api/friends/:userId', (req, res) => {
     });
 });
 
+app.post('/api/friends', (req, res) => {
+  const { userId } = req.body;
+  const { friendUserId } = req.body;
+  const sql = `
+    insert into "friends" ("userId", "friendUserId")
+    values ($1, $2)
+      `;
+  const params = [userId, friendUserId];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.get('/api/friendsRoutes/:userId', (req, res) => {
   const { userId } = req.params;
   const sql = `
@@ -243,7 +261,7 @@ app.get('/api/friendRequests/:userId', (req, res) => {
   const sql = `
       select *
         from "friendRequests"
-        join "users" on "friendRequests"."friendUserId" = "users"."userId"
+        join "users" on "friendRequests"."requesterUserId" = "users"."userId"
        where "friendRequests"."userId" = $1
       `;
   const params = [userId];
@@ -259,12 +277,12 @@ app.get('/api/friendRequests/:userId', (req, res) => {
 
 app.post('/api/friendRequests', (req, res) => {
   const { userId } = req.body;
-  const { friendUserId } = req.body;
+  const { requesterUserId } = req.body;
   const sql = `
-    insert into "friendRequests" ("userId", "friendUserId")
+    insert into "friendRequests" ("userId", "requesterUserId")
     values ($1, $2)
       `;
-  const params = [userId, friendUserId];
+  const params = [userId, requesterUserId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(201);
@@ -275,15 +293,15 @@ app.post('/api/friendRequests', (req, res) => {
     });
 });
 
-app.delete('/api/friendRequests/:userId/:friendUserId', (req, res) => {
+app.delete('/api/friendRequests/:userId/:requesterUserId', (req, res) => {
   const { userId } = req.params;
-  const { friendUserId } = req.params;
+  const { requesterUserId } = req.params;
   const sql = `
     delete from "friendRequests"
           where "userId" = $1
-          and "friendUserId" = $2
+          and "requesterUserId" = $2
     `;
-  const params = [userId, friendUserId];
+  const params = [userId, requesterUserId];
   db.query(sql, params)
     .then(result => {
       res.sendStatus(204);

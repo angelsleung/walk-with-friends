@@ -43,5 +43,5 @@ create table "friends" (
 
 create table "friendRequests" (
   "userId"          integer  not null,
-  "friendUserId"    integer  not null
+  "requesterUserId"    integer  not null
 );

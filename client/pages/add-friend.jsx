@@ -27,12 +27,12 @@ export default class AddFriend extends React.Component {
           this.setState({ username: '' });
           return;
         }
-        const friendUserId = friend[0].userId;
-        const { userId } = this.context.user;
+        const [{ userId }] = friend;
+        const requesterUserId = this.context.user.userId;
         const req = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, friendUserId })
+          body: JSON.stringify({ userId, requesterUserId })
         };
         fetch('api/friendRequests', req)
           .then(res => {
