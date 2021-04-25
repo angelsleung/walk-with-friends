@@ -57,7 +57,7 @@ export default class Leaderboard extends React.Component {
           <div key={friend.userId} className="friend-item">
             <div className="friend-name-rank">
               <div className="friend-rank">{index + 1}</div>
-              <i className="friend-icon fas fa-user-circle"></i>
+              <i className="friend-icon fas fa-user-circle" />
               <div className="friend-name">{friend.name}</div>
             </div>
             <div className="friend-distance">{`${friend.weeklyDistance} mi`}</div>

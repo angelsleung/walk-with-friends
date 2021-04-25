@@ -461,8 +461,6 @@ header {
 
 .add-friend-message {
   font-style: italic;
-
-  /* font-weight: 500; */
   margin: 0;
   padding-left: 1rem;
 }
@@ -478,6 +476,46 @@ header {
 .add-icon {
   padding-right: 0.5rem;
   font-size: 1.2rem;
+}
+
+.request-item {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid lightgray;
+  padding: 0.2rem 0;
+}
+
+.contact-div {
+  display: flex;
+  align-items: center;
+}
+
+.request-name {
+  font-size: 1.4rem;
+}
+
+.request-buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2rem 0;
+}
+
+.confirm,
+.delete {
+  width: 8rem;
+  padding: 0.5rem 1rem;
+  margin: 0.2rem 0;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.delete {
+  background-color: lightgray;
+}
+
+.request-text {
+  padding-left: 0.5rem;
 }
 
 .auth-page {
