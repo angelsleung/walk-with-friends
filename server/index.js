@@ -275,6 +275,25 @@ app.post('/api/friendRequests', (req, res) => {
     });
 });
 
+app.delete('/api/friendRequests/:userId/:friendUserId', (req, res) => {
+  const { userId } = req.params;
+  const { friendUserId } = req.params;
+  const sql = `
+    delete from "friendRequests"
+          where "userId" = $1
+          and "friendUserId" = $2
+    `;
+  const params = [userId, friendUserId];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.post('/api/auth/sign-up', (req, res) => {
   const { username, password } = req.body;
   const name = username[0].toUpperCase() + username.slice(1);
