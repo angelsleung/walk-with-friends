@@ -299,7 +299,7 @@ header {
 .add-date-icon {
   color: #ffcb91;
   font-size: 2rem;
-  padding-right: 1rem;
+  padding: 0 1.5rem 0 0.2rem;
 }
 
 .add-date-text {
@@ -314,8 +314,8 @@ header {
   padding: 2rem 1rem;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  top: 35%;
-  left: 3%;
+  top: 40%;
+  left: 7%;
   z-index: 2;
 }
 
@@ -353,6 +353,10 @@ header {
   background-color: lightgray;
 }
 
+.edit-content {
+  width: 20rem;
+}
+
 .edit-header {
   font-weight: 500;
   font-size: 1.4rem;
@@ -380,7 +384,7 @@ header {
 }
 
 .delete-row {
-  padding: 4rem 0 3rem;
+  padding: 4rem 0 3rem 0.2rem;
 }
 
 .delete-route {
@@ -791,7 +795,7 @@ header {
 
   .route-list-item {
     padding-left: 2rem;
-    width: 50rem;
+    width: 45rem;
   }
 
   .route-item-totals {
@@ -834,7 +838,7 @@ header {
   }
 
   .modal {
-    left: 36%;
+    left: 40%;
   }
 
   .home-friends-list {

@@ -113,27 +113,25 @@ export default class EditRoute extends React.Component {
           <div className="edit-content">
             <h2 className="edit-header">Last walked</h2>
             <div className="edit-row">
-              { this.state.clickedLastWalked
-                ? <i className={`${lastWalkedClass} fas fa-trash-alt`} data-type="lastWalked"
-                onClick={this.handleClickTrashDate} />
-                : <i className={`${lastWalkedClass} fas fa-minus-circle`} data-type="lastWalked"
-                onClick={this.handleClickMinusDate} />
-              }
               { this.state.lastWalked
-                ? <p>{formatDate(this.state.lastWalked)}</p>
+                ? <>
+                    <i className={`${lastWalkedClass} fas fa-${this.state.clickedLastWalked ? 'trash-alt' : 'minus-circle'}`}
+                      onClick={this.state.clickedLastWalked ? this.handleClickTrashDate : this.handleClickMinusDate}
+                      data-type="lastWalked" />
+                    <p>{formatDate(this.state.lastWalked)}</p>
+                  </>
                 : <AddDateButton setModal={this.setModal} />
               }
             </div>
             <h2 className="edit-header">Next walk</h2>
             <div className="edit-row">
-              { this.state.clickedNextWalk
-                ? <i className={`${nextWalkClass} fas fa-trash-alt`} data-type="nextWalk"
-                onClick={this.handleClickTrashDate} />
-                : <i className={`${nextWalkClass} fas fa-minus-circle`} data-type="nextWalk"
-                onClick={this.handleClickMinusDate} />
-              }
               { this.state.nextWalk
-                ? <p>{formatDate(this.state.nextWalk)}</p>
+                ? <>
+                    <i className={`${nextWalkClass} fas fa-${this.state.clickedNextWalk ? 'trash-alt' : 'minus-circle'}`}
+                      onClick={this.state.clickedNextWalk ? this.handleClickTrashDate : this.handleClickMinusDate}
+                      data-type="nextWalk" />
+                    <p>{formatDate(this.state.nextWalk)}</p>
+                  </>
                 : <AddDateButton setModal={this.setModal} />
               }
             </div>
