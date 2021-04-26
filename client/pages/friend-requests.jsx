@@ -68,6 +68,9 @@ export default class FriendRequests extends React.Component {
   }
 
   renderRequests() {
+    if (this.state.requests.length === 0) {
+      return <p className="no-requests">No new friend requests!</p>;
+    }
     return (
       this.state.requests.map(request => {
         return (

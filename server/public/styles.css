@@ -210,7 +210,8 @@ header {
   flex-basis: 25%;
 }
 
-.no-routes {
+.no-routes,
+.no-requests {
   text-align: center;
   font-style: italic;
   color: darkgray;
@@ -370,7 +371,7 @@ header {
   margin: 0.5rem 0;
 }
 
-.delete.edit-row {
+.delete-row {
   padding: 4rem 0 3rem;
 }
 
@@ -856,6 +857,7 @@ header {
 
   .app-drawer {
     position: fixed;
+    z-index: 1;
   }
 
   .app-drawer > i {

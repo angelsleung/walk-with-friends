@@ -137,7 +137,7 @@ export default class EditRoute extends React.Component {
                 : <AddDateButton setModal={this.setModal} />
               }
             </div>
-            <div className="delete edit-row">
+            <div className="edit-row delete-row">
               <i className={`${deleteRouteClass} fas fa-trash-alt`} data-type="nextWalk"
                 onClick={this.handleClickTrashRoute} />
               <div className="delete-route" onClick={this.handleClickDeleteRoute}>
