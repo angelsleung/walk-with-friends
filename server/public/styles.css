@@ -32,6 +32,150 @@ header {
   position: relative;
 }
 
+.auth-text {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 5rem 1rem 1rem;
+  width: 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-style: italic;
+  letter-spacing: 0.1rem;
+}
+
+.auth-text > p {
+  padding-left: 1.5rem;
+}
+
+.auth-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-icons > i {
+  transform: rotate(-90deg);
+  font-size: 2rem;
+  padding: 0 1rem;
+}
+
+.auth-page {
+  background-color: #ffcb91;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+.auth-form {
+  width: 100%;
+}
+
+.auth-app-name {
+  text-align: center;
+  font-size: 2.4rem;
+  font-family: 'Amaranth', sans-serif;
+  color: white;
+  font-weight: normal;
+  letter-spacing: 0.05rem;
+}
+
+.auth-input-div {
+  margin: 2.5rem 1.5rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-input {
+  font-size: 1.3rem;
+  border-radius: 50px;
+  border: 1px solid darkgray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  height: 1.8rem;
+  padding: 1.2rem 0 1.2rem 1.2rem;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.auth-input::placeholder {
+  color: darkgray;
+}
+
+.invalid-login {
+  margin: 0;
+  color: rgb(93, 93, 93);
+  text-align: center;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.submit.auth-input-div {
+  margin: 2rem 0 1rem;
+}
+
+.auth-submit {
+  padding: 0.5rem 2rem;
+  width: 10rem;
+  border-radius: 50px;
+  border: 1px solid lightgray;
+  background-color: rgb(195, 195, 195);
+  color: white;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.auth-submit:hover {
+  background-color: darkgray;
+}
+
+.sign-up {
+  background-color: #6ddccf;
+}
+
+.sign-up:hover {
+  background-color: #94ebcd;
+}
+
+.alternate-action-div {
+  text-align: center;
+}
+
+.alternate-action-div > a {
+  text-decoration: none;
+}
+
+.alternate-action {
+  color: white;
+  margin: 0;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+  border-radius: 50px;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.navbar i {
+  color: lightgray;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
 .app-name {
   display: none;
 }
@@ -94,6 +238,10 @@ header {
   cursor: pointer;
 }
 
+.button:hover {
+  background-color: #94ebcd;
+}
+
 .pac-container {
   font-family: 'Raleway', sans-serif;
   border-radius: 15px;
@@ -154,7 +302,7 @@ header {
   text-decoration: none;
 }
 
-.option-button > i {
+.option-icon {
   color: #ffcb91;
   font-size: 1.8rem;
   padding: 0.5rem;
@@ -164,6 +312,11 @@ header {
   color: #ffcb91;
   font-size: 1.4rem;
   font-weight: 500;
+}
+
+.option-button:hover .option-icon,
+.option-button:hover .button-text {
+  color: #ffefa1;
 }
 
 .route-list {
@@ -308,6 +461,11 @@ header {
   font-weight: 500;
 }
 
+.add-date-div:hover .add-date-icon,
+.add-date-div:hover .add-date-text {
+  color: #ffefa1;
+}
+
 .modal {
   position: absolute;
   border-radius: 50px;
@@ -377,6 +535,14 @@ header {
   width: 4rem;
 }
 
+.navbar i:hover {
+  color: #ffcb91;
+}
+
+.edit-row > i:hover {
+  color: #ffefa1;
+}
+
 .edit-row > p {
   font-size: 1.4rem;
   width: 11rem;
@@ -393,6 +559,12 @@ header {
   font-size: 1.4rem;
   cursor: pointer;
   text-align: center;
+}
+
+.delete-route:hover,
+.delete-row:hover .delete-route,
+.delete-row:hover .delete-route-icon {
+  color: #ffefa1;
 }
 
 .route-icon-details {
@@ -543,148 +715,12 @@ header {
   background-color: lightgray;
 }
 
+.delete:hover {
+  background-color: darkgray;
+}
+
 .request-text {
   padding-left: 0.5rem;
-}
-
-.auth-page {
-  background-color: #ffcb91;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 5rem;
-}
-
-.auth-form {
-  width: 100%;
-}
-
-.auth-app-name {
-  text-align: center;
-  font-size: 2.4rem;
-  font-family: 'Amaranth', sans-serif;
-  color: white;
-  font-weight: normal;
-  letter-spacing: 0.05rem;
-}
-
-.auth-input-div {
-  margin: 2.5rem 1.5rem 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-.auth-input {
-  font-size: 1.3rem;
-  border-radius: 50px;
-  border: 1px solid darkgray;
-  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  height: 1.8rem;
-  padding: 1.2rem 0 1.2rem 1.2rem;
-  width: 100%;
-  font-family: 'Raleway', sans-serif;
-}
-
-.auth-input::placeholder {
-  color: darkgray;
-}
-
-.invalid-login {
-  margin: 0;
-  color: rgb(93, 93, 93);
-  text-align: center;
-  font-weight: 600;
-  font-style: italic;
-}
-
-.submit.auth-input-div {
-  margin: 2rem 0 1rem;
-}
-
-.auth-submit {
-  padding: 0.5rem 2rem;
-  width: 10rem;
-  border-radius: 50px;
-  border: 1px solid lightgray;
-  background-color: rgb(195, 195, 195);
-  color: white;
-  font-size: 1.6rem;
-  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  cursor: pointer;
-}
-
-.sign-up {
-  background-color: #6ddccf;
-}
-
-.alternate-action-div {
-  text-align: center;
-}
-
-.alternate-action-div > a {
-  text-decoration: none;
-}
-
-.alternate-action {
-  color: white;
-  margin: 0;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-
-.auth-text {
-  color: white;
-  font-size: 1.6rem;
-  font-weight: 500;
-  padding: 5rem 1rem 1rem;
-  width: 22rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-style: italic;
-  letter-spacing: 0.1rem;
-}
-
-.auth-text > p {
-  padding-left: 1.5rem;
-}
-
-.auth-icons {
-  display: flex;
-  justify-content: center;
-}
-
-.auth-icons > i {
-  transform: rotate(-90deg);
-  font-size: 2rem;
-  padding: 0 1rem;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  background-color: white;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  padding: 0.5rem 0;
-  margin: 0.5rem 0;
-  border-radius: 50px;
-  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  z-index: 2;
-}
-
-.navbar i {
-  color: lightgray;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.navbar i:hover {
-  color: #ffcb91;
 }
 
 .overlay {
@@ -742,7 +778,7 @@ header {
   }
 
   .app-name {
-    display: block;
+    display: flex;
     width: 100%;
   }
 
@@ -751,6 +787,10 @@ header {
     color: #ffcb91;
     margin: 0 auto;
     text-align: center;
+  }
+
+  .app-name > a:hover {
+    color: #ffefa1;
   }
 
   .app-name > h1 {
@@ -796,6 +836,11 @@ header {
   .route-list-item {
     padding-left: 2rem;
     width: 45rem;
+  }
+
+  .route-list-item:hover {
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    border-radius: 50px;
   }
 
   .route-item-totals {
@@ -877,6 +922,10 @@ header {
 
   .navbar {
     display: none;
+  }
+
+  .bars-icon:hover {
+    color: #ffefa1;
   }
 
   .app-drawer {

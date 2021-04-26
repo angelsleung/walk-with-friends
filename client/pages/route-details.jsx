@@ -208,11 +208,11 @@ export default class RouteDetails extends React.Component {
               <div className="option-button" onClick={this.handleClickDirections}>
                 { this.state.viewDirectionsPanel
                   ? <>
-                      <i className="fas fa-ellipsis-h"></i>
+                      <i className="option-icon fas fa-ellipsis-h"></i>
                       <span className="button-text">Details</span>
                     </>
                   : <>
-                      <i className="fas fa-directions" />
+                      <i className="option-icon fas fa-directions" />
                       <span className="button-text">Directions</span>
                     </>
                 }
@@ -222,14 +222,14 @@ export default class RouteDetails extends React.Component {
               <a className="option-link"
                 href={`#share-route?routeId=${this.props.routeId}`}>
                 <div className="option-button">
-                  <i className="share-icon fas fa-share" />
+                  <i className="option-icon fas fa-share" />
                   <span className="button-text">Share</span>
                 </div>
               </a>
               <a className="option-link"
                 href={`#edit-route?routeId=${this.props.routeId}`}>
                 <div className="option-button">
-                  <i className="edit-icon fas fa-edit" />
+                  <i className="option-icon fas fa-edit" />
                   <span className="button-text">Edit</span>
                 </div>
               </a>

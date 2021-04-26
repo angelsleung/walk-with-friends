@@ -136,7 +136,7 @@ export default class EditRoute extends React.Component {
               }
             </div>
             <div className="edit-row delete-row">
-              <i className={`${deleteRouteClass} fas fa-trash-alt`} data-type="nextWalk"
+              <i className={`${deleteRouteClass} delete-route-icon fas fa-trash-alt`} data-type="nextWalk"
                 onClick={this.handleClickTrashRoute} />
               <div className="delete-route" onClick={this.handleClickDeleteRoute}>
                 Delete Route
