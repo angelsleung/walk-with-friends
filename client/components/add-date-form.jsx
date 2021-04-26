@@ -64,7 +64,7 @@ export default class AddDateForm extends React.Component {
             </div>
             <div>
               <input type="datetime-local" id="date-time" className="date-time"
-                onChange={this.handleChangeDate}></input>
+                onChange={this.handleChangeDate} required></input>
             </div>
             <div className="date-button-div">
               <button onClick={this.handleCancel}

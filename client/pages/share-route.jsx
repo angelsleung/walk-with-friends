@@ -60,15 +60,11 @@ export default class ShareRoute extends React.Component {
         body: JSON.stringify({ userId: friend.userId })
       };
       fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
-        .then(res => {
-          if (res.status === 204) {
-            window.location.hash = `route-details?routeId=${this.props.routeId}`;
-          }
-        })
         .catch(err => {
           console.error(err);
         });
     }
+    window.location.hash = `route-details?routeId=${this.props.routeId}`;
   }
 
   setLastWalked(lastWalked) {
@@ -115,7 +111,7 @@ export default class ShareRoute extends React.Component {
           </ul>
           <AddDateButton setModal={this.setModal} />
           <div className="center input-div">
-            <button className="button">Share</button>
+            <button className="button" type="submit">Share</button>
           </div>
         </form>
         { this.state.modalOpen

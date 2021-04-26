@@ -113,7 +113,7 @@ export default class LocationForm extends React.Component {
               className="location-input read-only" readOnly={true} />
           </div>
           <div className="center input-div">
-            <button className="button">Go</button>
+            <button type="submit" className="button">Go</button>
           </div>
         </form>
       </div>

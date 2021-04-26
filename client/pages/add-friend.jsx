@@ -57,10 +57,10 @@ export default class AddFriend extends React.Component {
       <div className="add-friend page">
         <form className="add-friend-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Add a Friend</h1>
-          <input className="add-friend-input" value={this.state.username}
+          <input className="add-friend-input" type="text" value={this.state.username}
             onChange={this.handleChange} placeholder="Username" required autoFocus />
             <p className="add-friend-message">{this.state.message}</p>
-          <button className="add-friend button">
+          <button className="add-friend button" type="submit">
             <i className="add-icon fas fa-user-plus" />
             Submit
           </button>

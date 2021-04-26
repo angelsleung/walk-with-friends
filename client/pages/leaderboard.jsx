@@ -77,7 +77,7 @@ export default class Leaderboard extends React.Component {
       - Sat ${saturday.getMonth() + 1}/${saturday.getDate()}`;
     return (
       <div className="page">
-        <h1 className="page-title">Friends</h1>
+        <h1 className="page-title">My Friends</h1>
         <h2 className="week">{weekFormatted}</h2>
         <ol className="home-friends-list">
           {this.renderFriends()}
