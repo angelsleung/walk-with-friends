@@ -54,14 +54,14 @@ export default class Leaderboard extends React.Component {
     return (
       sortedFriends.map((friend, index) => {
         return (
-          <div key={friend.userId} className="friend-item">
+          <li key={friend.userId} className="friend-item">
             <div className="friend-name-rank">
               <div className="friend-rank">{index + 1}</div>
               <i className="friend-icon fas fa-user-circle" />
               <div className="friend-name">{friend.name}</div>
             </div>
             <div className="friend-distance">{`${friend.weeklyDistance} mi`}</div>
-          </div>
+          </li>
         );
       })
     );
@@ -79,9 +79,9 @@ export default class Leaderboard extends React.Component {
       <div className="page">
         <h1 className="page-title">Friends</h1>
         <h2 className="week">{weekFormatted}</h2>
-        <div className="home-friends-list">
+        <ol className="home-friends-list">
           {this.renderFriends()}
-        </div>
+        </ol>
       </div>
     );
   }

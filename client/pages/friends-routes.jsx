@@ -37,7 +37,7 @@ export default class FriendsRoutes extends React.Component {
         const [date, time] = formatDate(route.nextWalk).split(' @ ');
         const duration = route.duration.replace('minutes', 'mins');
         return (
-          <div key={route.routeId} onClick={this.handleClickRoute}
+          <li key={route.routeId} onClick={this.handleClickRoute}
             className="friend route-list-item" data-place-ids={route.placeIds}
             data-location-a={route.locationA} data-location-b={route.locationB}
             data-location-c={route.locationC}>
@@ -53,7 +53,7 @@ export default class FriendsRoutes extends React.Component {
               <div className="route-item-distance">{`${route.distance} mi`}</div>
               <div className="route-item-duration">{duration}</div>
             </div>
-          </div>
+          </li>
         );
       })
     );
@@ -65,9 +65,9 @@ export default class FriendsRoutes extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">{"Friends' Routes"}</h1>
-        <div className="route-list">
+        <ul className="route-list">
           {this.renderRoutes()}
-        </div>
+        </ul>
       </div>
     );
   }

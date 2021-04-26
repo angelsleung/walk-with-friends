@@ -74,7 +74,7 @@ export default class FriendRequests extends React.Component {
     return (
       this.state.requests.map(request => {
         return (
-          <div key={request.userId} className="request-item" data-user-id={request.userId}>
+          <li key={request.userId} className="request-item" data-user-id={request.userId}>
             <div className="contact-div">
               <i className="friend-icon fas fa-user-circle" />
               <span className="request-name">{request.name}</span>
@@ -92,7 +92,7 @@ export default class FriendRequests extends React.Component {
                 </button>
               </div>
             }
-          </div>
+          </li>
         );
       })
     );
@@ -104,9 +104,9 @@ export default class FriendRequests extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">Friend Requests</h1>
-        <div className="friend-requests">
+        <ul className="friend-requests">
           {this.renderRequests()}
-        </div>
+        </ul>
       </div>
     );
   }

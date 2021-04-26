@@ -166,6 +166,10 @@ header {
   font-weight: 500;
 }
 
+.route-list {
+  padding: 0;
+}
+
 .route-list-item {
   display: flex;
   border-top: 1px solid lightgray;
@@ -238,6 +242,10 @@ header {
 
 .walk-details-section li {
   padding: 0.5rem 0;
+}
+
+.shared-with-list {
+  list-style: square;
 }
 
 .no-data {
@@ -377,7 +385,7 @@ header {
 
 .delete-route {
   color: #ffcb91;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.4rem;
   cursor: pointer;
   text-align: center;
@@ -420,6 +428,10 @@ header {
   text-align: center;
   color: darkgray;
   padding: 1rem 0;
+}
+
+.home-friends-list {
+  padding: 0;
 }
 
 .friend-item {
@@ -477,6 +489,10 @@ header {
 .add-icon {
   padding-right: 0.5rem;
   font-size: 1.2rem;
+}
+
+.friend-requests {
+  padding: 0;
 }
 
 .request-item {
@@ -687,7 +703,7 @@ header {
   right: 1.5rem;
   border-radius: 30px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  padding: 1.5rem 3rem;
+  padding: 2rem 1rem 1rem 4rem;
   z-index: 2;
 }
 
@@ -699,9 +715,13 @@ header {
   color: #ffcb91;
 }
 
-.menu > h2,
-.menu p {
-  padding: 1rem 0;
+.menu > ul {
+  padding: 0;
+}
+
+.menu li {
+  list-style: none;
+  padding: 1.2rem 0;
 }
 
 .center {
@@ -871,7 +891,10 @@ header {
     min-height: 125rem;
     bottom: auto;
     right: auto;
-    padding: 2rem 3rem;
+  }
+
+  .menu li {
+    padding: 1.8rem 0;
   }
 
   .hide.bars-icon {

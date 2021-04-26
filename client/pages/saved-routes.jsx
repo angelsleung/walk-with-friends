@@ -32,7 +32,7 @@ export default class SavedRoutes extends React.Component {
       this.state.routes.map(route => {
         const duration = route.duration.replace('minutes', 'mins');
         return (
-          <div key={route.routeId} className="route-list-item"
+          <li key={route.routeId} className="route-list-item"
             onClick={this.handleClickRoute} data-route-id={route.routeId}>
             <div className="route-item-locations">
               <div className="route-item-icon-location">
@@ -52,7 +52,7 @@ export default class SavedRoutes extends React.Component {
               <div className="route-item-distance">{`${route.distance} mi`}</div>
               <div className="route-item-duration">{duration}</div>
             </div>
-          </div>
+          </li>
         );
       })
     );
@@ -64,9 +64,9 @@ export default class SavedRoutes extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">Saved Routes</h1>
-        <div className="route-list">
+        <ul className="route-list">
           {this.renderRoutes()}
-        </div>
+        </ul>
       </div>
     );
   }

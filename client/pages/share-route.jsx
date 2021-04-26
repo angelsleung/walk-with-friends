@@ -90,14 +90,14 @@ export default class ShareRoute extends React.Component {
     return (
       this.state.notYetShared.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
         return (
-          <div key={friend.userId} className="friend-list-item">
+          <li key={friend.userId} className="friend-list-item">
             <input type="checkbox" className="checkbox" id={friend.userId} name="friend"
               value={friend.userId} onChange={this.handleChange}/>
             <label className="friend-label" htmlFor={friend.userId}>
               <i className="friend-icon fas fa-user-circle" />
               <p className="friend-name">{friend.name}</p>
             </label>
-          </div>
+          </li>
         );
       })
     );
@@ -110,9 +110,9 @@ export default class ShareRoute extends React.Component {
       <div className="page">
         <form className="share-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Select Friend</h1>
-          <div className="friend-list">
+          <ul className="friend-list">
             {this.renderFriends()}
-          </div>
+          </ul>
           <AddDateButton setModal={this.setModal} />
           <div className="center input-div">
             <button className="button">Share</button>

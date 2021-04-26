@@ -25,18 +25,18 @@ export default class AppDrawer extends React.Component {
     return (
       <div className="app-drawer">
         <div className={`menu ${menuClass}`}>
-          <h2>Menu</h2>
-          <a onClick={this.handleClickExit} href="#"><p>Leaderboard</p></a>
-          <a onClick={this.handleClickExit} href="#map-route"><p>Map a Route</p></a>
-          <a onClick={this.handleClickExit} href="#saved-routes"><p>Saved Routes</p></a>
-          <a onClick={this.handleClickExit} href="#friends-routes"><p>{"My Friends' Routes"}</p></a>
-          <a onClick={this.handleClickExit} href="#add-friend"><p>Add a Friend</p></a>
-          <a onClick={this.handleClickExit} href="#friend-requests"><p>Friend Requests</p></a>
+          <ul><h2>Menu</h2></ul>
+          <a onClick={this.handleClickExit} href="#"><li>Leaderboard</li></a>
+          <a onClick={this.handleClickExit} href="#map-route"><li>Map a Route</li></a>
+          <a onClick={this.handleClickExit} href="#saved-routes"><li>Saved Routes</li></a>
+          <a onClick={this.handleClickExit} href="#friends-routes"><li>{"My Friends' Routes"}</li></a>
+          <a onClick={this.handleClickExit} href="#add-friend"><li>Add a Friend</li></a>
+          <a onClick={this.handleClickExit} href="#friend-requests"><li>Friend Requests</li></a>
           <a onClick={() => {
             handleSignOut();
             this.handleClickExit();
           }} href="#">
-            <p>Sign Out</p>
+            <li>Sign Out</li>
           </a>
         </div>
         <div className={`overlay ${menuClass}`} onClick={this.handleClickExit} />
