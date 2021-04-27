@@ -14,7 +14,8 @@ export default class RouteDetails extends React.Component {
       lastWalked: '',
       nextWalk: '',
       sharedWith: [],
-      viewDirectionsPanel: false
+      viewDirectionsPanel: false,
+      doneLoading: false
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -26,6 +27,7 @@ export default class RouteDetails extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ doneLoading: false });
     this.mapInstance = new google.maps.Map(this.mapRef.current);
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer({
@@ -73,7 +75,8 @@ export default class RouteDetails extends React.Component {
         this.setState({
           isSaved: true,
           lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk
+          nextWalk: route.nextWalk,
+          doneLoading: true
         });
       });
 
@@ -91,6 +94,7 @@ export default class RouteDetails extends React.Component {
     this.directionsService.route(request, (result, status) => {
       if (status === 'OK' && result) {
         this.directionsRenderer.setDirections(result);
+        this.setState({ doneLoading: true });
       }
     });
   }
@@ -280,15 +284,19 @@ export default class RouteDetails extends React.Component {
 
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
-
+    // const loaderClass = this.state.doneLoading ? 'hidden' : '';
+    const routeDetailsClass = this.state.doneLoading ? '' : 'hidden';
     return (
-      <div className="route-details">
-        <div className="map" ref={this.mapRef} />
-        { this.props.routeId
-          ? this.renderWalkDetails()
-          : this.renderDirectionsDetails()
-        }
-      </div>
+      <>
+        <img className={'loader'} src="https://i.gifer.com/4WqQ.gif" />
+        <div className={`route-details ${routeDetailsClass}`}>
+          <div className="map" ref={this.mapRef} />
+          { this.props.routeId
+            ? this.renderWalkDetails()
+            : this.renderDirectionsDetails()
+          }
+        </div>
+      </>
     );
   }
 }

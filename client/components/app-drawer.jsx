@@ -21,7 +21,8 @@ export default class AppDrawer extends React.Component {
   render() {
     const { handleSignOut } = this.context;
     const iconClass = this.state.isOpen ? 'hide' : '';
-    const menuClass = this.state.isOpen ? '' : 'hidden';
+    const menuClass = this.state.isOpen ? 'open' : '';
+    const overlayClass = this.state.isOpen ? '' : 'hidden';
     return (
       <div className="app-drawer">
         <div className={`menu ${menuClass}`}>
@@ -39,7 +40,7 @@ export default class AppDrawer extends React.Component {
             <li>Sign Out</li>
           </a>
         </div>
-        <div className={`overlay ${menuClass}`} onClick={this.handleClickExit} />
+        <div className={`overlay ${overlayClass}`} onClick={this.handleClickExit} />
         <i onClick={this.handleClickIcon} className={`fas fa-bars bars-icon ${iconClass}`} />
         {this.state.isOpen ? <Navbar onClick={this.handleClickExit} isOpen={this.state.isOpen}/> : ''}
       </div>

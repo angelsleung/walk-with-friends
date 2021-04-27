@@ -745,6 +745,12 @@ header {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   padding: 2rem 1rem 1rem 4rem;
   z-index: 2;
+  transform: translateY(110%);
+  transition: transform 0.3s ease-out;
+}
+
+.menu.open {
+  transform: translateY(0);
 }
 
 .menu > a {
@@ -762,6 +768,10 @@ header {
 .menu li {
   list-style: none;
   padding: 1.2rem 0;
+}
+
+.loader {
+  transform: scale(0.5);
 }
 
 .center {
@@ -944,6 +954,11 @@ header {
     min-height: 125rem;
     bottom: auto;
     right: auto;
+    transform: translateX(-100%);
+  }
+
+  .menu.open {
+    transform: translateX(0);
   }
 
   .menu li {
