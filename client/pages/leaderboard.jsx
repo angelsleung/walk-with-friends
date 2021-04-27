@@ -6,13 +6,15 @@ export default class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: []
+      friends: [],
+      doneLoading: false
     };
   }
 
   componentDidMount() {
     if (!this.context.user) return <Redirect to="log-in" />;
     const { userId } = this.context.user;
+    this.setState({ doneLoading: false });
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
@@ -37,7 +39,10 @@ export default class Leaderboard extends React.Component {
               weeklyDistance
             };
             friends.push(me);
-            this.setState({ friends });
+            this.setState({
+              friends,
+              doneLoading: true
+            });
           });
       });
   }
@@ -78,10 +83,26 @@ export default class Leaderboard extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">My Friends</h1>
-        <h2 className="week">{weekFormatted}</h2>
-        <ol className="home-friends-list">
-          {this.renderFriends()}
-        </ol>
+          <h2 className="week">{weekFormatted}</h2>
+          { this.state.doneLoading
+            ? <ol className="home-friends-list">
+                {this.renderFriends()}
+              </ol>
+            : <div className="spinner-div">
+                <div className="spinner">
+                  <div className="loader">
+                    <div><div></div></div>
+                    <div><div></div></div>
+                    <div><div></div></div>
+                    <div><div></div></div>
+                    <div><div></div></div>
+                    <div><div></div></div>
+                    <div><div></div></div>
+                    <div><div></div></div>
+                  </div>
+                </div>
+              </div>
+          }
       </div>
     );
   }

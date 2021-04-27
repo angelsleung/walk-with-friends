@@ -288,7 +288,7 @@ export default class RouteDetails extends React.Component {
     const routeDetailsClass = this.state.doneLoading ? '' : 'hidden';
     return (
       <>
-        <img className={'loader'} src="https://i.gifer.com/4WqQ.gif" />
+        <img className="loader" src="./" />
         <div className={`route-details ${routeDetailsClass}`}>
           <div className="map" ref={this.mapRef} />
           { this.props.routeId
