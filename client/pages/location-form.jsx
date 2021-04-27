@@ -8,7 +8,10 @@ export default class LocationForm extends React.Component {
     this.state = {
       A: { name: '' },
       B: { name: '' },
-      C: { name: '' }
+      C: { name: '' },
+      errorA: false,
+      errorB: false,
+      errorC: false
     };
     this.autocompleteRefA = React.createRef();
     this.autocompleteRefB = React.createRef();
@@ -51,19 +54,28 @@ export default class LocationForm extends React.Component {
     this.autocompleteInstanceA.addListener('place_changed', () => {
       const place = this.autocompleteInstanceA.getPlace();
       if (place) {
-        this.setState({ A: place });
+        this.setState({
+          A: place,
+          errorA: false
+        });
       }
     });
     this.autocompleteInstanceB.addListener('place_changed', () => {
       const place = this.autocompleteInstanceB.getPlace();
       if (place) {
-        this.setState({ B: place });
+        this.setState({
+          B: place,
+          errorB: false
+        });
       }
     });
     this.autocompleteInstanceC.addListener('place_changed', () => {
       const place = this.autocompleteInstanceC.getPlace();
       if (place) {
-        this.setState({ C: place });
+        this.setState({
+          C: place,
+          errorC: false
+        });
       }
     });
   }
@@ -82,30 +94,43 @@ export default class LocationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    window.location.hash = `route-details?nameA=${this.state.A.name}&nameB=${this.state.B.name}&nameC=${this.state.C.name}&placeA=${this.state.A.place_id}&placeB=${this.state.B.place_id}&placeC=${this.state.C.place_id}`;
+    this.setState({
+      errorA: !this.state.A.place_id,
+      errorB: !this.state.B.place_id,
+      errorC: !this.state.C.place_id
+    });
+    if (this.state.A.place_id && this.state.B.place_id && this.state.C.place_id) {
+      window.location.hash = `route-details?nameA=${this.state.A.name}&nameB=${this.state.B.name}&nameC=${this.state.C.name}&placeA=${this.state.A.place_id}&placeB=${this.state.B.place_id}&placeC=${this.state.C.place_id}`;
+    }
   }
 
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
-
+    const errorAClass = this.state.errorA ? '' : 'invisible';
+    const errorBClass = this.state.errorB ? '' : 'invisible';
+    const errorCClass = this.state.errorC ? '' : 'invisible';
     return (
       <div className="page flex-center">
+        {this.state.modalOpen ? <div className="error-modal"></div> : ''}
         <form className="location-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Map a Route</h1>
           <div className="input-div">
             <label htmlFor="A" className="location-label">Start (A)</label>
             <input type="text" value={this.state.A.name} onChange={this.handleChangeA}
               className="location-input" ref={this.autocompleteRefA} id="A" required autoFocus/>
+            <p className={`location-message ${errorAClass}`}>Select a location from the list</p>
           </div>
           <div className="input-div">
             <label htmlFor="B" className="location-label">Stop (B)</label>
             <input type="text" value={this.state.B.name} onChange={this.handleChangeB}
               className="location-input" ref={this.autocompleteRefB} id="B" required/>
+            <p className={`location-message ${errorBClass}`}>Select a location from the list</p>
           </div>
           <div className="input-div">
             <label htmlFor="C" className="location-label">Stop (C)</label>
             <input type="text" value={this.state.C.name} onChange={this.handleChangeC}
               className="location-input" ref={this.autocompleteRefC} id="C" required/>
+            <p className={`location-message ${errorCClass}`}>Select a location from the list</p>
           </div>
           <div className="input-div">
             <label htmlFor="D" className="location-label">End (D)</label>

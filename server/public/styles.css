@@ -218,6 +218,14 @@ header {
   font-family: 'Raleway', sans-serif;
 }
 
+.location-message {
+  font-style: italic;
+  color: orange;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
 .read-only {
   display: flex;
   color: black;
@@ -789,7 +797,7 @@ header {
 }
 
 .spinner-page {
-  min-height: 80vh;
+  min-height: 90vh;
   background-color: white;
   display: flex;
   justify-content: center;
