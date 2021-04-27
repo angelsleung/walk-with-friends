@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
 
 export default class AddFriend extends React.Component {
   constructor(props) {
@@ -75,20 +76,7 @@ export default class AddFriend extends React.Component {
                     Submit
                 </button>
               </>
-            : <div className="spinner-div">
-                <div className="spinner">
-                  <div className="loader">
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                  </div>
-                </div>
-              </div>
+            : <Spinner />
           }
         </form>
       </div>

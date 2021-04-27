@@ -1,5 +1,6 @@
 import React from 'react';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
 import AppContext from '../lib/app-context';
 
 export default class Leaderboard extends React.Component {
@@ -88,20 +89,7 @@ export default class Leaderboard extends React.Component {
             ? <ol className="home-friends-list">
                 {this.renderFriends()}
               </ol>
-            : <div className="spinner-div">
-                <div className="spinner">
-                  <div className="loader">
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                    <div><div></div></div>
-                  </div>
-                </div>
-              </div>
+            : <Spinner />
           }
       </div>
     );
