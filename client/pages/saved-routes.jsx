@@ -1,11 +1,15 @@
 import React from 'react';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
 import AppContext from '../lib/app-context';
 
 export default class SavedRoutes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { routes: [] };
+    this.state = {
+      routes: [],
+      doneLoading: false
+    };
     this.handleClickRoute = this.handleClickRoute.bind(this);
   }
 
@@ -14,7 +18,10 @@ export default class SavedRoutes extends React.Component {
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
-        this.setState({ routes });
+        this.setState({
+          routes,
+          doneLoading: true
+        });
       });
   }
 
@@ -64,9 +71,13 @@ export default class SavedRoutes extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">Saved Routes</h1>
-        <ul className="route-list">
-          {this.renderRoutes()}
-        </ul>
+        { this.state.doneLoading
+          ? <ul className="route-list">
+              {this.renderRoutes()}
+            </ul>
+          : <Spinner />
+        }
+
       </div>
     );
   }

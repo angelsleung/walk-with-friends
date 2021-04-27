@@ -1,11 +1,15 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import Spinner from '../components/spinner';
 import Redirect from '../components/redirect';
 
 export default class FriendRequests extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { requests: [] };
+    this.state = {
+      requests: [],
+      doneLoading: false
+    };
     this.handleClickConfirm = this.handleClickConfirm.bind(this);
     this.handleClickDelete = this.handleClickDelete.bind(this);
   }
@@ -15,7 +19,10 @@ export default class FriendRequests extends React.Component {
     fetch(`/api/friendRequests/${userId}`)
       .then(res => res.json())
       .then(requests => {
-        this.setState({ requests });
+        this.setState({
+          requests,
+          doneLoading: true
+        });
       });
   }
 
@@ -104,9 +111,12 @@ export default class FriendRequests extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">Friend Requests</h1>
-        <ul className="friend-requests">
-          {this.renderRequests()}
-        </ul>
+        { this.state.doneLoading
+          ? <ul className="friend-requests">
+              {this.renderRequests()}
+            </ul>
+          : <Spinner />
+        }
       </div>
     );
   }

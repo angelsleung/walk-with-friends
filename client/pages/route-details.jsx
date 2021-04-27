@@ -1,7 +1,8 @@
 import React from 'react';
 import SaveButton from '../components/save-button';
-import formatDate from '../lib/format-date';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
+import formatDate from '../lib/format-date';
 import AppContext from '../lib/app-context';
 
 export default class RouteDetails extends React.Component {
@@ -27,7 +28,6 @@ export default class RouteDetails extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ doneLoading: false });
     this.mapInstance = new google.maps.Map(this.mapRef.current);
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer({
@@ -75,8 +75,7 @@ export default class RouteDetails extends React.Component {
         this.setState({
           isSaved: true,
           lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk,
-          doneLoading: true
+          nextWalk: route.nextWalk
         });
       });
 
@@ -284,11 +283,15 @@ export default class RouteDetails extends React.Component {
 
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
-    // const loaderClass = this.state.doneLoading ? 'hidden' : '';
     const routeDetailsClass = this.state.doneLoading ? '' : 'hidden';
     return (
       <>
-        <img className="loader" src="./" />
+        { this.state.doneLoading
+          ? ''
+          : <div className="spinner-page">
+              <Spinner />
+            </div>
+        }
         <div className={`route-details ${routeDetailsClass}`}>
           <div className="map" ref={this.mapRef} />
           { this.props.routeId

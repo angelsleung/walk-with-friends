@@ -2,6 +2,7 @@ import React from 'react';
 import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
 import AppContext from '../lib/app-context';
 
 export default class ShareRoute extends React.Component {
@@ -11,7 +12,8 @@ export default class ShareRoute extends React.Component {
       notYetShared: [],
       lastWalked: '',
       nextWalk: '',
-      modalOpen: false
+      modalOpen: false,
+      doneLoading: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,7 +35,10 @@ export default class ShareRoute extends React.Component {
               sharedWithUserIds[sharedWith[i].userId] = true;
             }
             const notYetShared = friends.filter(friend => !sharedWithUserIds[friend.userId]);
-            this.setState({ notYetShared });
+            this.setState({
+              notYetShared,
+              doneLoading: true
+            });
           });
       });
   }
@@ -106,9 +111,12 @@ export default class ShareRoute extends React.Component {
       <div className="page">
         <form className="share-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Select Friend</h1>
-          <ul className="friend-list">
-            {this.renderFriends()}
-          </ul>
+          { this.state.doneLoading
+            ? <ul className="friend-list">
+                {this.renderFriends()}
+              </ul>
+            : <Spinner />
+          }
           <AddDateButton setModal={this.setModal} />
           <div className="center input-div">
             <button className="button" type="submit">Share</button>
