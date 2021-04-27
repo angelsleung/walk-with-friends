@@ -37,7 +37,7 @@ export default class FriendsRoutes extends React.Component {
 
   renderRoutes() {
     if (this.state.routes.length === 0) {
-      return <p className="no-routes">No routes yet</p>;
+      return <p className="no-routes">No routes shared with me yet!</p>;
     }
     return (
       this.state.routes.map(route => {
