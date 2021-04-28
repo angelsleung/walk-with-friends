@@ -18,7 +18,7 @@ export default class RouteDetails extends React.Component {
       sharedWith: [],
       viewDirectionsPanel: false,
       doneLoading: false,
-      errorOpen: false
+      errorMessage: ''
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -31,6 +31,10 @@ export default class RouteDetails extends React.Component {
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     this.mapInstance = new google.maps.Map(this.mapRef.current);
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer({
@@ -83,7 +87,7 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
-        this.setState({ errorOpen: true });
+        this.setState({ errorMessage: 'bad-request' });
       });
 
     fetch(`/api/sharedRoutes/${this.props.routeId}`)
@@ -93,7 +97,7 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
-        this.setState({ errorOpen: true });
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -103,7 +107,7 @@ export default class RouteDetails extends React.Component {
         this.directionsRenderer.setDirections(result);
         this.setState({ doneLoading: true });
       } else {
-        this.setState({ errorOpen: true });
+        this.setState({ errorMessage: 'network-error' });
       }
     });
   }
@@ -170,7 +174,7 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
-        this.setState({ errorOpen: true });
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -187,6 +191,7 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -194,8 +199,8 @@ export default class RouteDetails extends React.Component {
     this.setState({ viewDirectionsPanel: !this.state.viewDirectionsPanel });
   }
 
-  setErrorModal(errorOpen) {
-    this.setState({ errorOpen });
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderDirectionsDetails() {
@@ -300,18 +305,10 @@ export default class RouteDetails extends React.Component {
 
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
-    if (!navigator.onLine) {
-      this.setState({ errorOpen: true });
-    }
+
     const routeDetailsClass = this.state.doneLoading ? '' : 'hidden';
     return (
-      <>
-        { this.state.doneLoading
-          ? ''
-          : <div className="spinner-page">
-              <Spinner />
-            </div>
-        }
+      <div className="background">
         <div className={`route-details ${routeDetailsClass}`}>
           <div className="map" ref={this.mapRef} />
           { this.props.routeId
@@ -319,8 +316,17 @@ export default class RouteDetails extends React.Component {
             : this.renderDirectionsDetails()
           }
         </div>
-        { this.state.errorOpen ? <ErrorModal setModal={this.setErrorModal} /> : ''}
-      </>
+        { this.state.doneLoading
+          ? ''
+          : <div className="spinner-page">
+              <Spinner />
+            </div>
+        }
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
+        }
+      </div>
     );
   }
 }

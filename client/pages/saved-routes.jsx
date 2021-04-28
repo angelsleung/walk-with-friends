@@ -1,6 +1,7 @@
 import React from 'react';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 
 export default class SavedRoutes extends React.Component {
@@ -8,12 +9,19 @@ export default class SavedRoutes extends React.Component {
     super(props);
     this.state = {
       routes: [],
-      doneLoading: false
+      doneLoading: false,
+      errorMessage: ''
     };
     this.handleClickRoute = this.handleClickRoute.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
+
     const { userId } = this.context.user;
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
@@ -22,6 +30,10 @@ export default class SavedRoutes extends React.Component {
           routes,
           doneLoading: true
         });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -29,6 +41,10 @@ export default class SavedRoutes extends React.Component {
     const clickedRoute = event.target.closest('.route-list-item');
     const routeId = clickedRoute.dataset.routeId;
     window.location.hash = `route-details?routeId=${routeId}`;
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderRoutes() {
@@ -77,7 +93,10 @@ export default class SavedRoutes extends React.Component {
             </ul>
           : <Spinner />
         }
-
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
+        }
       </div>
     );
   }

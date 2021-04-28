@@ -2,6 +2,7 @@ import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 
 export default class AddFriend extends React.Component {
   constructor(props) {
@@ -9,10 +10,18 @@ export default class AddFriend extends React.Component {
     this.state = {
       username: '',
       message: '',
-      doneLoading: true
+      doneLoading: true,
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
+  }
+
+  componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+    }
   }
 
   handleChange(event) {
@@ -21,6 +30,10 @@ export default class AddFriend extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     this.setState({ doneLoading: false });
     fetch(`/api/users/${this.state.username}`)
       .then(res => res.json())
@@ -40,23 +53,25 @@ export default class AddFriend extends React.Component {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId, requesterUserId })
         };
-        fetch('api/friendRequests', req)
-          .then(res => {
-            if (res.status === 201) {
-              this.setState({
-                message: `Sent a friend request to ${this.state.username}`,
-                username: '',
-                doneLoading: true
-              });
-            }
-          })
-          .catch(err => {
-            console.error(err);
+        return fetch('api/friendRequests', req);
+      })
+      .then(res => {
+        if (res.status === 201) {
+          this.setState({
+            message: `Sent a friend request to ${this.state.username}`,
+            username: '',
+            doneLoading: true
           });
+        }
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   render() {
@@ -79,6 +94,10 @@ export default class AddFriend extends React.Component {
             : <Spinner />
           }
         </form>
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
+        }
       </div>
     );
   }

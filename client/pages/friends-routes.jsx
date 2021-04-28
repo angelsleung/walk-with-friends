@@ -1,6 +1,7 @@
 import React from 'react';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 import formatDate from '../lib/format-date';
 
@@ -12,9 +13,14 @@ export default class FriendsRoutes extends React.Component {
       doneLoading: false
     };
     this.handleClickRoute = this.handleClickRoute.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     const { userId } = this.context.user;
     fetch(`/api/friendsRoutes/${userId}`)
       .then(res => res.json())
@@ -23,6 +29,10 @@ export default class FriendsRoutes extends React.Component {
           routes,
           doneLoading: true
         });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -33,6 +43,10 @@ export default class FriendsRoutes extends React.Component {
     const locationB = route.dataset.locationB;
     const locationC = route.dataset.locationC;
     window.location.hash = `route-details?nameA=${locationA}&nameB=${locationB}&nameC=${locationC}&placeA=${placeIdA}&placeB=${placeIdB}&placeC=${placeIdC}`;
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderRoutes() {
@@ -77,6 +91,10 @@ export default class FriendsRoutes extends React.Component {
               {this.renderRoutes()}
             </ul>
           : <Spinner />
+        }
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
         }
       </div>
     );

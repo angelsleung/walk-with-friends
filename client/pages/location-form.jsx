@@ -13,7 +13,7 @@ export default class LocationForm extends React.Component {
       errorA: false,
       errorB: false,
       errorC: false,
-      errorOpen: false
+      errorMessage: ''
     };
     this.autocompleteRefA = React.createRef();
     this.autocompleteRefB = React.createRef();
@@ -29,6 +29,11 @@ export default class LocationForm extends React.Component {
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
+
     this.autocompleteInstanceA = new google.maps.places.Autocomplete(
       this.autocompleteRefA.current,
       {
@@ -97,7 +102,7 @@ export default class LocationForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     if (!navigator.onLine) {
-      this.setState({ errorOpen: true });
+      this.setState({ errorMessage: 'network-error' });
       return;
     }
     this.setState({
@@ -110,8 +115,8 @@ export default class LocationForm extends React.Component {
     }
   }
 
-  setErrorModal(errorOpen) {
-    this.setState({ errorOpen });
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   render() {
@@ -121,14 +126,12 @@ export default class LocationForm extends React.Component {
     const errorCClass = this.state.errorC ? '' : 'invisible';
     return (
       <div className="page">
-        {this.state.errorOpen ? <ErrorModal isOpen={this.state.errorOpen} set={this.setErrorModal}/> : ''}
         <form className="location-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Map a Route</h1>
           <div className="input-div">
             <label htmlFor="A" className="location-label">Start (A)</label>
             <input type="text" value={this.state.A.name} onChange={this.handleChangeA}
-              className="location-input" ref={this.autocompleteRefA} id="A"
-              readOnly={!navigator.onLine} required autoFocus/>
+              className="location-input" ref={this.autocompleteRefA} id="A" required autoFocus/>
             <p className={`location-message ${errorAClass}`}>Select a location from the list</p>
           </div>
           <div className="input-div">
@@ -152,6 +155,10 @@ export default class LocationForm extends React.Component {
             <button type="submit" className="button">Go</button>
           </div>
         </form>
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
+        }
       </div>
     );
   }

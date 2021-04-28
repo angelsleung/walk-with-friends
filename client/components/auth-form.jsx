@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorModal from '../components/error-modal';
 
 export default class AuthForm extends React.Component {
   constructor(props) {
@@ -6,10 +7,18 @@ export default class AuthForm extends React.Component {
     this.state = {
       username: '',
       password: '',
-      invalidLogin: false
+      invalidLogin: false,
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
+  }
+
+  componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+    }
   }
 
   handleChange(event) {
@@ -35,7 +44,15 @@ export default class AuthForm extends React.Component {
         } else {
           this.setState({ invalidLogin: true });
         }
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   render() {
@@ -77,6 +94,10 @@ export default class AuthForm extends React.Component {
             <p className="alternate-action">{alternateActionText}</p>
           </a>
         </div>
+        { this.state.errorMessage
+          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
+          : ''
+        }
       </form>
     );
   }

@@ -3,6 +3,7 @@ import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import formatDate from '../lib/format-date';
 import AppContext from '../lib/app-context';
 
@@ -17,6 +18,7 @@ export default class EditRoute extends React.Component {
       clickedDeleteRoute: false,
       modalOpen: false,
       doneLoading: false
+
     };
     this.handleClickMinusDate = this.handleClickMinusDate.bind(this);
     this.handleClickTrashDate = this.handleClickTrashDate.bind(this);
@@ -24,10 +26,15 @@ export default class EditRoute extends React.Component {
     this.handleClickTrashRoute = this.handleClickTrashRoute.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
-    this.setModal = this.setModal.bind(this);
+    this.setDateModal = this.setDateModal.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     fetch(`/api/routes/${this.props.routeId}`)
       .then(res => res.json())
       .then(route => {
@@ -36,6 +43,10 @@ export default class EditRoute extends React.Component {
           nextWalk: route.nextWalk,
           doneLoading: true
         });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -72,6 +83,7 @@ export default class EditRoute extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -93,6 +105,7 @@ export default class EditRoute extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -104,8 +117,12 @@ export default class EditRoute extends React.Component {
     this.setState({ nextWalk });
   }
 
-  setModal(modalOpen) {
+  setDateModal(modalOpen) {
     this.setState({ modalOpen });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   render() {
@@ -129,7 +146,7 @@ export default class EditRoute extends React.Component {
                         data-type="lastWalked" />
                       <p>{formatDate(this.state.lastWalked)}</p>
                     </>
-                    : <AddDateButton setModal={this.setModal} />
+                    : <AddDateButton setModal={this.setDateModal} />
                   }
                 </div>
                 <h2 className="edit-header">Next walk</h2>
@@ -141,7 +158,7 @@ export default class EditRoute extends React.Component {
                         data-type="nextWalk" />
                       <p>{formatDate(this.state.nextWalk)}</p>
                     </>
-                    : <AddDateButton setModal={this.setModal} />
+                    : <AddDateButton setModal={this.setDateModal} />
                   }
                 </div>
                 <div className="edit-row delete-row">
@@ -161,9 +178,13 @@ export default class EditRoute extends React.Component {
           : <Spinner />
         }
         { this.state.modalOpen
-          ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}
+          ? <AddDateForm routeId={this.props.routeId} setModal={this.setDateModal}
             lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
             nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          : ''
+        }
+        { this.state.errorMessage
+          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
           : ''
         }
       </div>

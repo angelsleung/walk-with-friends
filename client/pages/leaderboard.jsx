@@ -10,19 +10,25 @@ export default class Leaderboard extends React.Component {
     this.state = {
       friends: [],
       doneLoading: false,
-      errorOpen: false
+      errorMessage: ''
     };
     this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
+
     if (!this.context.user) return <Redirect to="log-in" />;
-    const { userId } = this.context.user;
+
     this.setState({ doneLoading: false });
+    const { userId } = this.context.user;
+    let weeklyDistance = 0;
     fetch(`/api/savedRoutes/${userId}`)
       .then(res => res.json())
       .then(routes => {
-        let weeklyDistance = 0;
         for (let i = 0; i < routes.length; i++) {
           if (routes[i].lastWalked) {
             const parsedDate = Date.parse(routes[i].lastWalked);
@@ -34,28 +40,24 @@ export default class Leaderboard extends React.Component {
             }
           }
         }
-        fetch(`/api/friends/${userId}`)
-          .then(res => res.json())
-          .then(friends => {
-            const me = {
-              name: 'Me',
-              userId,
-              weeklyDistance
-            };
-            friends.push(me);
-            this.setState({
-              friends,
-              doneLoading: true
-            });
-          })
-          .catch(err => {
-            console.error(err);
-            this.setState({ errorOpen: true });
-          });
+        return fetch(`/api/friends/${userId}`);
+      })
+      .then(res => res.json())
+      .then(friends => {
+        const me = {
+          name: 'Me',
+          userId,
+          weeklyDistance
+        };
+        friends.push(me);
+        this.setState({
+          friends,
+          doneLoading: true
+        });
       })
       .catch(err => {
         console.error(err);
-        this.setState({ errorOpen: true });
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -65,8 +67,8 @@ export default class Leaderboard extends React.Component {
     return new Date(today.setDate(today.getDate() - today.getDay()));
   }
 
-  setErrorModal(errorOpen) {
-    this.setState({ errorOpen });
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderFriends() {
@@ -106,7 +108,10 @@ export default class Leaderboard extends React.Component {
               </ol>
             : <Spinner />
           }
-        { this.state.errorOpen ? <ErrorModal setModal={this.setErrorModal} /> : '' }
+        { this.state.errorMessage
+          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
+          : ''
+        }
       </div>
 
     );

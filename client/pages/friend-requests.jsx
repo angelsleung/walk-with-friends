@@ -2,19 +2,25 @@ import React from 'react';
 import AppContext from '../lib/app-context';
 import Spinner from '../components/spinner';
 import Redirect from '../components/redirect';
+import ErrorModal from '../components/error-modal';
 
 export default class FriendRequests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       requests: [],
-      doneLoading: false
+      doneLoading: false,
+      errorMessage: ''
     };
     this.handleClickConfirm = this.handleClickConfirm.bind(this);
     this.handleClickDelete = this.handleClickDelete.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+    }
     const { userId } = this.context.user;
     fetch(`/api/friendRequests/${userId}`)
       .then(res => res.json())
@@ -23,6 +29,10 @@ export default class FriendRequests extends React.Component {
           requests,
           doneLoading: true
         });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -43,6 +53,7 @@ export default class FriendRequests extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -71,7 +82,12 @@ export default class FriendRequests extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderRequests() {
@@ -116,6 +132,10 @@ export default class FriendRequests extends React.Component {
               {this.renderRequests()}
             </ul>
           : <Spinner />
+        }
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
         }
       </div>
     );

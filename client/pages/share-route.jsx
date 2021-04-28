@@ -3,6 +3,7 @@ import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 
 export default class ShareRoute extends React.Component {
@@ -12,17 +13,23 @@ export default class ShareRoute extends React.Component {
       notYetShared: [],
       lastWalked: '',
       nextWalk: '',
-      modalOpen: false,
-      doneLoading: false
+      dateOpen: false,
+      doneLoading: false,
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
-    this.setModal = this.setModal.bind(this);
+    this.setDateModal = this.setDateModal.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     const { userId } = this.context.user;
     fetch(`/api/friends/${userId}`)
       .then(res => res.json())
@@ -39,7 +46,15 @@ export default class ShareRoute extends React.Component {
               notYetShared,
               doneLoading: true
             });
+          })
+          .catch(err => {
+            console.error(err);
+            this.setState({ errorMessage: 'bad-request' });
           });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -68,6 +83,7 @@ export default class ShareRoute extends React.Component {
       fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
         .catch(err => {
           console.error(err);
+          this.setState({ errorMessage: 'bad-request' });
         });
     }
     window.location.hash = `route-details?routeId=${this.props.routeId}`;
@@ -81,8 +97,12 @@ export default class ShareRoute extends React.Component {
     this.setState({ nextWalk });
   }
 
-  setModal(modalOpen) {
+  setDateModal(modalOpen) {
     this.setState({ modalOpen });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderFriends() {
@@ -117,7 +137,7 @@ export default class ShareRoute extends React.Component {
                 <ul className="friend-list">
                   {this.renderFriends()}
                 </ul>
-                <AddDateButton setModal={this.setModal} />
+                <AddDateButton setModal={this.setDateModal} />
                 <div className="center input-div">
                   <button className="button" type="submit">Share</button>
                 </div>
@@ -125,10 +145,14 @@ export default class ShareRoute extends React.Component {
             : <Spinner />
           }
         </form>
-        { this.state.modalOpen
-          ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}
+        { this.state.dateOpen
+          ? <AddDateForm routeId={this.props.routeId} setModal={this.setDateModal}
             lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
             nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          : ''
+        }
+        { this.state.errorMessage
+          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
           : ''
         }
       </div>
