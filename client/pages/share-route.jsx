@@ -56,6 +56,7 @@ export default class ShareRoute extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ doneLoading: false });
     for (let i = 0; i < this.state.notYetShared.length; i++) {
       const friend = this.state.notYetShared[i];
       if (!friend.selected) continue;
@@ -112,15 +113,17 @@ export default class ShareRoute extends React.Component {
         <form className="share-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Select Friend</h1>
           { this.state.doneLoading
-            ? <ul className="friend-list">
-                {this.renderFriends()}
-              </ul>
+            ? <>
+                <ul className="friend-list">
+                  {this.renderFriends()}
+                </ul>
+                <AddDateButton setModal={this.setModal} />
+                <div className="center input-div">
+                  <button className="button" type="submit">Share</button>
+                </div>
+              </>
             : <Spinner />
           }
-          <AddDateButton setModal={this.setModal} />
-          <div className="center input-div">
-            <button className="button" type="submit">Share</button>
-          </div>
         </form>
         { this.state.modalOpen
           ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}

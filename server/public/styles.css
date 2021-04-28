@@ -167,7 +167,7 @@ header {
   margin: 0.5rem 0;
   border-radius: 50px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  z-index: 2;
+  z-index: 3;
 }
 
 .navbar i {
@@ -194,10 +194,14 @@ header {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   height: 100%;
   margin: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-div {
-  padding: 2rem 0;
+  padding: 2rem 0 1rem;
 }
 
 .location-label {
@@ -224,6 +228,7 @@ header {
   margin: 0 0.5rem;
   font-size: 1.2rem;
   font-weight: 500;
+  margin-left: 1.5rem;
 }
 
 .read-only {
@@ -415,7 +420,7 @@ header {
 }
 
 .friend-list {
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0;
 }
 
 .friend-list-item {
@@ -480,9 +485,7 @@ header {
   padding: 2rem 1rem;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  top: 40%;
-  left: 7%;
-  z-index: 2;
+  z-index: 3;
 }
 
 .date-time {
@@ -521,6 +524,7 @@ header {
 
 .edit-content {
   width: 20rem;
+  padding: 0 1rem;
 }
 
 .edit-header {
@@ -553,7 +557,7 @@ header {
 
 .edit-row > p {
   font-size: 1.4rem;
-  width: 11rem;
+  width: 11.5rem;
   margin: 0.5rem 0;
 }
 
@@ -739,7 +743,7 @@ header {
   min-height: 100vh;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .menu {
@@ -752,7 +756,7 @@ header {
   border-radius: 30px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   padding: 2rem 1rem 1rem 4rem;
-  z-index: 2;
+  z-index: 3;
   transform: translateY(110%);
   transition: transform 0.3s ease-out;
 }
@@ -782,6 +786,33 @@ header {
   text-align: center;
 }
 
+.error-modal {
+  border: 1px solid gray;
+  border-radius: 20px;
+  position: absolute;
+  background-color: #fffbe5;
+  padding: 1rem 1rem 2rem 2rem;
+  max-width: 500px;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  z-index: 3;
+}
+
+.exit-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.exit {
+  font-size: 1.5em;
+  color: gray;
+}
+
+.fr,
+.leaderboard {
+  align-items: normal;
+}
+
 @keyframes loader {
   0% {
     opacity: 1;
@@ -797,7 +828,7 @@ header {
 }
 
 .spinner-page {
-  min-height: 90vh;
+  min-height: 100vh;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -1021,7 +1052,7 @@ header {
   }
 
   .walk-details {
-    height: 40rem;
+    height: 40.5rem;
     width: 24rem;
     margin-left: 0.5rem;
     display: flex;
@@ -1042,10 +1073,6 @@ header {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-  }
-
-  .modal {
-    left: 40%;
   }
 
   .home-friends-list {
@@ -1119,11 +1146,6 @@ header {
 
   .hide.bars-icon {
     display: none;
-  }
-
-  .flex-center {
-    display: flex;
-    justify-content: center;
   }
 
   .hidden {

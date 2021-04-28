@@ -1,5 +1,6 @@
 import React from 'react';
 import Redirect from '../components/redirect';
+import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 
 export default class LocationForm extends React.Component {
@@ -11,7 +12,8 @@ export default class LocationForm extends React.Component {
       C: { name: '' },
       errorA: false,
       errorB: false,
-      errorC: false
+      errorC: false,
+      errorOpen: false
     };
     this.autocompleteRefA = React.createRef();
     this.autocompleteRefB = React.createRef();
@@ -23,6 +25,7 @@ export default class LocationForm extends React.Component {
     this.handleChangeB = this.handleChangeB.bind(this);
     this.handleChangeC = this.handleChangeC.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
@@ -50,7 +53,6 @@ export default class LocationForm extends React.Component {
         fields: ['place_id', 'name']
       }
     );
-
     this.autocompleteInstanceA.addListener('place_changed', () => {
       const place = this.autocompleteInstanceA.getPlace();
       if (place) {
@@ -94,6 +96,10 @@ export default class LocationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (!navigator.onLine) {
+      this.setState({ errorOpen: true });
+      return;
+    }
     this.setState({
       errorA: !this.state.A.place_id,
       errorB: !this.state.B.place_id,
@@ -104,20 +110,25 @@ export default class LocationForm extends React.Component {
     }
   }
 
+  setErrorModal(errorOpen) {
+    this.setState({ errorOpen });
+  }
+
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
     const errorAClass = this.state.errorA ? '' : 'invisible';
     const errorBClass = this.state.errorB ? '' : 'invisible';
     const errorCClass = this.state.errorC ? '' : 'invisible';
     return (
-      <div className="page flex-center">
-        {this.state.modalOpen ? <div className="error-modal"></div> : ''}
+      <div className="page">
+        {this.state.errorOpen ? <ErrorModal isOpen={this.state.errorOpen} set={this.setErrorModal}/> : ''}
         <form className="location-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Map a Route</h1>
           <div className="input-div">
             <label htmlFor="A" className="location-label">Start (A)</label>
             <input type="text" value={this.state.A.name} onChange={this.handleChangeA}
-              className="location-input" ref={this.autocompleteRefA} id="A" required autoFocus/>
+              className="location-input" ref={this.autocompleteRefA} id="A"
+              readOnly={!navigator.onLine} required autoFocus/>
             <p className={`location-message ${errorAClass}`}>Select a location from the list</p>
           </div>
           <div className="input-div">

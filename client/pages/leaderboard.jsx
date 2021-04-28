@@ -1,6 +1,7 @@
 import React from 'react';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 
 export default class Leaderboard extends React.Component {
@@ -8,8 +9,10 @@ export default class Leaderboard extends React.Component {
     super(props);
     this.state = {
       friends: [],
-      doneLoading: false
+      doneLoading: false,
+      errorOpen: false
     };
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +47,15 @@ export default class Leaderboard extends React.Component {
               friends,
               doneLoading: true
             });
+          })
+          .catch(err => {
+            console.error(err);
+            this.setState({ errorOpen: true });
           });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorOpen: true });
       });
   }
 
@@ -52,6 +63,10 @@ export default class Leaderboard extends React.Component {
     const now = new Date();
     const today = new Date(now.toLocaleDateString());
     return new Date(today.setDate(today.getDate() - today.getDay()));
+  }
+
+  setErrorModal(errorOpen) {
+    this.setState({ errorOpen });
   }
 
   renderFriends() {
@@ -82,7 +97,7 @@ export default class Leaderboard extends React.Component {
     const weekFormatted = `Sun ${sunday.getMonth() + 1}/${sunday.getDate()}
       - Sat ${saturday.getMonth() + 1}/${saturday.getDate()}`;
     return (
-      <div className="page">
+      <div className="leaderboard page">
         <h1 className="page-title">My Friends</h1>
           <h2 className="week">{weekFormatted}</h2>
           { this.state.doneLoading
@@ -91,7 +106,9 @@ export default class Leaderboard extends React.Component {
               </ol>
             : <Spinner />
           }
+        { this.state.errorOpen ? <ErrorModal setModal={this.setErrorModal} /> : '' }
       </div>
+
     );
   }
 }

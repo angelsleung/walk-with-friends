@@ -47,6 +47,7 @@ export default class EditRoute extends React.Component {
   }
 
   handleClickTrashDate(event) {
+    this.setState({ doneLoading: false });
     const type = event.target.dataset.type;
     const date = type === 'lastWalked'
       ? { lastWalked: '' }
@@ -64,7 +65,8 @@ export default class EditRoute extends React.Component {
             : this.setState({ nextWalk: '' });
           this.setState({
             clickedLastWalked: false,
-            clickedNextWalk: false
+            clickedNextWalk: false,
+            doneLoading: true
           });
         }
       })
@@ -78,6 +80,7 @@ export default class EditRoute extends React.Component {
   }
 
   handleClickTrashRoute() {
+    this.setState({ doneLoading: false });
     const req = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }

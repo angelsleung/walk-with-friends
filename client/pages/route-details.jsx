@@ -2,6 +2,7 @@ import React from 'react';
 import SaveButton from '../components/save-button';
 import Redirect from '../components/redirect';
 import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import formatDate from '../lib/format-date';
 import AppContext from '../lib/app-context';
 
@@ -16,7 +17,8 @@ export default class RouteDetails extends React.Component {
       nextWalk: '',
       sharedWith: [],
       viewDirectionsPanel: false,
-      doneLoading: false
+      doneLoading: false,
+      errorOpen: false
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -25,6 +27,7 @@ export default class RouteDetails extends React.Component {
     this.directionsRenderer = null;
     this.handleClickSave = this.handleClickSave.bind(this);
     this.handleClickDirections = this.handleClickDirections.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +80,10 @@ export default class RouteDetails extends React.Component {
           lastWalked: route.lastWalked,
           nextWalk: route.nextWalk
         });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorOpen: true });
       });
 
     fetch(`/api/sharedRoutes/${this.props.routeId}`)
@@ -86,6 +93,7 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorOpen: true });
       });
   }
 
@@ -94,6 +102,8 @@ export default class RouteDetails extends React.Component {
       if (status === 'OK' && result) {
         this.directionsRenderer.setDirections(result);
         this.setState({ doneLoading: true });
+      } else {
+        this.setState({ errorOpen: true });
       }
     });
   }
@@ -154,10 +164,13 @@ export default class RouteDetails extends React.Component {
       .then(res => {
         if (res.status === 201) {
           this.setState({ isSaved: true });
+        } else {
+          this.setState({ errorOpen: true });
         }
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorOpen: true });
       });
   }
 
@@ -179,6 +192,10 @@ export default class RouteDetails extends React.Component {
 
   handleClickDirections() {
     this.setState({ viewDirectionsPanel: !this.state.viewDirectionsPanel });
+  }
+
+  setErrorModal(errorOpen) {
+    this.setState({ errorOpen });
   }
 
   renderDirectionsDetails() {
@@ -283,6 +300,9 @@ export default class RouteDetails extends React.Component {
 
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
+    if (!navigator.onLine) {
+      this.setState({ errorOpen: true });
+    }
     const routeDetailsClass = this.state.doneLoading ? '' : 'hidden';
     return (
       <>
@@ -299,6 +319,7 @@ export default class RouteDetails extends React.Component {
             : this.renderDirectionsDetails()
           }
         </div>
+        { this.state.errorOpen ? <ErrorModal setModal={this.setErrorModal} /> : ''}
       </>
     );
   }

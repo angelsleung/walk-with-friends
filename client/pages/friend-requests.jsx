@@ -109,7 +109,7 @@ export default class FriendRequests extends React.Component {
     if (!this.context.user) return <Redirect to="log-in" />;
 
     return (
-      <div className="page">
+      <div className="fr page">
         <h1 className="page-title">Friend Requests</h1>
         { this.state.doneLoading
           ? <ul className="friend-requests">
