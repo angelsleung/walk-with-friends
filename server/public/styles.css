@@ -28,7 +28,8 @@ header {
   min-width: 23rem;
   width: 100%;
   height: 100%;
-  padding-bottom: 4rem;
+
+  /* padding-bottom: 4rem; */
   position: relative;
 }
 
@@ -172,7 +173,7 @@ header {
   margin: 0.5rem 0;
   border-radius: 50px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  z-index: 3;
+  z-index: 2;
 }
 
 .navbar i {
@@ -399,6 +400,10 @@ header {
   border-top: 1px solid lightgray;
 }
 
+.walk-details {
+  margin-bottom: 4rem;
+}
+
 .walk-details-text {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
@@ -495,7 +500,7 @@ header {
   padding: 2rem 1rem;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  z-index: 3;
+  z-index: 4;
 }
 
 .date-time {
@@ -758,6 +763,10 @@ header {
   z-index: 2;
 }
 
+.date.overlay {
+  z-index: 3;
+}
+
 .menu {
   background: rgb(238, 238, 238);
   width: 20rem;
@@ -768,7 +777,7 @@ header {
   border-radius: 30px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   padding: 2rem 1rem 1rem 4rem;
-  z-index: 3;
+  z-index: 4;
   transform: translateY(110%);
   transition: transform 0.3s ease-out;
 }

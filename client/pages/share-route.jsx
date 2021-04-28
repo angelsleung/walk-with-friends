@@ -97,8 +97,8 @@ export default class ShareRoute extends React.Component {
     this.setState({ nextWalk });
   }
 
-  setDateModal(modalOpen) {
-    this.setState({ modalOpen });
+  setDateModal(dateOpen) {
+    this.setState({ dateOpen });
   }
 
   setErrorModal(errorMessage) {

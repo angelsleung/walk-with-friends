@@ -72,7 +72,7 @@ export default class AddDateForm extends React.Component {
             </div>
           </form>
         </div>
-        <div className="overlay" />
+        <div className="date overlay" />
       </>
     );
   }
