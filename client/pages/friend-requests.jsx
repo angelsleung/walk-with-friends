@@ -55,6 +55,21 @@ export default class FriendRequests extends React.Component {
         console.error(err);
         this.setState({ errorMessage: 'bad-request' });
       });
+
+    req.body = JSON.stringify({
+      userId: friendUserId,
+      friendUserId: userId
+    });
+    fetch('api/friends', req)
+      .then(res => {
+        if (res.status === 201) {
+          this.deleteRequest('accepted', friendUserId);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
+      });
   }
 
   handleClickDelete(event) {
