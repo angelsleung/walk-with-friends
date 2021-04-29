@@ -585,12 +585,6 @@ header {
   text-align: center;
 }
 
-.delete-route:hover,
-.delete-row:hover .delete-route,
-.delete-row:hover .delete-route-icon {
-  color: #ffefa1;
-}
-
 .route-icon-details {
   display: flex;
   align-items: center;
@@ -1033,7 +1027,10 @@ header {
   }
 
   .option-button:hover .option-icon,
-  .option-button:hover .button-text {
+  .option-button:hover .button-text,
+  .delete-route:hover,
+  .delete-row:hover .delete-route,
+  .delete-row:hover .delete-route-icon {
     color: #ffefa1;
   }
 
