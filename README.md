@@ -1,6 +1,6 @@
 # walk-with-friends
 
-A full-stack JavaScript, React.js, and Node.js web app that encourages an active lifestyle by allowing users to create walking routes on a map and share them with friends
+A full-stack JavaScript and React web app that encourages an active lifestyle by allowing users to create walking routes on a map and share them with friends
 
 [Live Demo](http://walk-with-friends-app.herokuapp.com/)
 
@@ -15,11 +15,14 @@ A full-stack JavaScript, React.js, and Node.js web app that encourages an active
 8. User can delete a route from their saved routes
 9. User can view a list of routes that friends have shared with them
 10. User can view a leaderboard of distance walked among their friends in the past week
+11. User can add a friend by searching their username
+12. User can accept a friend request from another user
 
 ## Planned Additions
-* User can add a friend by searching their username
-* User can accept a friend request from another user
+* User can change their username or password
+* User can edit their name
 * User can un-share a route
+* User can remove a friend
 
 ## What I Learned
 * Be flexible - must structure the app's features around the data available in the API
