@@ -19,6 +19,12 @@ export default class AuthForm extends React.Component {
     if (!navigator.onLine) {
       this.setState({ errorMessage: 'network-error' });
     }
+    if (this.props.action === 'log-in') {
+      this.setState({
+        username: 'demo',
+        password: 'password'
+      });
+    }
   }
 
   handleChange(event) {
@@ -77,11 +83,11 @@ export default class AuthForm extends React.Component {
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-input-div">
           <input required autoFocus type="text" name="username" className="auth-input"
-            placeholder="Username" onChange={handleChange} value="demo" />
+            placeholder="Username" onChange={handleChange} value={this.state.username} />
         </div>
         <div className="auth-input-div">
           <input required type="password" name="password" className="auth-input"
-            placeholder="Password" onChange={this.handleChange} value="password" />
+            placeholder="Password" onChange={this.handleChange} value={this.state.password} />
         </div>
           <p className={`invalid-login ${invalidLoginClass}`}>Invalid login</p>
         <div className="submit auth-input-div">
