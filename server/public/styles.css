@@ -132,16 +132,8 @@ header {
   cursor: pointer;
 }
 
-.auth-submit:hover {
-  background-color: darkgray;
-}
-
 .sign-up {
   background-color: #6ddccf;
-}
-
-.sign-up:hover {
-  background-color: #94ebcd;
 }
 
 .alternate-action-div {
@@ -258,10 +250,6 @@ header {
   font-size: 1.6rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   cursor: pointer;
-}
-
-.button:hover {
-  background-color: #94ebcd;
 }
 
 .pac-container {
@@ -486,11 +474,6 @@ header {
   font-weight: 500;
 }
 
-.add-date-div:hover .add-date-icon,
-.add-date-div:hover .add-date-text {
-  color: #ffefa1;
-}
-
 .modal {
   position: absolute;
   border-radius: 50px;
@@ -557,14 +540,6 @@ header {
   font-size: 2rem;
   cursor: pointer;
   width: 4rem;
-}
-
-.navbar i:hover {
-  color: #ffcb91;
-}
-
-.edit-row > i:hover {
-  color: #ffefa1;
 }
 
 .edit-row > p {
@@ -735,10 +710,6 @@ header {
   background-color: lightgray;
 }
 
-.delete:hover {
-  background-color: darkgray;
-}
-
 .request-text {
   padding-left: 0.5rem;
 }
@@ -781,10 +752,6 @@ header {
   text-decoration: none;
 }
 
-.menu a:hover {
-  color: #ffcb91;
-}
-
 .menu > ul {
   padding: 0;
 }
@@ -818,11 +785,6 @@ header {
 .exit {
   font-size: 1.5em;
   color: gray;
-}
-
-.exit:hover {
-  cursor: pointer;
-  color: rgb(66, 65, 65);
 }
 
 .background {
@@ -992,8 +954,23 @@ header {
     display: flex;
   }
 
+  .auth-submit:hover {
+    background-color: darkgray;
+  }
+
+  .sign-up:hover {
+    background-color: #94ebcd;
+  }
+
   .spinner-page {
     min-height: auto;
+  }
+
+  .app-drawer > i {
+    color: #ffcb91;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 2rem;
   }
 
   .app-name {
@@ -1026,11 +1003,21 @@ header {
     width: 40rem;
   }
 
+  .add-date-div:hover .add-date-icon,
+  .add-date-div:hover .add-date-text,
   .option-button:hover .option-icon,
   .option-button:hover .button-text,
   .delete-route:hover,
   .delete-row:hover .delete-route,
   .delete-row:hover .delete-route-icon {
+    color: #ffefa1;
+  }
+
+  .navbar i:hover {
+    color: #ffcb91;
+  }
+
+  .edit-row > i:hover {
     color: #ffefa1;
   }
 
@@ -1047,6 +1034,10 @@ header {
     overflow-y: scroll;
     margin-left: 0.5rem;
     padding-bottom: 0;
+  }
+
+  .button:hover {
+    background-color: #94ebcd;
   }
 
   .map {
@@ -1142,6 +1133,15 @@ header {
     padding: 0 2rem;
   }
 
+  .exit:hover {
+    cursor: pointer;
+    color: rgb(66, 65, 65);
+  }
+
+  .delete:hover {
+    background-color: darkgray;
+  }
+
   .auth-form {
     width: 30rem;
   }
@@ -1163,13 +1163,6 @@ header {
     z-index: 1;
   }
 
-  .app-drawer > i {
-    color: #ffcb91;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 2rem;
-  }
-
   .menu {
     min-height: 125rem;
     bottom: auto;
@@ -1183,6 +1176,10 @@ header {
 
   .menu li {
     padding: 1.8rem 0;
+  }
+
+  .menu a:hover {
+    color: #ffcb91;
   }
 
   .hide.bars-icon {
