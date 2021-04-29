@@ -271,9 +271,9 @@ header {
   background-color: white;
   border-radius: 30px;
   padding: 0.5rem;
-  margin: 0.5rem 0.8rem 0;
+  margin: 0.5rem 0.8rem 4rem;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .route-info {
@@ -1033,7 +1033,7 @@ header {
     max-height: 40rem;
     overflow-y: scroll;
     margin-left: 0.5rem;
-    padding-bottom: 0;
+    padding-bottom: 1rem;
   }
 
   .button:hover {

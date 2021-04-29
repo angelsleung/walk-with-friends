@@ -77,11 +77,11 @@ export default class AuthForm extends React.Component {
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-input-div">
           <input required autoFocus type="text" name="username" className="auth-input"
-            placeholder="Username" onChange={handleChange}></input>
+            placeholder="Username" onChange={handleChange} value="demo" />
         </div>
         <div className="auth-input-div">
           <input required type="password" name="password" className="auth-input"
-            placeholder="Password" onChange={this.handleChange}></input>
+            placeholder="Password" onChange={this.handleChange} value="password" />
         </div>
           <p className={`invalid-login ${invalidLoginClass}`}>Invalid login</p>
         <div className="submit auth-input-div">
