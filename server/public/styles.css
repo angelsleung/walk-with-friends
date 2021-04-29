@@ -28,8 +28,6 @@ header {
   min-width: 23rem;
   width: 100%;
   height: 100%;
-
-  /* padding-bottom: 4rem; */
   position: relative;
 }
 
@@ -162,14 +160,11 @@ header {
 }
 
 .navbar {
-  display: flex;
-  justify-content: space-around;
   background-color: white;
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  padding: 0.5rem 0;
   margin: 0.5rem 0;
   border-radius: 50px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
@@ -180,6 +175,14 @@ header {
   color: lightgray;
   font-size: 2rem;
   cursor: pointer;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem 0;
+  padding: 0;
 }
 
 .app-name {
@@ -195,11 +198,11 @@ header {
 
 .page {
   border-radius: 50px;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 1rem;
   background-color: white;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   height: 100%;
-  margin: 0.8rem;
+  margin: 0.8rem 0.8rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -273,7 +276,6 @@ header {
 }
 
 .route-details {
-  /* margin: 0 0.5rem; */
   width: 100%;
 }
 
@@ -281,7 +283,7 @@ header {
   background-color: white;
   border-radius: 30px;
   padding: 0.5rem;
-  margin: 0.5rem 0.5rem 0;
+  margin: 0.5rem 0.8rem 0;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   padding-bottom: 2rem;
 }
@@ -299,7 +301,7 @@ header {
   border-radius: 50px;
   padding: 1rem 1rem 1rem 3rem;
   background-color: white;
-  margin: 0.5rem;
+  margin: 0.5rem 0.6rem;
 }
 
 .options-col {
@@ -407,9 +409,9 @@ header {
 .walk-details-text {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
-  padding: 1rem;
+  padding: 1rem 1rem 2rem;
   background-color: white;
-  margin: 0 0.5rem;
+  margin: 0 0.8rem;
 }
 
 .walk-details-section {
@@ -629,8 +631,8 @@ header {
   font-weight: 500;
   font-size: 1.2rem;
   text-align: center;
-  color: darkgray;
   padding: 1rem 0;
+  color: darkgray;
 }
 
 .home-friends-list {
@@ -652,17 +654,11 @@ header {
 .friend-rank {
   font-size: 1.5rem;
   padding-right: 0.5rem;
-  font-weight: 500;
 }
 
 .friend-distance {
   font-size: 1.4rem;
 }
-
-/* .add-friend.page {
-  display: flex;
-  justify-content: center;
-} */
 
 .add-friend-input {
   font-size: 1.2rem;
@@ -710,6 +706,12 @@ header {
 .contact-div {
   display: flex;
   align-items: center;
+}
+
+.request-icon {
+  color: #ffcb91;
+  font-size: 3rem;
+  padding: 0 1rem 0 0.5rem;
 }
 
 .request-name {
@@ -786,11 +788,11 @@ header {
   transform: translateY(0);
 }
 
-.menu > a {
+.menu a {
   text-decoration: none;
 }
 
-.menu > a:hover {
+.menu a:hover {
   color: #ffcb91;
 }
 
@@ -859,7 +861,7 @@ header {
 
 .spinner-page {
   width: 100%;
-  min-height: 100vh;
+  min-height: 130vh;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -871,7 +873,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4rem 0;
+  padding-top: 4rem;
 }
 
 .spinner {
@@ -1001,6 +1003,10 @@ header {
     display: flex;
   }
 
+  .spinner-page {
+    min-height: auto;
+  }
+
   .app-name {
     display: flex;
     width: 100%;
@@ -1035,6 +1041,7 @@ header {
     display: flex;
     justify-content: center;
     margin: 3rem 0;
+    align-self: flex-start;
   }
 
   .route-details-text {
@@ -1049,6 +1056,10 @@ header {
     width: 40rem;
     height: 40rem;
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  }
+
+  .background {
+    min-height: 70vh;
   }
 
   .route-list {

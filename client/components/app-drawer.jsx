@@ -25,25 +25,25 @@ export default class AppDrawer extends React.Component {
     const overlayClass = this.state.isOpen ? '' : 'hidden';
     return (
       <div className="app-drawer">
-        <div className={`menu ${menuClass}`}>
-          <ul><h2>Menu</h2></ul>
-          <a onClick={this.handleClickExit} href="#"><li>Leaderboard</li></a>
-          <a onClick={this.handleClickExit} href="#map-route"><li>Map a Route</li></a>
-          <a onClick={this.handleClickExit} href="#saved-routes"><li>Saved Routes</li></a>
-          <a onClick={this.handleClickExit} href="#friends-routes"><li>{"My Friends' Routes"}</li></a>
-          <a onClick={this.handleClickExit} href="#add-friend"><li>Add a Friend</li></a>
-          <a onClick={this.handleClickExit} href="#friend-requests"><li>Friend Requests</li></a>
-          <a onClick={() => {
-            handleSignOut();
-            this.handleClickExit();
-          }} href="#">
-            <li>Sign Out</li>
-          </a>
-        </div>
-        <div className={`overlay ${overlayClass}`} onClick={this.handleClickExit} />
-        <i onClick={this.handleClickIcon} className={`fas fa-bars bars-icon ${iconClass}`} />
-        {this.state.isOpen ? <Navbar onClick={this.handleClickExit} isOpen={this.state.isOpen}/> : ''}
-      </div>
+        <nav className={`menu ${menuClass}`}>
+          <h2>Menu</h2>
+          <ul>
+            <li><a onClick={this.handleClickExit} href="#">Leaderboard</a></li>
+            <li><a onClick={this.handleClickExit} href="#map-route">Map a Route</a></li>
+            <li><a onClick={this.handleClickExit} href="#saved-routes">Saved Routes</a></li>
+            <li><a onClick={this.handleClickExit} href="#friends-routes">{"My Friends' Routes"}</a></li>
+            <li><a onClick={this.handleClickExit} href="#add-friend">Add a Friend</a></li>
+            <li><a onClick={this.handleClickExit} href="#friend-requests">Friend Requests</a></li>
+            <li><a onClick={() => {
+              handleSignOut();
+              this.handleClickExit();
+            }} href="#">Sign Out</a></li>
+          </ul>
+        </nav>
+      <div className={`overlay ${overlayClass}`} onClick={this.handleClickExit} />
+      <i onClick={this.handleClickIcon} className={`fas fa-bars bars-icon ${iconClass}`} />
+      {this.state.isOpen ? <Navbar onClick={this.handleClickExit} isOpen={this.state.isOpen}/> : ''}
+    </div>
     );
   }
 }

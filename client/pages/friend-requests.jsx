@@ -114,7 +114,7 @@ export default class FriendRequests extends React.Component {
         return (
           <li key={request.userId} className="request-item" data-user-id={request.userId}>
             <div className="contact-div">
-              <i className="friend-icon fas fa-user-circle" />
+              <i className="request-icon fas fa-user-circle" />
               <span className="request-name">{request.name}</span>
             </div>
             { request.message
