@@ -291,7 +291,7 @@ export default class RouteDetails extends React.Component {
           <h2>Shared with</h2>
           {this.state.sharedWith.length > 0
             ? <ul className="shared-with-list">
-              {this.state.sharedWith.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+              {this.state.sharedWith.map(friend => {
                 return <li key={friend.userId}>{friend.name}</li>;
               })
               }

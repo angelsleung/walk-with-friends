@@ -150,6 +150,7 @@ app.get('/api/sharedRoutes/:routeId', (req, res) => {
         from "sharedRoutes"
         join "users" using ("userId")
        where "routeId" = $1
+       order by "users"."name"
       `;
   const params = [routeId];
   db.query(sql, params)
@@ -188,6 +189,7 @@ app.get('/api/friends/:userId', (req, res) => {
       join "users"
         on "friends"."friendUserId" = "users"."userId"
      where "friends"."userId" = $1
+     order by "users"."name"
   `;
   const params = [userId];
   db.query(sql, params)
@@ -226,6 +228,7 @@ app.get('/api/friendsRoutes/:userId', (req, res) => {
         join "sharedRoutes" using ("routeId")
         join "users" on "users"."userId" = "routes"."userId"
        where "sharedRoutes"."userId" = $1
+       order by "sharedRoutes"."createdAt"
       `;
   const params = [userId];
   db.query(sql, params)
@@ -263,6 +266,7 @@ app.get('/api/friendRequests/:userId', (req, res) => {
         from "friendRequests"
         join "users" on "friendRequests"."requesterUserId" = "users"."userId"
        where "friendRequests"."userId" = $1
+       order by "friendRequests"."createdAt"
       `;
   const params = [userId];
   db.query(sql, params)

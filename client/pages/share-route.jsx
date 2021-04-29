@@ -110,7 +110,7 @@ export default class ShareRoute extends React.Component {
       return <p className="no-friends">No friends available to share this route with</p>;
     }
     return (
-      this.state.notYetShared.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+      this.state.notYetShared.map(friend => {
         return (
           <li key={friend.userId} className="friend-list-item">
             <input type="checkbox" className="checkbox" id={friend.userId} name="friend"
