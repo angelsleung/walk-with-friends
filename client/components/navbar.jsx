@@ -15,11 +15,15 @@ export default class Navbar extends React.Component {
 
   render() {
     return (
-      <footer className="navbar" onClick={this.handleClick}>
-        <a href="#"><i className="fas fa-home"></i></a>
-        <a href="#map-route"><i className="fas fa-map-marked-alt"></i></a>
-        <a href="#saved-routes"><i className="fas fa-heart"></i></a >
-        <AppDrawer />
+      <footer>
+        <nav className="navbar" onClick={this.handleClick}>
+          <ul className="nav-list">
+            <li><a href="#" aria-label="Home"><i className="fas fa-home" /></a></li>
+            <li><a href="#map-route" aria-label="Map Route"><i className="fas fa-map-marked-alt" /></a></li>
+            <li><a href="#saved-routes" aria-label="Saved Routes"><i className="fas fa-heart" /></a></li>
+            <li><AppDrawer aria-label="Menu"/></li>
+          </ul>
+        </nav>
       </footer>
     );
   }

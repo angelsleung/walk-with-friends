@@ -1,7 +1,9 @@
 import React from 'react';
 import SaveButton from '../components/save-button';
-import formatDate from '../lib/format-date';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
+import formatDate from '../lib/format-date';
 import AppContext from '../lib/app-context';
 
 export default class RouteDetails extends React.Component {
@@ -14,7 +16,9 @@ export default class RouteDetails extends React.Component {
       lastWalked: '',
       nextWalk: '',
       sharedWith: [],
-      viewDirectionsPanel: false
+      viewDirectionsPanel: false,
+      doneLoading: false,
+      errorMessage: ''
     };
     this.mapRef = React.createRef();
     this.directionsPanelRef = React.createRef();
@@ -23,9 +27,14 @@ export default class RouteDetails extends React.Component {
     this.directionsRenderer = null;
     this.handleClickSave = this.handleClickSave.bind(this);
     this.handleClickDirections = this.handleClickDirections.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     this.mapInstance = new google.maps.Map(this.mapRef.current);
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer({
@@ -75,6 +84,10 @@ export default class RouteDetails extends React.Component {
           lastWalked: route.lastWalked,
           nextWalk: route.nextWalk
         });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
 
     fetch(`/api/sharedRoutes/${this.props.routeId}`)
@@ -84,6 +97,7 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -91,6 +105,9 @@ export default class RouteDetails extends React.Component {
     this.directionsService.route(request, (result, status) => {
       if (status === 'OK' && result) {
         this.directionsRenderer.setDirections(result);
+        this.setState({ doneLoading: true });
+      } else {
+        this.setState({ errorMessage: 'network-error' });
       }
     });
   }
@@ -151,10 +168,13 @@ export default class RouteDetails extends React.Component {
       .then(res => {
         if (res.status === 201) {
           this.setState({ isSaved: true });
+        } else {
+          this.setState({ errorOpen: true });
         }
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -171,11 +191,16 @@ export default class RouteDetails extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
   handleClickDirections() {
     this.setState({ viewDirectionsPanel: !this.state.viewDirectionsPanel });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderDirectionsDetails() {
@@ -208,11 +233,11 @@ export default class RouteDetails extends React.Component {
               <div className="option-button" onClick={this.handleClickDirections}>
                 { this.state.viewDirectionsPanel
                   ? <>
-                      <i className="fas fa-ellipsis-h"></i>
+                      <i className="option-icon fas fa-ellipsis-h"></i>
                       <span className="button-text">Details</span>
                     </>
                   : <>
-                      <i className="fas fa-directions" />
+                      <i className="option-icon fas fa-directions" />
                       <span className="button-text">Directions</span>
                     </>
                 }
@@ -222,14 +247,14 @@ export default class RouteDetails extends React.Component {
               <a className="option-link"
                 href={`#share-route?routeId=${this.props.routeId}`}>
                 <div className="option-button">
-                  <i className="share-icon fas fa-share" />
+                  <i className="option-icon fas fa-share" />
                   <span className="button-text">Share</span>
                 </div>
               </a>
               <a className="option-link"
                 href={`#edit-route?routeId=${this.props.routeId}`}>
                 <div className="option-button">
-                  <i className="edit-icon fas fa-edit" />
+                  <i className="option-icon fas fa-edit" />
                   <span className="button-text">Edit</span>
                 </div>
               </a>
@@ -265,8 +290,8 @@ export default class RouteDetails extends React.Component {
         <div className="walk-details-section">
           <h2>Shared with</h2>
           {this.state.sharedWith.length > 0
-            ? <ul>
-              {this.state.sharedWith.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+            ? <ul className="shared-with-list">
+              {this.state.sharedWith.map(friend => {
                 return <li key={friend.userId}>{friend.name}</li>;
               })
               }
@@ -281,12 +306,25 @@ export default class RouteDetails extends React.Component {
   render() {
     if (!this.context.user) return <Redirect to="log-in" />;
 
+    const routeDetailsClass = this.state.doneLoading ? '' : 'hidden';
     return (
-      <div className="route-details">
-        <div className="map" ref={this.mapRef} />
-        { this.props.routeId
-          ? this.renderWalkDetails()
-          : this.renderDirectionsDetails()
+      <div className="background">
+        <div className={`route-details ${routeDetailsClass}`}>
+          <div className="map" ref={this.mapRef} />
+          { this.props.routeId
+            ? this.renderWalkDetails()
+            : this.renderDirectionsDetails()
+          }
+        </div>
+        { this.state.doneLoading
+          ? ''
+          : <div className="spinner-page">
+              <Spinner />
+            </div>
+        }
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
         }
       </div>
     );

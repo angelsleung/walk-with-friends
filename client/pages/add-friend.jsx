@@ -1,16 +1,27 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 
 export default class AddFriend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
-      message: ''
+      message: '',
+      doneLoading: true,
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
+  }
+
+  componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+    }
   }
 
   handleChange(event) {
@@ -19,36 +30,48 @@ export default class AddFriend extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
+    this.setState({ doneLoading: false });
     fetch(`/api/users/${this.state.username}`)
       .then(res => res.json())
       .then(friend => {
         if (friend.length === 0) {
-          this.setState({ message: `No user with the username "${this.state.username}"` });
-          this.setState({ username: '' });
+          this.setState({
+            message: `No user with the username "${this.state.username}"`,
+            username: '',
+            doneLoading: true
+          });
           return;
         }
-        const friendUserId = friend[0].userId;
-        const { userId } = this.context.user;
+        const [{ userId }] = friend;
+        const requesterUserId = this.context.user.userId;
         const req = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, friendUserId })
+          body: JSON.stringify({ userId, requesterUserId })
         };
-        fetch('api/friendRequests', req)
-          .then(res => {
-            if (res.status === 201) {
-              this.setState({ message: `Sent friend request to ${this.state.username}` });
-              this.setState({ username: '' });
-            }
-          })
-          .catch(err => {
-            console.error(err);
+        return fetch('api/friendRequests', req);
+      })
+      .then(res => {
+        if (res.status === 201) {
+          this.setState({
+            message: `Sent a friend request to ${this.state.username}`,
+            username: '',
+            doneLoading: true
           });
+        }
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   render() {
@@ -58,14 +81,23 @@ export default class AddFriend extends React.Component {
       <div className="add-friend page">
         <form className="add-friend-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Add a Friend</h1>
-          <input className="add-friend-input" value={this.state.username}
-            onChange={this.handleChange} placeholder="Username" required autoFocus />
-            <p className="add-friend-message">{this.state.message}</p>
-          <button className="add-friend button">
-            <i className="add-icon fas fa-user-plus" />
-            Submit
-          </button>
+          { this.state.doneLoading
+            ? <>
+                <input className="add-friend-input" type="text" value={this.state.username}
+                  onChange={this.handleChange} placeholder="Username" required autoFocus />
+                <p className="add-friend-message">{this.state.message}</p>
+                <button className="add-friend button" type="submit">
+                  <i className="add-icon fas fa-user-plus" />
+                    Submit
+                </button>
+              </>
+            : <Spinner />
+          }
         </form>
+        { this.state.errorMessage
+          ? <ErrorModal message={this.state.errorMessage} set={this.setErrorModal} />
+          : ''
+        }
       </div>
     );
   }

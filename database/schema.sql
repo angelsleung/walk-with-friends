@@ -12,6 +12,7 @@ create table "users" (
   "hashedPassword"   text    not null,
   "name"             text    not null,
   "weeklyDistance"   float   not null,
+  "createdAt"   timestamptz(6) not null default now(),
   primary key ("userId"),
   unique ("username")
 );
@@ -33,15 +34,18 @@ create table "routes" (
 
 create table "sharedRoutes" (
   "routeId"          serial,
-  "userId"          integer  not null
+  "userId"          integer  not null,
+  "createdAt"   timestamptz(6) not null default now()
 );
 
 create table "friends" (
   "userId"          integer  not null,
-  "friendUserId"    integer  not null
+  "friendUserId"    integer  not null,
+  "createdAt"   timestamptz(6) not null default now()
 );
 
 create table "friendRequests" (
   "userId"          integer  not null,
-  "friendUserId"    integer  not null
+  "requesterUserId"    integer  not null,
+  "createdAt"   timestamptz(6) not null default now()
 );

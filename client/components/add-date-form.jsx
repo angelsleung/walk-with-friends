@@ -38,12 +38,11 @@ export default class AddDateForm extends React.Component {
     };
     fetch(`/api/routes/${this.props.routeId}`, req)
       .then(res => {
-        if (res.status === 204) {
-          type === 'lastWalked'
-            ? this.props.setLastWalked(formattedDate)
-            : this.props.setNextWalk(formattedDate);
-          this.props.setModal(false);
-        }
+        if (res.status !== 204) return;
+        type === 'lastWalked'
+          ? this.props.setLastWalked(formattedDate)
+          : this.props.setNextWalk(formattedDate);
+        this.props.setModal(false);
       })
       .catch(err => {
         console.error(err);
@@ -64,7 +63,7 @@ export default class AddDateForm extends React.Component {
             </div>
             <div>
               <input type="datetime-local" id="date-time" className="date-time"
-                onChange={this.handleChangeDate}></input>
+                onChange={this.handleChangeDate} required></input>
             </div>
             <div className="date-button-div">
               <button onClick={this.handleCancel}
@@ -73,7 +72,7 @@ export default class AddDateForm extends React.Component {
             </div>
           </form>
         </div>
-        <div className="overlay" />
+        <div className="date overlay" />
       </>
     );
   }

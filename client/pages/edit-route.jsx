@@ -1,8 +1,10 @@
 import React from 'react';
 import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
-import formatDate from '../lib/format-date';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
+import formatDate from '../lib/format-date';
 import AppContext from '../lib/app-context';
 
 export default class EditRoute extends React.Component {
@@ -14,7 +16,9 @@ export default class EditRoute extends React.Component {
       clickedLastWalked: false,
       clickedNextWalk: false,
       clickedDeleteRoute: false,
-      modalOpen: false
+      modalOpen: false,
+      doneLoading: false
+
     };
     this.handleClickMinusDate = this.handleClickMinusDate.bind(this);
     this.handleClickTrashDate = this.handleClickTrashDate.bind(this);
@@ -22,15 +26,27 @@ export default class EditRoute extends React.Component {
     this.handleClickTrashRoute = this.handleClickTrashRoute.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
-    this.setModal = this.setModal.bind(this);
+    this.setDateModal = this.setDateModal.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     fetch(`/api/routes/${this.props.routeId}`)
       .then(res => res.json())
       .then(route => {
-        this.setState({ lastWalked: route.lastWalked });
-        this.setState({ nextWalk: route.nextWalk });
+        this.setState({
+          lastWalked: route.lastWalked,
+          nextWalk: route.nextWalk,
+          doneLoading: true
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -42,6 +58,7 @@ export default class EditRoute extends React.Component {
   }
 
   handleClickTrashDate(event) {
+    this.setState({ doneLoading: false });
     const type = event.target.dataset.type;
     const date = type === 'lastWalked'
       ? { lastWalked: '' }
@@ -59,12 +76,14 @@ export default class EditRoute extends React.Component {
             : this.setState({ nextWalk: '' });
           this.setState({
             clickedLastWalked: false,
-            clickedNextWalk: false
+            clickedNextWalk: false,
+            doneLoading: true
           });
         }
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -73,6 +92,7 @@ export default class EditRoute extends React.Component {
   }
 
   handleClickTrashRoute() {
+    this.setState({ doneLoading: false });
     const req = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
@@ -85,6 +105,7 @@ export default class EditRoute extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -96,8 +117,12 @@ export default class EditRoute extends React.Component {
     this.setState({ nextWalk });
   }
 
-  setModal(modalOpen) {
+  setDateModal(modalOpen) {
     this.setState({ modalOpen });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   render() {
@@ -109,52 +134,57 @@ export default class EditRoute extends React.Component {
     return (
       <div className="page">
         <h1 className="page-title">Edit Route</h1>
-        <div className="edit-page">
-          <div className="edit-content">
-            <h2 className="edit-header">Last walked</h2>
-            <div className="edit-row">
-              { this.state.clickedLastWalked
-                ? <i className={`${lastWalkedClass} fas fa-trash-alt`} data-type="lastWalked"
-                onClick={this.handleClickTrashDate} />
-                : <i className={`${lastWalkedClass} fas fa-minus-circle`} data-type="lastWalked"
-                onClick={this.handleClickMinusDate} />
-              }
-              { this.state.lastWalked
-                ? <p>{formatDate(this.state.lastWalked)}</p>
-                : <AddDateButton setModal={this.setModal} />
-              }
-            </div>
-            <h2 className="edit-header">Next walk</h2>
-            <div className="edit-row">
-              { this.state.clickedNextWalk
-                ? <i className={`${nextWalkClass} fas fa-trash-alt`} data-type="nextWalk"
-                onClick={this.handleClickTrashDate} />
-                : <i className={`${nextWalkClass} fas fa-minus-circle`} data-type="nextWalk"
-                onClick={this.handleClickMinusDate} />
-              }
-              { this.state.nextWalk
-                ? <p>{formatDate(this.state.nextWalk)}</p>
-                : <AddDateButton setModal={this.setModal} />
-              }
-            </div>
-            <div className="delete edit-row">
-              <i className={`${deleteRouteClass} fas fa-trash-alt`} data-type="nextWalk"
-                onClick={this.handleClickTrashRoute} />
-              <div className="delete-route" onClick={this.handleClickDeleteRoute}>
-                Delete Route
+        { this.state.doneLoading
+          ? <>
+              <div className="edit-content">
+                <h2 className="edit-header">Last walked</h2>
+                <div className="edit-row">
+                  {this.state.lastWalked
+                    ? <>
+                      <i className={`${lastWalkedClass} fas fa-${this.state.clickedLastWalked ? 'trash-alt' : 'minus-circle'}`}
+                        onClick={this.state.clickedLastWalked ? this.handleClickTrashDate : this.handleClickMinusDate}
+                        data-type="lastWalked" />
+                      <p>{formatDate(this.state.lastWalked)}</p>
+                    </>
+                    : <AddDateButton setModal={this.setDateModal} />
+                  }
+                </div>
+                <h2 className="edit-header">Next walk</h2>
+                <div className="edit-row">
+                  {this.state.nextWalk
+                    ? <>
+                      <i className={`${nextWalkClass} fas fa-${this.state.clickedNextWalk ? 'trash-alt' : 'minus-circle'}`}
+                        onClick={this.state.clickedNextWalk ? this.handleClickTrashDate : this.handleClickMinusDate}
+                        data-type="nextWalk" />
+                      <p>{formatDate(this.state.nextWalk)}</p>
+                    </>
+                    : <AddDateButton setModal={this.setDateModal} />
+                  }
+                </div>
+                <div className="edit-row delete-row">
+                  <i className={`${deleteRouteClass} delete-route-icon fas fa-trash-alt`} data-type="nextWalk"
+                    onClick={this.handleClickTrashRoute} />
+                  <div className="delete-route" onClick={this.handleClickDeleteRoute}>
+                    Delete Route
+                    </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="center input-div">
-          <a href={`#route-details?routeId=${this.props.routeId}`}>
-            <button className="button">Done</button>
-            </a>
-        </div>
+              <div className="center input-div">
+                <a href={`#route-details?routeId=${this.props.routeId}`}>
+                  <button className="button">Done</button>
+                </a>
+              </div>
+            </>
+          : <Spinner />
+        }
         { this.state.modalOpen
-          ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}
+          ? <AddDateForm routeId={this.props.routeId} setModal={this.setDateModal}
             lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
             nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          : ''
+        }
+        { this.state.errorMessage
+          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
           : ''
         }
       </div>

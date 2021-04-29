@@ -2,6 +2,8 @@ import React from 'react';
 import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
+import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 
 export default class ShareRoute extends React.Component {
@@ -11,16 +13,23 @@ export default class ShareRoute extends React.Component {
       notYetShared: [],
       lastWalked: '',
       nextWalk: '',
-      modalOpen: false
+      dateOpen: false,
+      doneLoading: false,
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setLastWalked = this.setLastWalked.bind(this);
     this.setNextWalk = this.setNextWalk.bind(this);
-    this.setModal = this.setModal.bind(this);
+    this.setDateModal = this.setDateModal.bind(this);
+    this.setErrorModal = this.setErrorModal.bind(this);
   }
 
   componentDidMount() {
+    if (!navigator.onLine) {
+      this.setState({ errorMessage: 'network-error' });
+      return;
+    }
     const { userId } = this.context.user;
     fetch(`/api/friends/${userId}`)
       .then(res => res.json())
@@ -33,8 +42,19 @@ export default class ShareRoute extends React.Component {
               sharedWithUserIds[sharedWith[i].userId] = true;
             }
             const notYetShared = friends.filter(friend => !sharedWithUserIds[friend.userId]);
-            this.setState({ notYetShared });
+            this.setState({
+              notYetShared,
+              doneLoading: true
+            });
+          })
+          .catch(err => {
+            console.error(err);
+            this.setState({ errorMessage: 'bad-request' });
           });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'bad-request' });
       });
   }
 
@@ -51,6 +71,7 @@ export default class ShareRoute extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ doneLoading: false });
     for (let i = 0; i < this.state.notYetShared.length; i++) {
       const friend = this.state.notYetShared[i];
       if (!friend.selected) continue;
@@ -60,15 +81,12 @@ export default class ShareRoute extends React.Component {
         body: JSON.stringify({ userId: friend.userId })
       };
       fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
-        .then(res => {
-          if (res.status === 204) {
-            window.location.hash = `route-details?routeId=${this.props.routeId}`;
-          }
-        })
         .catch(err => {
           console.error(err);
+          this.setState({ errorMessage: 'bad-request' });
         });
     }
+    window.location.hash = `route-details?routeId=${this.props.routeId}`;
   }
 
   setLastWalked(lastWalked) {
@@ -79,8 +97,12 @@ export default class ShareRoute extends React.Component {
     this.setState({ nextWalk });
   }
 
-  setModal(modalOpen) {
-    this.setState({ modalOpen });
+  setDateModal(dateOpen) {
+    this.setState({ dateOpen });
+  }
+
+  setErrorModal(errorMessage) {
+    this.setState({ errorMessage });
   }
 
   renderFriends() {
@@ -88,16 +110,16 @@ export default class ShareRoute extends React.Component {
       return <p className="no-friends">No friends available to share this route with</p>;
     }
     return (
-      this.state.notYetShared.sort((a, b) => a.name > b.name ? 1 : -1).map(friend => {
+      this.state.notYetShared.map(friend => {
         return (
-          <div key={friend.userId} className="friend-list-item">
+          <li key={friend.userId} className="friend-list-item">
             <input type="checkbox" className="checkbox" id={friend.userId} name="friend"
               value={friend.userId} onChange={this.handleChange}/>
             <label className="friend-label" htmlFor={friend.userId}>
               <i className="friend-icon fas fa-user-circle" />
               <p className="friend-name">{friend.name}</p>
             </label>
-          </div>
+          </li>
         );
       })
     );
@@ -110,18 +132,27 @@ export default class ShareRoute extends React.Component {
       <div className="page">
         <form className="share-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Select Friend</h1>
-          <div className="friend-list">
-            {this.renderFriends()}
-          </div>
-          <AddDateButton setModal={this.setModal} />
-          <div className="center input-div">
-            <button className="button">Share</button>
-          </div>
+          { this.state.doneLoading
+            ? <>
+                <ul className="friend-list">
+                  {this.renderFriends()}
+                </ul>
+                <AddDateButton setModal={this.setDateModal} />
+                <div className="center input-div">
+                  <button className="button" type="submit">Share</button>
+                </div>
+              </>
+            : <Spinner />
+          }
         </form>
-        { this.state.modalOpen
-          ? <AddDateForm routeId={this.props.routeId} setModal={this.setModal}
+        { this.state.dateOpen
+          ? <AddDateForm routeId={this.props.routeId} setModal={this.setDateModal}
             lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
             nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          : ''
+        }
+        { this.state.errorMessage
+          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
           : ''
         }
       </div>

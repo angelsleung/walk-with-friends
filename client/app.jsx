@@ -8,11 +8,12 @@ import ShareRoute from './pages/share-route';
 import EditRoute from './pages/edit-route';
 import FriendsRoutes from './pages/friends-routes';
 import Leaderboard from './pages/leaderboard';
+import AddFriend from './pages/add-friend';
+import FriendRequests from './pages/friend-requests';
 import Auth from './pages/auth';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 import decodeToken from './lib/decode-token';
-import AddFriend from './pages/add-friend';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -79,9 +80,11 @@ export default class App extends React.Component {
     if (route.path === 'friends-routes') {
       return <FriendsRoutes />;
     }
-
     if (route.path === 'add-friend') {
       return <AddFriend />;
+    }
+    if (route.path === 'friend-requests') {
+      return <FriendRequests />;
     }
   }
 
