@@ -62,6 +62,8 @@ export default class AddFriend extends React.Component {
             username: '',
             doneLoading: true
           });
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {

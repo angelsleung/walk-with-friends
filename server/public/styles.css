@@ -340,11 +340,6 @@ header {
   font-weight: 500;
 }
 
-.option-button:hover .option-icon,
-.option-button:hover .button-text {
-  color: #ffefa1;
-}
-
 .route-list {
   padding: 0;
 }
@@ -1037,6 +1032,11 @@ header {
     width: 40rem;
   }
 
+  .option-button:hover .option-icon,
+  .option-button:hover .button-text {
+    color: #ffefa1;
+  }
+
   .route-details {
     display: flex;
     justify-content: center;
@@ -1092,14 +1092,15 @@ header {
 
   .options {
     padding: 1rem 1rem 1rem 2rem;
+    margin: 0.5rem;
   }
 
   .walk-details {
     height: 40.5rem;
     width: 24rem;
-    margin-left: 0.5rem;
     display: flex;
     flex-direction: column;
+    margin: 0.5rem;
   }
 
   .walk-details-text {
