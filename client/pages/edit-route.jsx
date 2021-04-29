@@ -79,6 +79,8 @@ export default class EditRoute extends React.Component {
             clickedNextWalk: false,
             doneLoading: true
           });
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {
@@ -101,6 +103,8 @@ export default class EditRoute extends React.Component {
       .then(res => {
         if (res.status === 204) {
           window.location.hash = 'saved-routes';
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {

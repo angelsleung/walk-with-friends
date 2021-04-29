@@ -11,6 +11,7 @@ export default class RouteDetails extends React.Component {
     super(props);
     this.state = {
       isSaved: false,
+      locationNames: [],
       distance: '',
       duration: '',
       lastWalked: '',
@@ -59,7 +60,10 @@ export default class RouteDetails extends React.Component {
       ],
       travelMode: 'WALKING'
     };
-    this.setState({ viewDirectionsPanel: true });
+    this.setState({
+      viewDirectionsPanel: true,
+      locationNames: this.props.locationNames
+    });
     this.displayRoute(request);
   }
 
@@ -79,10 +83,12 @@ export default class RouteDetails extends React.Component {
           travelMode: 'WALKING'
         };
         this.displayRoute(request);
+        const locationNames = [route.locationA, route.locationB, route.locationC];
         this.setState({
           isSaved: true,
           lastWalked: route.lastWalked,
-          nextWalk: route.nextWalk
+          nextWalk: route.nextWalk,
+          locationNames
         });
       })
       .catch(err => {
@@ -141,7 +147,7 @@ export default class RouteDetails extends React.Component {
   }
 
   saveRoute() {
-    const [locationA, locationB, locationC] = this.props.locationNames;
+    const [locationA, locationB, locationC] = this.state.locationNames;
     const waypoints = this.directionsRenderer.getDirections().geocoded_waypoints;
     const placeIds = [];
     for (let i = 0; i < waypoints.length; i++) {
@@ -164,12 +170,13 @@ export default class RouteDetails extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(route)
     };
-    fetch('api/routes', req)
+    const path = this.props.routeId ? this.props.routeId : '';
+    fetch(`api/routes/${path}`, req)
       .then(res => {
         if (res.status === 201) {
           this.setState({ isSaved: true });
         } else {
-          this.setState({ errorOpen: true });
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {
@@ -187,6 +194,8 @@ export default class RouteDetails extends React.Component {
       .then(res => {
         if (res.status === 204) {
           this.setState({ isSaved: false });
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {

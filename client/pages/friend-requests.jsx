@@ -49,6 +49,8 @@ export default class FriendRequests extends React.Component {
       .then(res => {
         if (res.status === 201) {
           this.deleteRequest('accepted', friendUserId);
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {
@@ -64,6 +66,8 @@ export default class FriendRequests extends React.Component {
       .then(res => {
         if (res.status === 201) {
           this.deleteRequest('accepted', friendUserId);
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
       })
       .catch(err => {
@@ -86,14 +90,17 @@ export default class FriendRequests extends React.Component {
     };
     fetch(`/api/friendRequests/${userId}/${requesterUserId}`, req)
       .then(res => {
-        if (res.status !== 204) return;
-        const requests = this.state.requests;
-        for (let i = 0; i < requests.length; i++) {
-          if (requests[i].userId === requesterUserId) {
-            requests[i].message = `Request ${action}!`;
+        if (res.status === 204) {
+          const requests = this.state.requests;
+          for (let i = 0; i < requests.length; i++) {
+            if (requests[i].userId === requesterUserId) {
+              requests[i].message = `Request ${action}!`;
+            }
           }
+          this.setState({ requests });
+        } else {
+          this.setState({ errorMessage: 'bad-request' });
         }
-        this.setState({ requests });
       })
       .catch(err => {
         console.error(err);

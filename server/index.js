@@ -85,6 +85,55 @@ app.post('/api/routes', (req, res) => {
     });
 });
 
+app.post('/api/routes/:routeId', (req, res) => {
+  const { routeId } = req.params;
+  const {
+    userId,
+    locationA,
+    locationB,
+    locationC,
+    distance,
+    duration,
+    placeIds,
+    lastWalked,
+    nextWalk
+  } = req.body;
+  const sql = `
+    insert into "routes" (
+      "routeId",
+      "userId",
+      "locationA",
+      "locationB",
+      "locationC",
+      "distance",
+      "duration",
+      "placeIds",
+      "lastWalked",
+      "nextWalk"
+      ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      `;
+  const params = [
+    routeId,
+    userId,
+    locationA,
+    locationB,
+    locationC,
+    distance,
+    duration,
+    placeIds,
+    lastWalked,
+    nextWalk
+  ];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.patch('/api/routes/:routeId', (req, res) => {
   const { routeId } = req.params;
   const type = req.body.lastWalked || req.body.lastWalked === ''
