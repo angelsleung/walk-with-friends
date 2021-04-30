@@ -83,7 +83,9 @@ export default class Leaderboard extends React.Component {
               <i className="friend-icon fas fa-user-circle" />
               <div className="friend-name">{friend.name}</div>
             </div>
-            <div className="friend-distance">{`${friend.weeklyDistance} mi`}</div>
+            <div className="friend-distance">
+              {friend.weeklyDistance > 0 ? `${friend.weeklyDistance.toFixed(1)} mi` : '0 mi'}
+            </div>
           </li>
         );
       })
