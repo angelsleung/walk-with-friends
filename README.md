@@ -16,7 +16,7 @@ A full-stack JavaScript and React web app that encourages an active lifestyle by
 9. User can view a list of routes that friends have shared with them
 10. User can view a leaderboard of distance walked among their friends in the past week
 11. User can add a friend by searching their username
-12. User can accept a friend request from another user
+12. User can accept or delete a friend request from another user
 
 ## Planned Additions
 * User can change their username or password
