@@ -37,7 +37,6 @@ export default class LocationForm extends React.Component {
     this.autocompleteInstanceA = new google.maps.places.Autocomplete(
       this.autocompleteRefA.current,
       {
-        types: ['establishment'],
         componentRestrictions: { country: 'US' },
         fields: ['place_id', 'name']
       }
@@ -45,7 +44,6 @@ export default class LocationForm extends React.Component {
     this.autocompleteInstanceB = new google.maps.places.Autocomplete(
       this.autocompleteRefB.current,
       {
-        types: ['establishment'],
         componentRestrictions: { country: 'US' },
         fields: ['place_id', 'name']
       }
@@ -53,7 +51,6 @@ export default class LocationForm extends React.Component {
     this.autocompleteInstanceC = new google.maps.places.Autocomplete(
       this.autocompleteRefC.current,
       {
-        types: ['establishment'],
         componentRestrictions: { country: 'US' },
         fields: ['place_id', 'name']
       }
