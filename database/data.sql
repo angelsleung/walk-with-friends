@@ -6,7 +6,8 @@ values ('Ash', 5.2, 'ash', 'password'),
        ('Joy', 1.1, 'joy', 'password'),
        ('Gary', 2.5, 'gary', 'password'),
        ('James', 0.7, 'james', 'password'),
-       ('Jessie', 0.8, 'jessie', 'password');
+       ('Jessie', 0.8, 'jessie', 'password'),
+       ('Demo', 0, 'demo', '$argon2i$v=19$m=4096,t=3,p=1$g1u0nVBdf+nxbTS4/GLiHg$WzuRnCk6rs6NyaC0ApmXSUuEwooM55AVQ74zxTGQ0ZE');
 
 insert into "routes" (
   "userId",
