@@ -28,7 +28,7 @@ export default class AppDrawer extends React.Component {
         <nav className={`menu ${menuClass}`}>
           <h2>Menu</h2>
           <ul>
-            <li><a onClick={this.handleClickExit} href="#">Leaderboard</a></li>
+            <li><a onClick={this.handleClickExit} href="#">Distance Leaderboard</a></li>
             <li><a onClick={this.handleClickExit} href="#map-route">Map a Route</a></li>
             <li><a onClick={this.handleClickExit} href="#saved-routes">Saved Routes</a></li>
             <li><a onClick={this.handleClickExit} href="#friends-routes">{"My Friends' Routes"}</a></li>
