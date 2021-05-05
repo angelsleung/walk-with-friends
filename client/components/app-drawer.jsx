@@ -41,7 +41,10 @@ export default class AppDrawer extends React.Component {
           </ul>
         </nav>
       <div className={`overlay ${overlayClass}`} onClick={this.handleClickExit} />
-      <i onClick={this.handleClickIcon} className={`fas fa-bars bars-icon ${iconClass}`} />
+      <div className={`navbar-div ${iconClass}`} onClick={this.handleClickIcon}>
+        <i className="fas fa-bars bars-icon" />
+        <span className="nav-label">menu</span>
+      </div>
       {this.state.isOpen ? <Navbar onClick={this.handleClickExit} isOpen={this.state.isOpen}/> : ''}
     </div>
     );

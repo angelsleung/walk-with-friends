@@ -39,12 +39,10 @@ export default class AddFriend extends React.Component {
       .then(res => res.json())
       .then(friend => {
         if (friend.length === 0) {
-          this.setState({
-            message: `No user with the username "${this.state.username}"`,
-            username: '',
-            doneLoading: true
-          });
-          return;
+          return {
+            isHandled: true,
+            message: `No user with the username "${this.state.username}"`
+          };
         }
         const [{ userId }] = friend;
         const requesterUserId = this.context.user.userId;
@@ -56,15 +54,18 @@ export default class AddFriend extends React.Component {
         return fetch('api/friendRequests', req);
       })
       .then(res => {
-        if (res.status === 201) {
-          this.setState({
-            message: `Sent a friend request to ${this.state.username}`,
-            username: '',
-            doneLoading: true
-          });
-        } else {
-          this.setState({ errorMessage: 'bad-request' });
+        let message = '';
+        if (res.isHandled) {
+          message = res.message;
         }
+        if (res.status === 201) {
+          message = `Sent a friend request to ${this.state.username}`;
+        }
+        this.setState({
+          message,
+          username: '',
+          doneLoading: true
+        });
       })
       .catch(err => {
         console.error(err);
