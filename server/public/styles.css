@@ -1008,7 +1008,7 @@ header {
 
   .app-name > a {
     text-decoration: none;
-    color: #ffcb91;
+    color: #ffb866;
     margin: 0 auto;
     text-align: center;
   }
@@ -1185,7 +1185,7 @@ header {
   }
 
   .bars-icon {
-    color: #ffcb91;
+    color: #ffb866;
     font-size: 1.5rem;
     cursor: pointer;
     padding: 2rem;
