@@ -402,7 +402,7 @@ header {
 .walk-details-text {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
   border-radius: 50px;
-  padding: 1rem 1rem 2rem;
+  padding: 1rem 1rem 1.5rem;
   background-color: white;
   margin: 0 0.8rem;
 }
