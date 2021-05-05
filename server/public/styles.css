@@ -1001,13 +1001,6 @@ header {
     min-height: auto;
   }
 
-  .app-drawer > i {
-    color: #ffcb91;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 2rem;
-  }
-
   .app-name {
     display: flex;
     width: 100%;
@@ -1046,10 +1039,6 @@ header {
   .delete-row:hover .delete-route,
   .delete-row:hover .delete-route-icon {
     color: #ffefa1;
-  }
-
-  .navbar i:hover {
-    color: #ffcb91;
   }
 
   .edit-row > i:hover {
@@ -1185,17 +1174,25 @@ header {
     width: 100%;
   }
 
-  .navbar {
+  .navbar,
+  .nav-label {
     display: none;
-  }
-
-  .bars-icon:hover {
-    color: #ffefa1;
   }
 
   .app-drawer {
     position: fixed;
     z-index: 1;
+  }
+
+  .bars-icon {
+    color: #ffcb91;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 2rem;
+  }
+
+  .bars-icon:hover {
+    color: #ffefa1;
   }
 
   .menu {
