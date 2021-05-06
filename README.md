@@ -4,8 +4,7 @@ A full-stack JavaScript and React web app that encourages an active lifestyle by
 
 [Live Site](http://walk-with-friends-app.herokuapp.com/) _<-- To preview the app, log in as "demo" user with the pre-filled-in credentials_
 
-
-<img src="https://user-images.githubusercontent.com/65578254/116647850-70beaa00-a930-11eb-904a-6d70c093ee9e.png" width="200px" height="430px"> <img src="https://user-images.githubusercontent.com/65578254/116647860-75835e00-a930-11eb-8ad4-87c6ae23f7a1.png" width="200px" height="430px"> <img src="https://user-images.githubusercontent.com/65578254/116647866-77e5b800-a930-11eb-9033-94bd1654223c.png" width="200px" height="430px"> <img src="https://user-images.githubusercontent.com/65578254/116647868-7a481200-a930-11eb-8802-0478590d12a6.png" width="200px" height="430px">
+<img src="https://user-images.githubusercontent.com/65578254/117357332-ab14d380-ae69-11eb-9398-598cc75feeaa.png" width="200px" height="430px"> <img src="https://user-images.githubusercontent.com/65578254/117357349-b0721e00-ae69-11eb-966c-b66a6a35a9b0.png" width="200px" height="430px"> <img src="https://user-images.githubusercontent.com/65578254/117357369-b536d200-ae69-11eb-91d5-1481fcc605d8.png" width="200px" height="430px"> <img src="https://user-images.githubusercontent.com/65578254/117357384-bb2cb300-ae69-11eb-88e4-c38b305e0879.png" width="200px" height="430px">
 
 <img src="https://user-images.githubusercontent.com/65578254/117356633-d21ed580-ae68-11eb-86d1-0ceb0f2fc7c9.gif" width="250px">
 
