@@ -129,13 +129,11 @@ export default class RouteDetails extends React.Component {
     const distanceMiles = (distanceMeters / 1609.34).toFixed(1);
     const durationMinutes = Math.floor(durationSeconds / 60);
     const hrString = durationMinutes < 60 ? '' : `${Math.floor(durationMinutes / 60)} hr`;
-    const minString = durationMinutes % 60 === 0 ? '' : `${durationMinutes % 60} min`;
-    let durationString = hrString + minString;
-    if (hrString < 1) durationString += 'ute';
-    if (durationMinutes > 1) durationString += 's';
+    let minString = durationMinutes % 60 === 0 ? '' : `${durationMinutes % 60} min`;
+    if (!hrString && minString) minString += 'utes';
     this.setState({
       distance: distanceMiles,
-      duration: durationString
+      duration: `${hrString} ${minString}`
     });
   }
 
