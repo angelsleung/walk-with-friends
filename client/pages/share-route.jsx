@@ -72,6 +72,7 @@ export default class ShareRoute extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ doneLoading: false });
+    const promiseArray = [];
     for (let i = 0; i < this.state.notYetShared.length; i++) {
       const friend = this.state.notYetShared[i];
       if (!friend.selected) continue;
@@ -80,13 +81,18 @@ export default class ShareRoute extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: friend.userId })
       };
-      fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
-        .catch(err => {
-          console.error(err);
-          this.setState({ errorMessage: 'bad-request' });
-        });
+      promiseArray.push(
+        fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
+          .catch(err => {
+            console.error(err);
+            this.setState({ errorMessage: 'bad-request' });
+          })
+      );
     }
-    window.location.hash = `route-details?routeId=${this.props.routeId}`;
+    Promise.all(promiseArray)
+      .then(() => {
+        window.location.hash = `route-details?routeId=${this.props.routeId}`;
+      });
   }
 
   setLastWalked(lastWalked) {
