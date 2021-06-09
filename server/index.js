@@ -6,7 +6,6 @@ const staticMiddleware = require('./static-middleware');
 const pg = require('pg');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
-
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
