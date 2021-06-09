@@ -1,3 +1,5 @@
+// refactor to incorporate TypeScript
+
 require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
