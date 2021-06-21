@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AddDateButton from '../components/add-date-button';
 import AddDateForm from '../components/add-date-form';
 import Redirect from '../components/redirect';
@@ -6,28 +6,17 @@ import Spinner from '../components/spinner';
 import ErrorModal from '../components/error-modal';
 import AppContext from '../lib/app-context';
 
-export default class ShareRoute extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      notYetShared: [],
-      lastWalked: '',
-      nextWalk: '',
-      dateOpen: false,
-      doneLoading: false,
-      errorMessage: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.setLastWalked = this.setLastWalked.bind(this);
-    this.setNextWalk = this.setNextWalk.bind(this);
-    this.setDateModal = this.setDateModal.bind(this);
-    this.setErrorModal = this.setErrorModal.bind(this);
-  }
+export default function ShareRoute () {
+  const [notYetShared, setNotYetShared] = useState([]);
+  const [lastWalked, setLastWalked] = useState('');
+  const [nextWalk, setNetWalk] = useState('');
+  const [dateOpen, setDateOpen] = useState(false);
+  const [doneLoading, setDoneLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  componentDidMount() {
+  useEffect(() => {
     if (!navigator.onLine) {
-      this.setState({ errorMessage: 'network-error' });
+      setErrorMessage('network-error');
       return;
     }
     const { userId } = this.context.user;
@@ -42,38 +31,35 @@ export default class ShareRoute extends React.Component {
               sharedWithUserIds[sharedWith[i].userId] = true;
             }
             const notYetShared = friends.filter(friend => !sharedWithUserIds[friend.userId]);
-            this.setState({
-              notYetShared,
-              doneLoading: true
-            });
+            setNotYetShared(notYetShared);
+            setNotDoneLoading(true);
           })
           .catch(err => {
             console.error(err);
-            this.setState({ errorMessage: 'bad-request' });
+            setErrorMessage('bad-request');
           });
       })
       .catch(err => {
         console.error(err);
-        this.setState({ errorMessage: 'bad-request' });
+        setErrorMessage('bad-request');
       });
   }
 
-  handleChange(event) {
+  function handleChange(event) {
     const userId = parseInt(event.target.value);
-    const notYetShared = this.state.notYetShared;
     for (let i = 0; i < notYetShared.length; i++) {
       if (notYetShared[i].userId === userId) {
         notYetShared[i].selected = event.target.checked;
       }
     }
-    this.setState({ notYetShared });
+    setNotYetShared(notYetShared);
   }
 
-  handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
-    this.setState({ doneLoading: false });
-    for (let i = 0; i < this.state.notYetShared.length; i++) {
-      const friend = this.state.notYetShared[i];
+    setDoneLoading(false);
+    for (let i = 0; i < notYetShared.length; i++) {
+      const friend = notYetShared[i];
       if (!friend.selected) continue;
       const req = {
         method: 'PATCH',
@@ -83,34 +69,18 @@ export default class ShareRoute extends React.Component {
       fetch(`/api/sharedRoutes/${this.props.routeId}`, req)
         .catch(err => {
           console.error(err);
-          this.setState({ errorMessage: 'bad-request' });
+          setErrorMessage('bad-request');
         });
     }
     window.location.hash = `route-details?routeId=${this.props.routeId}`;
   }
 
-  setLastWalked(lastWalked) {
-    this.setState({ lastWalked });
-  }
-
-  setNextWalk(nextWalk) {
-    this.setState({ nextWalk });
-  }
-
-  setDateModal(dateOpen) {
-    this.setState({ dateOpen });
-  }
-
-  setErrorModal(errorMessage) {
-    this.setState({ errorMessage });
-  }
-
   renderFriends() {
-    if (this.state.notYetShared.length === 0) {
+    if (notYetShared.length === 0) {
       return <p className="no-friends">No friends available to share this route with</p>;
     }
     return (
-      this.state.notYetShared.map(friend => {
+      notYetShared.map(friend => {
         return (
           <li key={friend.userId} className="friend-list-item">
             <input type="checkbox" className="checkbox" id={friend.userId} name="friend"
@@ -132,7 +102,7 @@ export default class ShareRoute extends React.Component {
       <div className="page">
         <form className="share-form" onSubmit={this.handleSubmit}>
           <h1 className="page-title">Select Friend</h1>
-          { this.state.doneLoading
+          { doneLoading
             ? <>
                 <ul className="friend-list">
                   {this.renderFriends()}
@@ -146,13 +116,13 @@ export default class ShareRoute extends React.Component {
           }
         </form>
         { this.state.dateOpen
-          ? <AddDateForm routeId={this.props.routeId} setModal={this.setDateModal}
-            lastWalked={this.state.lastWalked} setLastWalked={this.setLastWalked}
-            nextWalk={this.state.nextWalk} setNextWalk={this.setNextWalk} />
+          ? <AddDateForm routeId={this.props.routeId} setModal={setDateModal}
+            lastWalked={lastWalked} setLastWalked={setLastWalked}
+            nextWalk={nextWalk} setNextWalk={setNextWalk} />
           : ''
         }
         { this.state.errorMessage
-          ? <ErrorModal set={this.setErrorModal} message={this.state.errorMessage} />
+          ? <ErrorModal set={setErrorModal} message={errorMessage} />
           : ''
         }
       </div>
